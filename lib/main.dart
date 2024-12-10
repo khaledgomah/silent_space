@@ -11,10 +11,10 @@ class SilentSpace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: RoutesName.splash,
       onGenerateRoute: onGenerateRoute,
-      theme:
-          ThemeData(primaryColor: Colors.green, brightness: Brightness.light),
+      theme: ThemeData(brightness: Brightness.light),
     );
   }
 }
