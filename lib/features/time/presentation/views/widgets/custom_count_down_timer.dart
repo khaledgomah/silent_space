@@ -22,11 +22,11 @@ class CustomCountDownTimer extends StatelessWidget {
       isReverse: true,
       duration: maxTime,
       width: context.screenWidth() * 0.8,
-      height: context.screenWidth() * 0.8,
+      height: context.screenHeight() * 0.5,
       fillColor: Colors.grey,
       ringColor: Colors.white,
       textFormat: 'mm:ss',
-      textStyle: const TextStyle(fontSize: 48),
+      textStyle: const TextStyle(fontSize: 48, color: Colors.white),
     );
   }
 }

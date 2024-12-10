@@ -1,86 +1,63 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:mrx_charts/mrx_charts.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
+import 'package:silent_space/features/time/presentation/views/widgets/focus_chart.dart';
+import 'package:silent_space/features/time/presentation/views/widgets/show_details.dart';
 
 class StatesScreen extends StatelessWidget {
   const StatesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    const double opacityValue = 0.2;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
             height: 32,
           ),
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Sammary',
               style: TextStyleManager.headline2,
             ),
           ),
-          SizedBox(height: 8),
-          ShowDetails(),
-          SizedBox(height: 48),
-          Align(
+          const SizedBox(height: 8),
+          const ShowDetails(),
+          const SizedBox(height: 48),
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Today',
               style: TextStyleManager.headline2,
             ),
           ),
-          SizedBox(height: 8),
-          ShowDetails(),
-        ],
-      ),
-    );
-  }
-}
-
-class ShowDetails extends StatelessWidget {
-  const ShowDetails({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        ShowDataContainer(title: 'Focas Time (min)', value: 10),
-        SizedBox(width: 16),
-        ShowDataContainer(title: 'Focus count', value: 1),
-      ],
-    );
-  }
-}
-
-class ShowDataContainer extends StatelessWidget {
-  const ShowDataContainer({
-    super.key,
-    required this.title,
-    required this.value,
-  });
-  final String title;
-  final int value;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: (context.screenWidth() / 2) - 24,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.grey.withOpacity(0.2)),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: TextStyleManager.bodyText1,
+          const SizedBox(height: 8),
+          const ShowDetails(),
+          const SizedBox(height: 48),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Focus Time',
+              style: TextStyleManager.headline2,
+            ),
           ),
-          Text(
-            value.toString(),
-            style: TextStyleManager.bodyText1,
-          ),
+          const SizedBox(height: 8),
+          Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.grey.withOpacity(opacityValue),
+              ),
+              height: context.screenHeight() * 0.3,
+              child: const FocusChart()),
         ],
       ),
     );

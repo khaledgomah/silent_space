@@ -62,13 +62,7 @@ class _HomeViewState extends State<HomeView> {
         ),
         body: Container(
             width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.lightBlue.shade300, Colors.red],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
+            decoration: const BoxDecoration(),
             child: _screens[currentIndex]));
   }
 }

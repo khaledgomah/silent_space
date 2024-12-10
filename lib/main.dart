@@ -14,7 +14,7 @@ class SilentSpace extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: RoutesName.splash,
       onGenerateRoute: onGenerateRoute,
-      theme: ThemeData(brightness: Brightness.light),
+      theme: ThemeData(brightness: Brightness.dark),
     );
   }
 }
