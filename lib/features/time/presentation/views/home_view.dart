@@ -1,6 +1,5 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:silent_space/features/time/presentation/views/widgets/timer_section.dart';
+import 'package:silent_space/features/time/presentation/views/widgets/timer_screen.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -9,12 +8,6 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-final List<Color> blackShades = [
-  const Color(0xFFA9A9A9), // Gray
-  const Color(0xFFD3D3D3), // Light Gray
-  const Color(0xFFE6E6E6), // Silver
-  const Color(0xFFFFFFFF), // White (for contrast or end of gradient)
-];
 
 class _HomeViewState extends State<HomeView> {
   int currentIndex = 0;
@@ -88,19 +81,3 @@ List<Widget> _screens = [
   const Placeholder(),
   const Placeholder()
 ];
-
-class TimerScreen extends StatelessWidget {
-  TimerScreen({super.key});
-  final maxTime = 30;
-  final CountDownController _countDownController = CountDownController();
-  @override
-  Widget build(BuildContext context) {
-    return TimerSection(
-        countDownController: _countDownController, maxTime: maxTime);
-  }
-}
-
-extension MediaQuerySize on BuildContext {
-  double screenHeight() => MediaQuery.of(this).size.height;
-  double screenWidth() => MediaQuery.of(this).size.width;
-}
