@@ -18,46 +18,39 @@ class StatesScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: ListView(
         padding: EdgeInsets.zero,
-        children: [
-          const SizedBox(
+        children: const [
+          SizedBox(
             height: 32,
           ),
-          const Align(
+          Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Sammary',
               style: TextStyleManager.headline2,
             ),
           ),
-          const SizedBox(height: 8),
-          const ShowDetails(),
-          const SizedBox(height: 48),
-          const Align(
+          SizedBox(height: 8),
+          ShowDetails(),
+          SizedBox(height: 48),
+          Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Today',
               style: TextStyleManager.headline2,
             ),
           ),
-          const SizedBox(height: 8),
-          const ShowDetails(),
-          const SizedBox(height: 48),
-          const Align(
+          SizedBox(height: 8),
+          ShowDetails(),
+          SizedBox(height: 48),
+          Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Focus Time',
               style: TextStyleManager.headline2,
             ),
           ),
-          const SizedBox(height: 8),
-          Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey.withOpacity(opacityValue),
-              ),
-              height: context.screenHeight() * 0.3,
-              child: const FocusChart()),
+          SizedBox(height: 8),
+          FocusChart(),
         ],
       ),
     );
