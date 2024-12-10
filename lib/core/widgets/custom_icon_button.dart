@@ -7,13 +7,11 @@ class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      backgroundColor: Colors.green,
-      child: IconButton(
-        color: Colors.black,
-        onPressed: onPressed,
-        icon: icon,
-      ),
+    return IconButton(
+      iconSize: 32,
+      color: Colors.white,
+      onPressed: onPressed,
+      icon: icon,
     );
   }
 }

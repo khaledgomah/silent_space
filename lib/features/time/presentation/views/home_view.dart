@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silent_space/features/time/presentation/views/widgets/states_screen.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/timer_screen.dart';
 
 class HomeView extends StatefulWidget {
@@ -7,7 +8,6 @@ class HomeView extends StatefulWidget {
   @override
   State<HomeView> createState() => _HomeViewState();
 }
-
 
 class _HomeViewState extends State<HomeView> {
   int currentIndex = 0;
@@ -61,13 +61,10 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
         body: Container(
-            decoration: const BoxDecoration(
+            width: double.infinity,
+            decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Colors.deepPurpleAccent,
-                  Colors.deepPurple,
-                  Colors.purple
-                ],
+                colors: [Colors.lightBlue.shade300, Colors.red],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -78,6 +75,6 @@ class _HomeViewState extends State<HomeView> {
 
 List<Widget> _screens = [
   TimerScreen(),
-  const Placeholder(),
+  const StatesScreen(),
   const Placeholder()
 ];
