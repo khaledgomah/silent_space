@@ -23,8 +23,8 @@ class CustomCountDownTimer extends StatelessWidget {
       duration: maxTime,
       width: context.screenWidth() * 0.8,
       height: context.screenHeight() * 0.5,
-      fillColor: Colors.grey,
-      ringColor: Colors.white,
+      fillColor: Colors.white,
+      ringColor: Colors.grey.shade800,
       textFormat: 'mm:ss',
       textStyle: const TextStyle(fontSize: 48, color: Colors.white),
     );
