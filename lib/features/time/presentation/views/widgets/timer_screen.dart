@@ -5,6 +5,7 @@ import 'package:silent_space/features/time/presentation/views/widgets/custom_cou
 import 'package:silent_space/features/time/presentation/views/widgets/restart_icon_button.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/start_and_puase_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silent_space/features/time/presentation/views/widgets/timer_setting_modal_sheet.dart';
 
 class TimerScreen extends StatelessWidget {
   TimerScreen({super.key});
@@ -27,7 +28,14 @@ class TimerScreen extends StatelessWidget {
                   color: Colors.white,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return const TimerSettingModalSheet();
+                    },
+                  );
+                },
                 icon: const Icon(
                   FontAwesomeIcons.sliders,
                   color: Colors.white,
