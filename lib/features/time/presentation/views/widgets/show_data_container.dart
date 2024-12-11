@@ -13,7 +13,7 @@ class ShowDataContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: (context.screenWidth() / 2) - 24,
+      width: (context.width() / 2) - 24,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),

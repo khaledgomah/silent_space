@@ -12,14 +12,13 @@ class TextStyleManager {
   );
 
   static const TextStyle bodyText1 = TextStyle(
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: FontWeight.normal,
   );
 
   static const TextStyle bodyText2 = TextStyle(
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: FontWeight.normal,
-    color: Colors.black,
   );
 
   // Add more text styles as needed

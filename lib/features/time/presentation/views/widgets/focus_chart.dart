@@ -15,7 +15,7 @@ class FocusChart extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         color: Constans.secondaryColor,
       ),
-      height: context.screenHeight() * 0.3,
+      height: context.height() * 0.3,
       child: Chart(layers: [
         ChartAxisLayer(
           settings: const ChartAxisSettings(

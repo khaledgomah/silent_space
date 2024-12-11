@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/helper/extentions.dart';
+import 'package:silent_space/core/helper/helper_functions.dart';
+import 'package:silent_space/core/utils/text_style_manager.dart';
 
 class TimerSettingModalSheet extends StatefulWidget {
   const TimerSettingModalSheet({super.key});
@@ -8,26 +11,82 @@ class TimerSettingModalSheet extends StatefulWidget {
 }
 
 class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
-  double _sliderValue = 0;
+  double _focusSliderValue = 0;
+  double _breakSliderValue = 0;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Align(child: Text('Timer Settings')),
-        Slider(
-          value: _sliderValue,
-          min: 0,
-          max: 100,
-          divisions: 100,
-          label: _sliderValue.toStringAsFixed(1),
-          onChanged: (value) {
-            setState(() {
-              _sliderValue = value;
-            });
-          },
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: context.height() * 0.4,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  enableFeedback: false,
+                  onPressed: () {},
+                  icon: const Text(''),
+                ),
+                const Text(
+                  'Timer Settings',
+                  style: TextStyleManager.bodyText1,
+                ),
+                IconButton(
+                  enableFeedback: false,
+                  onPressed: () {
+                    context.pop();
+                  },
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                'Focus Dioration (min)',
+                style: TextStyleManager.bodyText2,
+              ),
+            ),
+            Slider(
+              value: _focusSliderValue,
+              min: 0,
+              max: 100,
+              divisions: 100,
+              label: _focusSliderValue.toStringAsFixed(1),
+              onChanged: (value) {
+                setState(() {
+                  _focusSliderValue = value;
+                });
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                'Break Dioration (min)',
+                style: TextStyleManager.bodyText2,
+              ),
+            ),
+            Slider(
+              value: _breakSliderValue,
+              min: 0,
+              max: 100,
+              divisions: 100,
+              label: _breakSliderValue.toStringAsFixed(1),
+              onChanged: (value) {
+                setState(() {
+                  _breakSliderValue = value;
+                });
+              },
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

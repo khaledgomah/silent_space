@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 extension Navigation on BuildContext {
-  void navigateTo(Widget page) {
+  void push(Widget page) {
     Navigator.push(
       this,
       MaterialPageRoute(builder: (context) => page),
     );
   }
 
-  void navigateToReplacement(Widget page) {
+  void pushAndReplacement(Widget page) {
     Navigator.pushReplacement(
       this,
       MaterialPageRoute(builder: (context) => page),
     );
   }
 
-  void navigateBack() {
+  void pop() {
     Navigator.pop(this);
   }
 }
