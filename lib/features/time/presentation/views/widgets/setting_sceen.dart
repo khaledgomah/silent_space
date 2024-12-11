@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/utils/constans.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/time/data/models/setting_item_model.dart';
-import 'package:silent_space/features/time/presentation/views/home_view.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/setting_item_widget.dart';
 
 class SettingSceen extends StatelessWidget {
   SettingSceen({super.key});
   final List<SettingItemModel> settingItems = [
-    SettingItemModel(title: 'Dark Mode', icon: const Icon(Icons.dark_mode)),
+    SettingItemModel(title: 'Categories', icon: const Icon(Icons.category)),
     SettingItemModel(
         title: 'Notifications', icon: const Icon(Icons.notifications)),
-    SettingItemModel(title: 'About', icon: const Icon(Icons.info)),
+    SettingItemModel(title: 'Languages', icon: const Icon(Icons.language)),
+    SettingItemModel(title: 'How to use', icon: const Icon(Icons.info)),
+    SettingItemModel(
+        title: 'About ${Constans.appName}', icon: const Icon(Icons.info)),
+    SettingItemModel(title: 'Feedback', icon: const Icon(Icons.feedback)),
+    SettingItemModel(
+        title: 'Rate ${Constans.appName}', icon: const Icon(Icons.star)),
+    SettingItemModel(title: 'Share To Friends', icon: const Icon(Icons.share)),
   ];
 
   @override
