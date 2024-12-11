@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:mrx_charts/mrx_charts.dart';
-import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/focus_chart.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/show_details.dart';
@@ -12,8 +8,6 @@ class StatesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double opacityValue = 0.2;
-
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView(

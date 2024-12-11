@@ -20,16 +20,16 @@ class FocusChart extends StatelessWidget {
         ChartAxisLayer(
           settings: const ChartAxisSettings(
             x: ChartAxisSettingsAxis(
-              frequency: 1.0,
-              max: 6,
-              min: 0,
+              frequency: -1.0,
+              max: 0,
+              min: 6.0,
               textStyle: TextStyle(
                 color: Colors.white,
                 fontSize: 10.0,
               ),
             ),
             y: ChartAxisSettingsAxis(
-              frequency: 20.0,
+              frequency: 25,
               max: 100.0,
               min: 0.0,
               textStyle: TextStyle(
@@ -39,7 +39,7 @@ class FocusChart extends StatelessWidget {
             ),
           ),
           labelX: (value) => getDate(value),
-          labelY: (value) => value.toString(),
+          labelY: (value) => value.toInt().toString(),
         ),
         ChartBarLayer(
           items: List.generate(
@@ -51,7 +51,7 @@ class FocusChart extends StatelessWidget {
             ),
           ),
           settings: const ChartBarSettings(
-            thickness: 8.0,
+            thickness: 10.0,
             radius: BorderRadius.all(Radius.circular(4.0)),
           ),
         ),
@@ -59,5 +59,3 @@ class FocusChart extends StatelessWidget {
     );
   }
 }
-
-
