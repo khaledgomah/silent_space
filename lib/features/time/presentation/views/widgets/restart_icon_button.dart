@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/widgets/custom_icon_button.dart';
 import 'package:silent_space/features/time/presentation/manager/cubit/timer_cubit.dart';
 
-class RestartIconButton extends StatelessWidget {
-  const RestartIconButton({
+class RestTimerIconButton extends StatelessWidget {
+  const RestTimerIconButton({
     super.key,
     required this.countDownController,
     required this.maxTime,
