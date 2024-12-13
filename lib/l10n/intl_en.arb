@@ -15,6 +15,8 @@
     "today": "Today",
     "summary": "Summary",
     "focasTime(min)" : "Focus Time(min)",
-    "focusCount": "Focus Count"
-
+    "focusCount": "Focus Count",
+    "arabic": "Arabic",
+    "english": "English",
+    "selectLanguage": "Select Language"
 }

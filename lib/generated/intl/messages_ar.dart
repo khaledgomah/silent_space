@@ -24,9 +24,11 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "RateUs": MessageLookupByLibrary.simpleMessage("قيمنا"),
         "about": MessageLookupByLibrary.simpleMessage("حول Silent Space"),
+        "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
         "breakDuration": MessageLookupByLibrary.simpleMessage(
             "مدة الاستراحة القصيرة (دقائق)"),
         "categories": MessageLookupByLibrary.simpleMessage("الفئات"),
+        "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
         "feedback": MessageLookupByLibrary.simpleMessage("تعليق"),
         "focusCount": MessageLookupByLibrary.simpleMessage("عدد الجلسات"),
         "focusDuration":
@@ -37,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "howToUse": MessageLookupByLibrary.simpleMessage("كيفية الاستخدام"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
+        "selectLanguage": MessageLookupByLibrary.simpleMessage("اختر اللغة"),
         "share": MessageLookupByLibrary.simpleMessage("مشاركة Silent Space"),
         "summary": MessageLookupByLibrary.simpleMessage("الملخص"),
         "timerSettings": MessageLookupByLibrary.simpleMessage("إعدادات المؤقت"),

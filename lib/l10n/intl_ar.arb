@@ -15,6 +15,10 @@
       "today": "اليوم",
       "summary": "الملخص",
       "focasTime(min)" : "وقت التركيز (دقائق)",
-      "focusCount": "عدد الجلسات"
+      "focusCount": "عدد الجلسات",
+      "arabic": "العربية",
+      "english": "الإنجليزية",
+      "selectLanguage": "اختر اللغة"
+
 }
 

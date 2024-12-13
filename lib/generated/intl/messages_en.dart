@@ -24,9 +24,11 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "RateUs": MessageLookupByLibrary.simpleMessage("Rate Us"),
         "about": MessageLookupByLibrary.simpleMessage("About Silent Space"),
+        "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
         "breakDuration":
             MessageLookupByLibrary.simpleMessage("Short Break Duration(min)"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "english": MessageLookupByLibrary.simpleMessage("English"),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
         "focusCount": MessageLookupByLibrary.simpleMessage("Focus Count"),
         "focusDuration":
@@ -37,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "howToUse": MessageLookupByLibrary.simpleMessage("How to Use"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "selectLanguage":
+            MessageLookupByLibrary.simpleMessage("Select Language"),
         "share": MessageLookupByLibrary.simpleMessage("Share Silent Space"),
         "summary": MessageLookupByLibrary.simpleMessage("Summary"),
         "timerSettings": MessageLookupByLibrary.simpleMessage("Timer Settings"),

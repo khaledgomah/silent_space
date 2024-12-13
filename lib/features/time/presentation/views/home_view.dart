@@ -14,7 +14,7 @@ class _HomeViewState extends State<HomeView> {
   final List<Widget> _screens = [
     TimerScreen(),
     const StatesScreen(),
-    SettingSceen()
+    const SettingSceen()
   ];
 
   int currentIndex = 0;

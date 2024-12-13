@@ -15,7 +15,7 @@ class SettingItemWidget extends StatelessWidget {
             WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 8)),
         shape: WidgetStateProperty.all(const RoundedRectangleBorder()),
       ),
-      onPressed: () {},
+      onPressed: item.onTap,
       child: ListTile(
         leading: item.icon,
         title: Text(item.title),
