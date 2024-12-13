@@ -21,5 +21,25 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "RateUs": MessageLookupByLibrary.simpleMessage("قيمنا"),
+        "about": MessageLookupByLibrary.simpleMessage("حول Silent Space"),
+        "breakDuration": MessageLookupByLibrary.simpleMessage(
+            "مدة الاستراحة القصيرة (دقائق)"),
+        "categories": MessageLookupByLibrary.simpleMessage("الفئات"),
+        "feedback": MessageLookupByLibrary.simpleMessage("تعليق"),
+        "focusCount": MessageLookupByLibrary.simpleMessage("عدد الجلسات"),
+        "focusDuration":
+            MessageLookupByLibrary.simpleMessage("مدة التركيز (دقائق)"),
+        "focusTime": MessageLookupByLibrary.simpleMessage("وقت التركيز"),
+        "generalSettings":
+            MessageLookupByLibrary.simpleMessage("الإعدادات العامة"),
+        "howToUse": MessageLookupByLibrary.simpleMessage("كيفية الاستخدام"),
+        "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+        "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
+        "share": MessageLookupByLibrary.simpleMessage("مشاركة Silent Space"),
+        "summary": MessageLookupByLibrary.simpleMessage("الملخص"),
+        "timerSettings": MessageLookupByLibrary.simpleMessage("إعدادات المؤقت"),
+        "today": MessageLookupByLibrary.simpleMessage("اليوم")
+      };
 }

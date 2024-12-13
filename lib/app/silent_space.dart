@@ -11,21 +11,24 @@ class SilentSpace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-
       create: (context) => LanguageCubit(),
-      child: MaterialApp(
-        locale: Locale(BlocProvider.of<LanguageCubit>(context).language),
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        debugShowCheckedModeBanner: false,
-        initialRoute: RoutesName.splash,
-        onGenerateRoute: onGenerateRoute,
-        theme: ThemeData(brightness: Brightness.dark),
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, state) {
+          return MaterialApp(
+            locale: Locale(BlocProvider.of<LanguageCubit>(context).language),
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            debugShowCheckedModeBanner: false,
+            initialRoute: RoutesName.splash,
+            onGenerateRoute: onGenerateRoute,
+            theme: ThemeData(brightness: Brightness.dark),
+          );
+        },
       ),
     );
   }

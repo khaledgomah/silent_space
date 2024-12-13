@@ -1,1 +1,20 @@
-{}
+{
+      "timerSettings": "إعدادات المؤقت",
+      "focusDuration": "مدة التركيز (دقائق)",
+      "breakDuration": "مدة الاستراحة القصيرة (دقائق)",
+      "generalSettings": "الإعدادات العامة",
+      "language": "اللغة",
+      "notifications": "الإشعارات",
+      "howToUse": "كيفية الاستخدام",
+      "about": "حول Silent Space",
+      "feedback": "تعليق",
+      "categories": "الفئات",
+      "RateUs": "قيمنا",
+      "share": "مشاركة Silent Space",
+      "focusTime": "وقت التركيز",
+      "today": "اليوم",
+      "summary": "الملخص",
+      "focasTime(min)" : "وقت التركيز (دقائق)",
+      "focusCount": "عدد الجلسات"
+}
+

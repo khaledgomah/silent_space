@@ -1,1 +1,20 @@
-{}
+{
+    "timerSettings": "Timer Settings",
+    "focusDuration": "Focus Duration(min)",
+    "breakDuration": "Short Break Duration(min)",
+    "generalSettings": "General Settings",
+    "language": "Language",
+    "notifications": "Notifications",
+    "howToUse": "How to Use",
+    "about": "About Silent Space",
+    "feedback": "Feedback",
+    "categories": "Categories",
+    "RateUs": "Rate Us",
+    "share": "Share Silent Space",
+    "focusTime": "Focus Time",
+    "today": "Today",
+    "summary": "Summary",
+    "focasTime(min)" : "Focus Time(min)",
+    "focusCount": "Focus Count"
+
+}

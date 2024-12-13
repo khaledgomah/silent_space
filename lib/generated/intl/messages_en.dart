@@ -21,5 +21,25 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "RateUs": MessageLookupByLibrary.simpleMessage("Rate Us"),
+        "about": MessageLookupByLibrary.simpleMessage("About Silent Space"),
+        "breakDuration":
+            MessageLookupByLibrary.simpleMessage("Short Break Duration(min)"),
+        "categories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
+        "focusCount": MessageLookupByLibrary.simpleMessage("Focus Count"),
+        "focusDuration":
+            MessageLookupByLibrary.simpleMessage("Focus Duration(min)"),
+        "focusTime": MessageLookupByLibrary.simpleMessage("Focus Time"),
+        "generalSettings":
+            MessageLookupByLibrary.simpleMessage("General Settings"),
+        "howToUse": MessageLookupByLibrary.simpleMessage("How to Use"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "share": MessageLookupByLibrary.simpleMessage("Share Silent Space"),
+        "summary": MessageLookupByLibrary.simpleMessage("Summary"),
+        "timerSettings": MessageLookupByLibrary.simpleMessage("Timer Settings"),
+        "today": MessageLookupByLibrary.simpleMessage("Today")
+      };
 }

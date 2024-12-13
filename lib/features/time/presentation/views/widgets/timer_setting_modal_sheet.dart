@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:silent_space/core/helper/extentions.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
+import 'package:silent_space/generated/l10n.dart';
 
 class TimerSettingModalSheet extends StatefulWidget {
   const TimerSettingModalSheet({super.key});
@@ -33,8 +34,8 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                   onPressed: () {},
                   icon: const Text(''),
                 ),
-                const Text(
-                  'Timer Settings',
+                Text(
+                  S.of(context).timerSettings,
                   style: TextStyleManager.bodyText1,
                 ),
                 IconButton(
@@ -46,10 +47,10 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Text(
-                'Focus Dioration (min)',
+                S.of(context).focusDuration,
                 style: TextStyleManager.bodyText2,
               ),
             ),
@@ -65,10 +66,10 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                 });
               },
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Text(
-                'Break Dioration (min)',
+                S.of(context).breakDuration,
                 style: TextStyleManager.bodyText2,
               ),
             ),

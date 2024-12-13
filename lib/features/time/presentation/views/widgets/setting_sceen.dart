@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/utils/constans.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/time/data/models/setting_item_model.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/setting_item_widget.dart';
+import 'package:silent_space/generated/l10n.dart';
 
 class SettingSceen extends StatelessWidget {
-  SettingSceen({super.key});
-  final List<SettingItemModel> settingItems = [
-    SettingItemModel(title: 'Categories', icon: const Icon(Icons.category)),
-    SettingItemModel(
-        title: 'Notifications', icon: const Icon(Icons.notifications)),
-    SettingItemModel(title: 'Languages', icon: const Icon(Icons.language)),
-    SettingItemModel(title: 'How to use', icon: const Icon(Icons.info)),
-    SettingItemModel(
-        title: 'About ${Constans.appName}', icon: const Icon(Icons.info)),
-    SettingItemModel(title: 'Feedback', icon: const Icon(Icons.feedback)),
-    SettingItemModel(
-        title: 'Rate ${Constans.appName}', icon: const Icon(Icons.star)),
-    SettingItemModel(title: 'Share To Friends', icon: const Icon(Icons.share)),
-  ];
+  const SettingSceen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<SettingItemModel> settingItems = [
+      SettingItemModel(
+          title: S.of(context).categories, icon: const Icon(Icons.category)),
+      SettingItemModel(
+          title: S.of(context).notifications,
+          icon: const Icon(Icons.notifications)),
+      SettingItemModel(
+          title: S.of(context).language, icon: const Icon(Icons.language)),
+      SettingItemModel(
+          title: S.of(context).howToUse, icon: const Icon(Icons.info)),
+      SettingItemModel(
+          title: S.of(context).about, icon: const Icon(Icons.info)),
+      SettingItemModel(
+          title: S.of(context).feedback, icon: const Icon(Icons.feedback)),
+      SettingItemModel(
+          title: S.of(context).RateUs, icon: const Icon(Icons.star)),
+      SettingItemModel(
+          title: S.of(context).share, icon: const Icon(Icons.share)),
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(top: 50, left: 18),
+        Padding(
+          padding: const EdgeInsets.only(top: 50, left: 18, right: 18),
           child: Text(
-            'General',
+            S.of(context).generalSettings,
             style: TextStyleManager.headline2,
           ),
         ),

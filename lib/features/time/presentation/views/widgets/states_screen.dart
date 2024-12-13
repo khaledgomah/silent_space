@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/focus_chart.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/show_details.dart';
+import 'package:silent_space/generated/l10n.dart';
 
 class StatesScreen extends StatelessWidget {
   const StatesScreen({super.key});
@@ -10,41 +11,32 @@ class StatesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: const [
-          SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
             height: 32,
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Sammary',
-              style: TextStyleManager.headline2,
-            ),
+          Text(
+            S.of(context).today,
+            style: TextStyleManager.headline2,
           ),
-          SizedBox(height: 8),
-          ShowDetails(),
-          SizedBox(height: 48),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Today',
-              style: TextStyleManager.headline2,
-            ),
+          const SizedBox(height: 8),
+          const ShowDetails(),
+          const SizedBox(height: 48),
+          Text(
+            S.of(context).summary,
+            style: TextStyleManager.headline2,
           ),
-          SizedBox(height: 8),
-          ShowDetails(),
-          SizedBox(height: 48),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Focus Time',
-              style: TextStyleManager.headline2,
-            ),
+          const SizedBox(height: 8),
+          const ShowDetails(),
+          const SizedBox(height: 48),
+          Text(
+            S.of(context).focusTime,
+            style: TextStyleManager.headline2,
           ),
-          SizedBox(height: 8),
-          FocusChart(),
+          const SizedBox(height: 8),
+          const FocusChart(),
         ],
       ),
     );
