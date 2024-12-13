@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/helper/extentions.dart';
+import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/setting/data/models/setting_item_model.dart';
 import 'package:silent_space/features/setting/presentation/widgets/change_language_modal_sheet.dart';
@@ -32,7 +34,9 @@ class SettingSceen extends StatelessWidget {
       SettingItemModel(
           title: S.of(context).howToUse,
           icon: const Icon(Icons.help),
-          onTap: () {}),
+          onTap: () {
+            context.pushNamed(RoutesName.howToUse);
+          }),
       SettingItemModel(
           title: S.of(context).about,
           icon: const Icon(Icons.info),
