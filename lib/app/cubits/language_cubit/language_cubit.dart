@@ -1,22 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:silent_space/core/helper/helper_functions.dart';
 
 part 'language_state.dart';
 
 class LanguageCubit extends Cubit<LanguageState> {
-  String _language = 'ar';
-void changeLanguage(Language language){
-  if(language == Language.english){
-    _language = 'en';
-  }else{
-    _language = 'ar';
+  String _language = 'en';
+ late SharedPreferencesWithCache prefsWithCache=getIt<SharedPreferencesWithCache>();
+  Future<void> changeLanguage(Language language) async {
+   
+    if (language == Language.english) {
+      _language = 'en';
+    } else {
+      _language = 'ar';
+    }
+    prefsWithCache.setString('language', _language);
+    emit(LanguageChange());
   }
-  emit(LanguageChange());
-}
-String get language => _language;
+
+  String language(SharedPreferencesWithCache prefsWithCache) {
+    return prefsWithCache.getString('language').toString();
+  }
+
   LanguageCubit() : super(LanguageInitial());
 }
 
-
-
-enum Language{ english, arabic }
+enum Language { english, arabic }
