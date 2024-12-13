@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/features/time/presentation/views/widgets/setting_sceen.dart';
+import 'package:silent_space/features/setting/presentation/setting_sceen.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/states_screen.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/timer_screen.dart';
 

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/app/cubits/language_cubit/language_cubit.dart';
-import 'package:silent_space/core/helper/extentions.dart';
-import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
-import 'package:silent_space/features/time/data/models/setting_item_model.dart';
-import 'package:silent_space/features/time/presentation/views/widgets/change_language_modal_sheet.dart';
-import 'package:silent_space/features/time/presentation/views/widgets/setting_item_widget.dart';
+import 'package:silent_space/features/setting/data/models/setting_item_model.dart';
+import 'package:silent_space/features/setting/presentation/widgets/change_language_modal_sheet.dart';
+import 'package:silent_space/features/setting/presentation/widgets/setting_item_widget.dart';
 import 'package:silent_space/generated/l10n.dart';
 
 class SettingSceen extends StatelessWidget {
