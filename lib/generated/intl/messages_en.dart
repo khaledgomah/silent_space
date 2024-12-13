@@ -28,6 +28,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "breakDuration":
             MessageLookupByLibrary.simpleMessage("Short Break Duration(min)"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "configurwNotificationAnswer": MessageLookupByLibrary.simpleMessage(
+            "1. الخطوات التالية مخصصة لهواتف/أجهزة Android. إذا كنت تستخدم iPhone/Mac/iPad، يمكنك إعداد الإشعارات من إعدادات التطبيق.\n2. الخطوات مخصصة للإصدارات الأحدث من 1.3.2 فقط. قمنا بتحديث الإشعارات لتحسين عمل تطبيق Foca في الخلفية.\n3. تعتمد الإشعارات على إعدادات نظام Android."),
+        "configurwNotificationQuestion": MessageLookupByLibrary.simpleMessage(
+            "How to configure notification?"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
         "focusCount": MessageLookupByLibrary.simpleMessage("Focus Count"),

@@ -241,6 +241,26 @@ class S {
       args: [],
     );
   }
+
+  /// `How to configure notification?`
+  String get configurwNotificationQuestion {
+    return Intl.message(
+      'How to configure notification?',
+      name: 'configurwNotificationQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1. الخطوات التالية مخصصة لهواتف/أجهزة Android. إذا كنت تستخدم iPhone/Mac/iPad، يمكنك إعداد الإشعارات من إعدادات التطبيق.\n2. الخطوات مخصصة للإصدارات الأحدث من 1.3.2 فقط. قمنا بتحديث الإشعارات لتحسين عمل تطبيق Foca في الخلفية.\n3. تعتمد الإشعارات على إعدادات نظام Android.`
+  String get configurwNotificationAnswer {
+    return Intl.message(
+      '1. الخطوات التالية مخصصة لهواتف/أجهزة Android. إذا كنت تستخدم iPhone/Mac/iPad، يمكنك إعداد الإشعارات من إعدادات التطبيق.\n2. الخطوات مخصصة للإصدارات الأحدث من 1.3.2 فقط. قمنا بتحديث الإشعارات لتحسين عمل تطبيق Foca في الخلفية.\n3. تعتمد الإشعارات على إعدادات نظام Android.',
+      name: 'configurwNotificationAnswer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

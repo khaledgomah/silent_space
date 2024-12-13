@@ -18,5 +18,8 @@
     "focusCount": "Focus Count",
     "arabic": "Arabic",
     "english": "English",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "configurwNotificationQuestion": "How to configure notification?",
+    "configurwNotificationAnswer": "1. الخطوات التالية مخصصة لهواتف/أجهزة Android. إذا كنت تستخدم iPhone/Mac/iPad، يمكنك إعداد الإشعارات من إعدادات التطبيق.\n2. الخطوات مخصصة للإصدارات الأحدث من 1.3.2 فقط. قمنا بتحديث الإشعارات لتحسين عمل تطبيق Foca في الخلفية.\n3. تعتمد الإشعارات على إعدادات نظام Android."
+
 }
