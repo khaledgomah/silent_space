@@ -5,6 +5,7 @@ import 'package:silent_space/core/helper/extentions.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/time/data/models/setting_item_model.dart';
+import 'package:silent_space/features/time/presentation/views/widgets/change_language_modal_sheet.dart';
 import 'package:silent_space/features/time/presentation/views/widgets/setting_item_widget.dart';
 import 'package:silent_space/generated/l10n.dart';
 
@@ -29,55 +30,7 @@ class SettingSceen extends StatelessWidget {
             showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return BlocBuilder<LanguageCubit, LanguageState>(
-                    builder: (context, state) {
-                      return Container(
-                        constraints: BoxConstraints(
-                          minHeight: context.height() * 0.3,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AppBar(
-                                leading: const SizedBox(),
-                                centerTitle: true,
-                                backgroundColor: Colors.transparent,
-                                title: Text(S.of(context).selectLanguage),
-                                actions: [
-                                  IconButton(
-                                    onPressed: () {
-                                      context.pop();
-                                    },
-                                    icon: const Icon(Icons.close),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16),
-                              ListTile(
-                                title: Text(S.of(context).english),
-                                onTap: () {
-                                  BlocProvider.of<LanguageCubit>(context)
-                                      .changeLanguage(Language.english);
-                                  context.pop();
-                                },
-                              ),
-                              ListTile(
-                                title: Text(S.of(context).arabic),
-                                onTap: () {
-                                  BlocProvider.of<LanguageCubit>(context)
-                                      .changeLanguage(Language.arabic);
-                                  context.pop();
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
+                  return const ChangeLanguageModalSheet();
                 });
           }),
       SettingItemModel(
