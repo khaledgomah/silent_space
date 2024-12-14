@@ -33,7 +33,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "configurwNotificationQuestion": MessageLookupByLibrary.simpleMessage(
             "How to configure notification?"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
+        "enterYourFeedback":
+            MessageLookupByLibrary.simpleMessage("Enter your feedback here..."),
+        "enterYourMail":
+            MessageLookupByLibrary.simpleMessage("Enter your mail..."),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
+        "feedbackNotSent": MessageLookupByLibrary.simpleMessage(
+            "Failed to send feedback, please try again"),
+        "feedbackSent":
+            MessageLookupByLibrary.simpleMessage("Feedback sent successfully!"),
         "focusCount": MessageLookupByLibrary.simpleMessage("Focus Count"),
         "focusDuration":
             MessageLookupByLibrary.simpleMessage("Focus Duration(min)"),
@@ -42,9 +50,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("General Settings"),
         "howToUse": MessageLookupByLibrary.simpleMessage("How to Use"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "noFeedbackError":
+            MessageLookupByLibrary.simpleMessage("Please enter your feedback!"),
+        "noMailErro":
+            MessageLookupByLibrary.simpleMessage("Please enter your mail!"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "send": MessageLookupByLibrary.simpleMessage("Send"),
         "share": MessageLookupByLibrary.simpleMessage("Share Silent Space"),
         "summary": MessageLookupByLibrary.simpleMessage("Summary"),
         "timerSettings": MessageLookupByLibrary.simpleMessage("Timer Settings"),

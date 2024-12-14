@@ -261,6 +261,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Enter your mail...`
+  String get enterYourMail {
+    return Intl.message(
+      'Enter your mail...',
+      name: 'enterYourMail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your feedback here...`
+  String get enterYourFeedback {
+    return Intl.message(
+      'Enter your feedback here...',
+      name: 'enterYourFeedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get send {
+    return Intl.message(
+      'Send',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter your feedback!`
+  String get noFeedbackError {
+    return Intl.message(
+      'Please enter your feedback!',
+      name: 'noFeedbackError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter your mail!`
+  String get noMailErro {
+    return Intl.message(
+      'Please enter your mail!',
+      name: 'noMailErro',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feedback sent successfully!`
+  String get feedbackSent {
+    return Intl.message(
+      'Feedback sent successfully!',
+      name: 'feedbackSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to send feedback, please try again`
+  String get feedbackNotSent {
+    return Intl.message(
+      'Failed to send feedback, please try again',
+      name: 'feedbackNotSent',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

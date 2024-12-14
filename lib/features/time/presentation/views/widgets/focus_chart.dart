@@ -13,7 +13,7 @@ class FocusChart extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Constans.secondaryColor,
+        color: Constants.secondaryColor,
       ),
       height: context.height() * 0.3,
       child: Chart(layers: [

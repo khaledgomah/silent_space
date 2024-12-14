@@ -10,7 +10,7 @@ class SettingItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
-        overlayColor: WidgetStateProperty.all(Constans.secondaryColor),
+        overlayColor: WidgetStateProperty.all(Constants.secondaryColor),
         padding:
             WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 8)),
         shape: WidgetStateProperty.all(const RoundedRectangleBorder()),

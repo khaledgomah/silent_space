@@ -16,7 +16,7 @@ class CustomCountDownTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularCountDownTimer(
-      strokeWidth: Constans.circleThikness,
+      strokeWidth: Constants.circleThikness,
       controller: _countDownController,
       autoStart: false,
       isReverse: true,

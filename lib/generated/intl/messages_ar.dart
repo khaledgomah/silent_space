@@ -33,7 +33,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "configurwNotificationQuestion":
             MessageLookupByLibrary.simpleMessage("كيفية اعداد الإشعار؟"),
         "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
+        "enterYourFeedback":
+            MessageLookupByLibrary.simpleMessage("أدخل ملاحظاتك هنا..."),
+        "enterYourMail":
+            MessageLookupByLibrary.simpleMessage("أدخل بريدك الإلكتروني..."),
         "feedback": MessageLookupByLibrary.simpleMessage("تعليق"),
+        "feedbackNotSent": MessageLookupByLibrary.simpleMessage(
+            "فشل في إرسال الملاحظات، يرجى المحاولة مرة أخرى"),
+        "feedbackSent":
+            MessageLookupByLibrary.simpleMessage("تم إرسال الملاحظات بنجاح!"),
         "focusCount": MessageLookupByLibrary.simpleMessage("عدد الجلسات"),
         "focusDuration":
             MessageLookupByLibrary.simpleMessage("مدة التركيز (دقائق)"),
@@ -42,8 +50,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الإعدادات العامة"),
         "howToUse": MessageLookupByLibrary.simpleMessage("كيفية الاستخدام"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+        "noFeedbackError":
+            MessageLookupByLibrary.simpleMessage("يرجى إدخال ملاحظاتك!"),
+        "noMailErro": MessageLookupByLibrary.simpleMessage(
+            "يرجى إدخال بريدك الإلكتروني!"),
         "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
         "selectLanguage": MessageLookupByLibrary.simpleMessage("اختر اللغة"),
+        "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "share": MessageLookupByLibrary.simpleMessage("مشاركة Silent Space"),
         "summary": MessageLookupByLibrary.simpleMessage("الملخص"),
         "timerSettings": MessageLookupByLibrary.simpleMessage("إعدادات المؤقت"),
