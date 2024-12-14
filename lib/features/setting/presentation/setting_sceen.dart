@@ -43,15 +43,19 @@ class SettingSceen extends StatelessWidget {
         icon: const Icon(Icons.help),
       ),
       SettingItemModel(
-          title: S.of(context).about,
-          icon: const Icon(Icons.info),
-          onTap: () {
-            context.pushNamed(RoutesName.aboutApp);
-          }),
+        onTap: () {
+          context.pushNamed(RoutesName.aboutApp);
+        },
+        title: S.of(context).about,
+        icon: const Icon(Icons.info),
+      ),
       SettingItemModel(
-          title: S.of(context).feedback,
-          icon: const Icon(Icons.feedback),
-          onTap: () {}),
+        title: S.of(context).feedback,
+        onTap: () {
+          context.pushNamed(RoutesName.feedbackScreen);
+        },
+        icon: const Icon(Icons.feedback),
+      ),
       SettingItemModel(
           title: S.of(context).RateUs,
           icon: const Icon(Icons.star),

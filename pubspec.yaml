@@ -35,6 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_email_sender: ^6.0.3
   flutter_getit: ^3.0.1
   flutter_localizations:
     sdk: flutter

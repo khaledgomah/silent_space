@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/features/setting/presentation/about_app_screen.dart';
 import 'package:silent_space/features/setting/presentation/categories_screen.dart';
+import 'package:silent_space/features/setting/presentation/feedback.dart';
 import 'package:silent_space/features/setting/presentation/how_to_use_screen.dart';
 import 'package:silent_space/features/splash/presentation/views/splash_view.dart';
 import 'package:silent_space/features/time/presentation/manager/cubit/timer_cubit.dart';
@@ -19,6 +20,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const HowToUseScreen());
     case RoutesName.categories:
       return MaterialPageRoute(builder: (context) => const CategoriesScreen());
+    case RoutesName.feedbackScreen:
+      return MaterialPageRoute(builder: (context) => FeedbackScreen());
     case RoutesName.aboutApp:
       return MaterialPageRoute(builder: (context) => const AboutAppScreen());
     default:
@@ -49,4 +52,5 @@ class RoutesName {
   static const String howToUse = '/howToUse';
   static const String categories = '/categories';
   static const String aboutApp = '/aboutApp';
+  static const String feedbackScreen = '/FeedbackScreen';
 }
