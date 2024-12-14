@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/features/how_to_use/data/model/question_model.dart';
-import 'package:silent_space/features/how_to_use/presentation/widgets/question_widget.dart';
+import 'package:silent_space/features/setting/data/models/question_model.dart';
+import 'package:silent_space/features/setting/presentation/widgets/question_widget.dart';
 import 'package:silent_space/generated/l10n.dart';
 
 class HowToUseScreen extends StatelessWidget {

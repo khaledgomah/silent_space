@@ -16,7 +16,9 @@ class SettingSceen extends StatelessWidget {
       SettingItemModel(
           title: S.of(context).categories,
           icon: const Icon(Icons.category),
-          onTap: () {}),
+          onTap: () {
+            context.pushNamed(RoutesName.categories);
+          }),
       SettingItemModel(
           title: S.of(context).notifications,
           icon: const Icon(Icons.notifications),

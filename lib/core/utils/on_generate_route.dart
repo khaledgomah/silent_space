@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/features/how_to_use/presentation/how_to_use_screen.dart';
+import 'package:silent_space/features/setting/presentation/categories_screen.dart';
+import 'package:silent_space/features/setting/presentation/how_to_use_screen.dart';
 import 'package:silent_space/features/splash/presentation/views/splash_view.dart';
 import 'package:silent_space/features/time/presentation/manager/cubit/timer_cubit.dart';
 import 'package:silent_space/features/time/presentation/views/home_view.dart';
@@ -15,6 +16,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
               create: (context) => TimerCubit(), child: const HomeView()));
     case RoutesName.howToUse:
       return MaterialPageRoute(builder: (context) => const HowToUseScreen());
+      case RoutesName.categories:
+      return MaterialPageRoute(builder: (context) => const CategoriesScreen());
     default:
       return MaterialPageRoute(builder: (context) => const _UnknownPage());
   }
@@ -41,4 +44,5 @@ class RoutesName {
   static const String unknown = '/unknown';
   static const String homeView = '/home';
   static const String howToUse = '/howToUse';
+  static const String categories = '/categories';
 }

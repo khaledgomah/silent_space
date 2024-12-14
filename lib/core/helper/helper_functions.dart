@@ -12,4 +12,9 @@ getDate(double day) {
   return '${dateTime.day}/${dateTime.month}';
 }
 
-
+void showSnackBar(BuildContext context, String message,{int duration = 2}) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(message),
+    duration:  Duration(seconds: duration),
+  ));
+}

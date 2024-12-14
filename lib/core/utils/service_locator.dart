@@ -9,9 +9,7 @@ Future<void> locatorSetup() async {
       allowList: <String>{'language'},
     ),
   );
-  getIt.registerSingleton<SharedPreferencesWithCache>(sharedPreferencesWithCache);
+  getIt.registerSingleton<SharedPreferencesWithCache>(
+      sharedPreferencesWithCache);
 }
-
-
-
 
