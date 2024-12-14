@@ -14,35 +14,40 @@ class SettingSceen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<SettingItemModel> settingItems = [
       SettingItemModel(
-          title: S.of(context).categories,
-          icon: const Icon(Icons.category),
-          onTap: () {
-            context.pushNamed(RoutesName.categories);
-          }),
+        onTap: () {
+          context.pushNamed(RoutesName.categories);
+        },
+        title: S.of(context).categories,
+        icon: const Icon(Icons.category),
+      ),
       SettingItemModel(
           title: S.of(context).notifications,
           icon: const Icon(Icons.notifications),
           onTap: () {}),
       SettingItemModel(
-          title: S.of(context).language,
-          icon: const Icon(Icons.language),
-          onTap: () {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const ChangeLanguageModalSheet();
-                });
-          }),
+        onTap: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return const ChangeLanguageModalSheet();
+              });
+        },
+        title: S.of(context).language,
+        icon: const Icon(Icons.language),
+      ),
       SettingItemModel(
-          title: S.of(context).howToUse,
-          icon: const Icon(Icons.help),
-          onTap: () {
-            context.pushNamed(RoutesName.howToUse);
-          }),
+        onTap: () {
+          context.pushNamed(RoutesName.howToUse);
+        },
+        title: S.of(context).howToUse,
+        icon: const Icon(Icons.help),
+      ),
       SettingItemModel(
           title: S.of(context).about,
           icon: const Icon(Icons.info),
-          onTap: () {}),
+          onTap: () {
+            context.pushNamed(RoutesName.aboutApp);
+          }),
       SettingItemModel(
           title: S.of(context).feedback,
           icon: const Icon(Icons.feedback),

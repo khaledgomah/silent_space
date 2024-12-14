@@ -15,6 +15,9 @@ class HowToUseScreen extends StatelessWidget {
       ),
     ];
     return Scaffold(
+      appBar: AppBar(
+        title: Text(S.of(context).howToUse),
+      ),
       body: ListView.builder(
         itemCount: questions.length,
         itemBuilder: (context, index) => QuestionWidget(
