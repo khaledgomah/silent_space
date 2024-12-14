@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:silent_space/core/helper/helper_functions.dart';
+import 'package:silent_space/core/utils/service_locator.dart';
 
 part 'language_state.dart';
 
