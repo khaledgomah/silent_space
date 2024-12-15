@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/features/time/presentation/views/widgets/show_data_container.dart';
+import 'package:silent_space/features/home/presentation/views/widgets/show_data_container.dart';
 import 'package:silent_space/generated/l10n.dart';
 
 class ShowDetails extends StatelessWidget {

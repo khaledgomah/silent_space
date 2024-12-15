@@ -4,7 +4,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/widgets/custom_icon_button.dart';
-import 'package:silent_space/features/time/presentation/manager/cubit/timer_cubit.dart';
+import 'package:silent_space/features/home/presentation/manager/cubit/timer_cubit.dart';
 
 class RestTimerIconButton extends StatelessWidget {
   const RestTimerIconButton({
