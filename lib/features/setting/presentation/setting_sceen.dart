@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:silent_space/core/helper/extentions.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
@@ -63,26 +64,31 @@ class SettingSceen extends StatelessWidget {
       SettingItemModel(
           title: S.of(context).share,
           icon: const Icon(Icons.share),
-          onTap: () {}),
+          onTap: () {
+            Share.share('check out my website https://example.com');
+          }),
     ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 50, left: 18, right: 18),
-          child: Text(
-            S.of(context).generalSettings,
-            style: TextStyleManager.headline2,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 50, left: 18, right: 18),
+            child: Text(
+              S.of(context).generalSettings,
+              style: TextStyleManager.headline2,
+            ),
           ),
-        ),
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: settingItems.length,
-          itemBuilder: (context, index) =>
-              SettingItemWidget(item: settingItems[index]),
-        ),
-      ],
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: settingItems.length,
+            itemBuilder: (context, index) =>
+                SettingItemWidget(item: settingItems[index]),
+          ),
+        ],
+      ),
     );
   }
 }
