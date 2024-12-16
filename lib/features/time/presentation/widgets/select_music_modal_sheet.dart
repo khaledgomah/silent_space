@@ -19,6 +19,7 @@ class SelectMusicSheet extends StatelessWidget {
           top: 8,
           left: 16,
           right: 16,
+          bottom: 16,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
