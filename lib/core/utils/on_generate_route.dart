@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/features/setting/presentation/about_app_screen.dart';
 import 'package:silent_space/features/setting/presentation/categories_screen.dart';
 import 'package:silent_space/features/setting/presentation/feedback.dart';
 import 'package:silent_space/features/setting/presentation/how_to_use_screen.dart';
 import 'package:silent_space/features/splash/presentation/views/splash_view.dart';
-import 'package:silent_space/features/home/presentation/manager/cubit/timer_cubit.dart';
 import 'package:silent_space/features/home/presentation/views/home_view.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -14,8 +12,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const SplashView());
     case RoutesName.homeView:
       return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-              create: (context) => TimerCubit(), child: const HomeView()));
+          builder: (context) => const HomeView());
     case RoutesName.howToUse:
       return MaterialPageRoute(builder: (context) => const HowToUseScreen());
     case RoutesName.categories:

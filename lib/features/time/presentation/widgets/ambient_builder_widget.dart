@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silent_space/features/home/presentation/manager/cubit/timer_cubit.dart';
 import 'package:silent_space/features/time/data/models/sound.dart';
 import 'package:silent_space/features/time/presentation/widgets/sound_tile.dart';
 import 'package:silent_space/generated/l10n.dart';
 import 'package:silent_space/core/utils/sounds_manager.dart';
-
-String selectedSoundPath = SoundsManager.none;
 
 class AmbientBuilderWidget extends StatefulWidget {
   const AmbientBuilderWidget({
@@ -96,7 +96,7 @@ class _AmbientBuilderWidgetState extends State<AmbientBuilderWidget> {
           onPressed: () {
             setState(() {
               selectedIndex = index;
-              selectedSoundPath = sounds[index].path;
+              BlocProvider.of<TimerCubit>(context).path = sounds[index].path;
             });
           },
           sound: sounds[index],

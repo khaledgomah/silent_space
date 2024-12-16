@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silent_space/app/cubits/language_cubit/language_cubit.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
+import 'package:silent_space/features/home/presentation/manager/cubit/timer_cubit.dart';
 import 'package:silent_space/generated/l10n.dart';
 
 class SilentSpace extends StatelessWidget {
@@ -14,13 +15,20 @@ class SilentSpace extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LanguageCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LanguageCubit(),
+        ),
+        BlocProvider(
+          create: (context) => TimerCubit(),
+        ),
+      ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-  
         builder: (context, state) {
           return MaterialApp(
-            locale: Locale(BlocProvider.of<LanguageCubit>(context).language(getIt<SharedPreferencesWithCache>())),
+            locale: Locale(BlocProvider.of<LanguageCubit>(context)
+                .language(getIt<SharedPreferencesWithCache>())),
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,
