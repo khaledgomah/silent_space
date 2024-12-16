@@ -461,6 +461,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Sound Level`
+  String get soundLevel {
+    return Intl.message(
+      'Sound Level',
+      name: 'soundLevel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

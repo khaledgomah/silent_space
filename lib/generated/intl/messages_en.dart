@@ -69,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select Language"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "share": MessageLookupByLibrary.simpleMessage("Share Silent Space"),
+        "soundLevel": MessageLookupByLibrary.simpleMessage("Sound Level"),
         "storm": MessageLookupByLibrary.simpleMessage("Storm"),
         "stream": MessageLookupByLibrary.simpleMessage("Stream"),
         "summary": MessageLookupByLibrary.simpleMessage("Summary"),

@@ -41,5 +41,7 @@
     "grass": "Grass",
     "mosque": "Mosque",
     "library": "Library",
-    "stream": "Stream"
+    "stream": "Stream",
+    "soundLevel": "Sound Level"
+
 }

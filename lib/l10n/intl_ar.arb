@@ -40,6 +40,7 @@
       "grass": "عشب",
       "mosque": "مسجد",
       "library": "مكتبة",
-      "stream": "شلال"
+      "stream": "شلال",
+      "soundLevel": "مستوى الصوت"
 }
 

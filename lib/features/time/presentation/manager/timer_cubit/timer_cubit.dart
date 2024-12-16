@@ -11,7 +11,7 @@ class TimerCubit extends Cubit<TimerState> {
   int durationTime = 45;
   int breakTime = 5;
   String path = SoundsManager.none;
-
+  int soundLevel = 50;
 
 
   _playSound() async {
