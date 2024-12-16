@@ -12,7 +12,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final List<Widget> _screens = [
-    TimerScreen(),
+    TimerView(),
     const StatesScreen(),
     const SettingSceen()
   ];

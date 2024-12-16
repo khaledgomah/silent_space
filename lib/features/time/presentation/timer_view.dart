@@ -8,8 +8,8 @@ import 'package:silent_space/features/time/presentation/widgets/start_and_puase_
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silent_space/features/time/presentation/widgets/timer_setting_modal_sheet.dart';
 
-class TimerScreen extends StatelessWidget {
-  TimerScreen({super.key});
+class TimerView extends StatelessWidget {
+  TimerView({super.key});
   final maxTime = 30;
   final CountDownController _countDownController = CountDownController();
   @override

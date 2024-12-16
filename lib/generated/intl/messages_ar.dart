@@ -69,9 +69,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "share": MessageLookupByLibrary.simpleMessage("مشاركة Silent Space"),
         "storm": MessageLookupByLibrary.simpleMessage("عاصفة"),
-        "stream": MessageLookupByLibrary.simpleMessage("جدول"),
+        "stream": MessageLookupByLibrary.simpleMessage("شلال"),
         "summary": MessageLookupByLibrary.simpleMessage("الملخص"),
-        "tide": MessageLookupByLibrary.simpleMessage("المد والجزر"),
+        "tide": MessageLookupByLibrary.simpleMessage("امواج"),
         "timerSettings": MessageLookupByLibrary.simpleMessage("إعدادات المؤقت"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم")
       };

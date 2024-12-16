@@ -352,10 +352,10 @@ class S {
     );
   }
 
-  /// `Tide`
+  /// `Waves`
   String get tide {
     return Intl.message(
-      'Tide',
+      'Waves',
       name: 'tide',
       desc: '',
       args: [],

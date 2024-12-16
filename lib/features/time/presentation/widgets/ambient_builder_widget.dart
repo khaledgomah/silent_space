@@ -5,6 +5,8 @@ import 'package:silent_space/features/time/presentation/widgets/sound_tile.dart'
 import 'package:silent_space/generated/l10n.dart';
 import 'package:silent_space/core/utils/sounds_manager.dart';
 
+String selectedSoundPath = SoundsManager.none;
+
 class AmbientBuilderWidget extends StatefulWidget {
   const AmbientBuilderWidget({
     super.key,
@@ -16,7 +18,7 @@ class AmbientBuilderWidget extends StatefulWidget {
 
 class _AmbientBuilderWidgetState extends State<AmbientBuilderWidget> {
   int selectedIndex = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     final List<Sound> sounds = [
@@ -94,6 +96,7 @@ class _AmbientBuilderWidgetState extends State<AmbientBuilderWidget> {
           onPressed: () {
             setState(() {
               selectedIndex = index;
+              selectedSoundPath = sounds[index].path;
             });
           },
           sound: sounds[index],

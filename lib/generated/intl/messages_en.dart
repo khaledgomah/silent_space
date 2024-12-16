@@ -72,7 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storm": MessageLookupByLibrary.simpleMessage("Storm"),
         "stream": MessageLookupByLibrary.simpleMessage("Stream"),
         "summary": MessageLookupByLibrary.simpleMessage("Summary"),
-        "tide": MessageLookupByLibrary.simpleMessage("Tide"),
+        "tide": MessageLookupByLibrary.simpleMessage("Waves"),
         "timerSettings": MessageLookupByLibrary.simpleMessage("Timer Settings"),
         "today": MessageLookupByLibrary.simpleMessage("Today")
       };
