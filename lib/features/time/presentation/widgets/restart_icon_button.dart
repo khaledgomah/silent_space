@@ -10,17 +10,16 @@ class RestartTimerIconButton extends StatelessWidget {
   const RestartTimerIconButton({
     super.key,
     required this.countDownController,
-    required this.maxTime,
   });
   final CountDownController countDownController;
-  final int maxTime;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TimerCubit(),
       child: CustomIconButton(
         onPressed: () {
-          countDownController.restart(duration: maxTime);
+          countDownController.restart(
+              duration: BlocProvider.of<TimerCubit>(context).durationTime * 60);
           if (BlocProvider.of<TimerCubit>(context).isRunning == false) {
             countDownController.pause();
           }

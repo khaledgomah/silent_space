@@ -10,10 +10,10 @@ import 'package:silent_space/features/time/presentation/widgets/timer_setting_mo
 
 class TimerView extends StatelessWidget {
   TimerView({super.key});
-  final maxTime = 30;
   final CountDownController _countDownController = CountDownController();
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         const Spacer(),
@@ -57,7 +57,7 @@ class TimerView extends StatelessWidget {
         ),
         const Spacer(),
         CustomCountDownTimer(
-            countDownController: _countDownController, maxTime: maxTime),
+            countDownController: _countDownController),
         const Spacer(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +70,6 @@ class TimerView extends StatelessWidget {
             ),
             RestartTimerIconButton(
               countDownController: _countDownController,
-              maxTime: maxTime,
             )
           ],
         ),

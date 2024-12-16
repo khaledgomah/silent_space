@@ -48,9 +48,20 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Text(
-                S.of(context).focusDuration,
-                style: TextStyleManager.bodyText1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    S.of(context).focusDuration,
+                    style: TextStyleManager.bodyText1,
+                  ),
+                  Text(
+                    BlocProvider.of<TimerCubit>(context)
+                        .durationTime
+                        .toString(),
+                    style: TextStyleManager.bodyText1,
+                  ),
+                ],
               ),
             ),
             Slider(
@@ -60,8 +71,6 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
               min: 10,
               max: 180,
               divisions: 90,
-              label:
-                  BlocProvider.of<TimerCubit>(context).durationTime.toString(),
               onChanged: (value) {
                 setState(() {
                   BlocProvider.of<TimerCubit>(context).durationTime =
@@ -71,9 +80,18 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Text(
-                S.of(context).breakDuration,
-                style: TextStyleManager.bodyText1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    S.of(context).breakDuration,
+                    style: TextStyleManager.bodyText1,
+                  ),
+                  Text(
+                    BlocProvider.of<TimerCubit>(context).breakTime.toString(),
+                    style: TextStyleManager.bodyText1,
+                  ),
+                ],
               ),
             ),
             Slider(
@@ -82,7 +100,6 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
               min: 2,
               max: 30,
               divisions: 100,
-              label: BlocProvider.of<TimerCubit>(context).breakTime.toString(),
               onChanged: (value) {
                 setState(() {
                   BlocProvider.of<TimerCubit>(context).breakTime =
@@ -92,9 +109,18 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Text(
-                S.of(context).soundLevel,
-                style: TextStyleManager.bodyText1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    S.of(context).soundLevel,
+                    style: TextStyleManager.bodyText1,
+                  ),
+                  Text(
+                    BlocProvider.of<TimerCubit>(context).soundLevel.toString(),
+                    style: TextStyleManager.bodyText1,
+                  ),
+                ],
               ),
             ),
             Slider(
@@ -103,11 +129,10 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
               min: 0,
               max: 100,
               divisions: 100,
-              label: BlocProvider.of<TimerCubit>(context).soundLevel.toString(),
+
               onChanged: (value) {
                 setState(() {
-                  BlocProvider.of<TimerCubit>(context).soundLevel =
-                      value.round();
+                  BlocProvider.of<TimerCubit>(context).setVolume(value.round());
                 });
               },
             ),

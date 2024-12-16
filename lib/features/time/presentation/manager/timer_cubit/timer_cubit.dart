@@ -13,12 +13,18 @@ class TimerCubit extends Cubit<TimerState> {
   String path = SoundsManager.none;
   int soundLevel = 50;
 
+setVolume(int value) {
+    soundLevel = value;
+    player.setVolume(soundLevel / 100);
+  }
 
+  
   _playSound() async {
     if (path != SoundsManager.none) {
       await player.setAsset(path);
       await player.setLoopMode(LoopMode.all);
       await player.play();
+      player.setVolume(soundLevel / 100);
     }
   }
 
