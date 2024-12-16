@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silent_space/features/setting/presentation/setting_sceen.dart';
-import 'package:silent_space/features/home/presentation/views/widgets/states_screen.dart';
-import 'package:silent_space/features/home/presentation/views/widgets/timer_screen.dart';
+import 'package:silent_space/features/home/presentation/widgets/states_screen.dart';
+import 'package:silent_space/features/time/presentation/timer_screen.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

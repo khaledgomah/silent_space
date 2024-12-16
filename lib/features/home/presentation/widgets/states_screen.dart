@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
-import 'package:silent_space/features/home/presentation/views/widgets/focus_chart.dart';
-import 'package:silent_space/features/home/presentation/views/widgets/show_details.dart';
+import 'package:silent_space/features/home/presentation/widgets/focus_chart.dart';
+import 'package:silent_space/features/home/presentation/widgets/show_details.dart';
 import 'package:silent_space/generated/l10n.dart';
 
 class StatesScreen extends StatelessWidget {
