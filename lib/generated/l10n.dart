@@ -331,6 +331,136 @@ class S {
       args: [],
     );
   }
+
+  /// `Ambient Sound`
+  String get ambientSound {
+    return Intl.message(
+      'Ambient Sound',
+      name: 'ambientSound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `None`
+  String get none {
+    return Intl.message(
+      'None',
+      name: 'none',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tide`
+  String get tide {
+    return Intl.message(
+      'Tide',
+      name: 'tide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forest`
+  String get forest {
+    return Intl.message(
+      'Forest',
+      name: 'forest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cafe`
+  String get cafe {
+    return Intl.message(
+      'Cafe',
+      name: 'cafe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Storm`
+  String get storm {
+    return Intl.message(
+      'Storm',
+      name: 'storm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clock`
+  String get clock {
+    return Intl.message(
+      'Clock',
+      name: 'clock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bonfire`
+  String get bonfire {
+    return Intl.message(
+      'Bonfire',
+      name: 'bonfire',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Books`
+  String get books {
+    return Intl.message(
+      'Books',
+      name: 'books',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Grass`
+  String get grass {
+    return Intl.message(
+      'Grass',
+      name: 'grass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mosque`
+  String get mosque {
+    return Intl.message(
+      'Mosque',
+      name: 'mosque',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Library`
+  String get library {
+    return Intl.message(
+      'Library',
+      name: 'library',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stream`
+  String get stream {
+    return Intl.message(
+      'Stream',
+      name: 'stream',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

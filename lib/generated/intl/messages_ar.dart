@@ -24,10 +24,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "RateUs": MessageLookupByLibrary.simpleMessage("قيمنا"),
         "about": MessageLookupByLibrary.simpleMessage("حول Silent Space"),
+        "ambientSound": MessageLookupByLibrary.simpleMessage("صوت البيئة"),
         "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
+        "bonfire": MessageLookupByLibrary.simpleMessage("موقد"),
+        "books": MessageLookupByLibrary.simpleMessage("كتب"),
         "breakDuration": MessageLookupByLibrary.simpleMessage(
             "مدة الاستراحة القصيرة (دقائق)"),
+        "cafe": MessageLookupByLibrary.simpleMessage("مقهى"),
         "categories": MessageLookupByLibrary.simpleMessage("الفئات"),
+        "clock": MessageLookupByLibrary.simpleMessage("ساعة"),
         "configurwNotificationAnswer": MessageLookupByLibrary.simpleMessage(
             " 1. الخطوات التالية لإعداد الإشعارات مخصصة للهواتف / الأجهزة اللوحية التي تعمل بنظام Android. إذا كنت تستخدم iPhone / Mac / iPad ، يمكنك تكوين الإشعارات باستخدام إعدادات التطبيق.\n2. الخطوات مخصصة للإصدار الأحدث من 1.3.2 فقط. قمنا بتحديث الإشعار لجعل Foca يعمل بشكل أفضل في الخلفية.\n3. تعتمد الإشعارات على إعدادات نظام Android."),
         "configurwNotificationQuestion":
@@ -46,19 +51,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "focusDuration":
             MessageLookupByLibrary.simpleMessage("مدة التركيز (دقائق)"),
         "focusTime": MessageLookupByLibrary.simpleMessage("وقت التركيز"),
+        "forest": MessageLookupByLibrary.simpleMessage("الغابة"),
         "generalSettings":
             MessageLookupByLibrary.simpleMessage("الإعدادات العامة"),
+        "grass": MessageLookupByLibrary.simpleMessage("عشب"),
         "howToUse": MessageLookupByLibrary.simpleMessage("كيفية الاستخدام"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+        "library": MessageLookupByLibrary.simpleMessage("مكتبة"),
+        "mosque": MessageLookupByLibrary.simpleMessage("مسجد"),
         "noFeedbackError":
             MessageLookupByLibrary.simpleMessage("يرجى إدخال ملاحظاتك!"),
         "noMailErro": MessageLookupByLibrary.simpleMessage(
             "يرجى إدخال بريدك الإلكتروني!"),
+        "none": MessageLookupByLibrary.simpleMessage("لا شيء"),
         "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
         "selectLanguage": MessageLookupByLibrary.simpleMessage("اختر اللغة"),
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "share": MessageLookupByLibrary.simpleMessage("مشاركة Silent Space"),
+        "storm": MessageLookupByLibrary.simpleMessage("عاصفة"),
+        "stream": MessageLookupByLibrary.simpleMessage("جدول"),
         "summary": MessageLookupByLibrary.simpleMessage("الملخص"),
+        "tide": MessageLookupByLibrary.simpleMessage("المد والجزر"),
         "timerSettings": MessageLookupByLibrary.simpleMessage("إعدادات المؤقت"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم")
       };

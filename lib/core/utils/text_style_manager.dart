@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 class TextStyleManager {
   static const TextStyle headline1 = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
+    fontSize: 22,
+    fontWeight: FontWeight.normal,
   );
 
   static const TextStyle headline2 = TextStyle(
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: FontWeight.bold,
   );
 
   static const TextStyle bodyText1 = TextStyle(
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: FontWeight.normal,
   );
 
   static const TextStyle bodyText2 = TextStyle(
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: FontWeight.normal,
   );
 
