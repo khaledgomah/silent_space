@@ -2,7 +2,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/widgets/custom_icon_button.dart';
-import 'package:silent_space/features/time/presentation/manager/cubit/timer_cubit.dart';
+import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 import 'package:just_audio/just_audio.dart';
 
 class StartAndPuaseWidget extends StatelessWidget {

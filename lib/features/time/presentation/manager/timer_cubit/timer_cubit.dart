@@ -8,7 +8,12 @@ class TimerCubit extends Cubit<TimerState> {
   TimerCubit() : super(TimerInitState());
   bool isRunning = false;
   final player = AudioPlayer();
+  int durationTime = 45;
+  int breakTime = 5;
   String path = SoundsManager.none;
+
+
+
   _playSound() async {
     if (path != SoundsManager.none) {
       await player.setAsset(path);

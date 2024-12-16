@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/helper/extentions.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
+import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 import 'package:silent_space/generated/l10n.dart';
 
 class TimerSettingModalSheet extends StatefulWidget {
@@ -12,8 +14,6 @@ class TimerSettingModalSheet extends StatefulWidget {
 }
 
 class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
-  double _focusSliderValue = 0;
-  double _breakSliderValue = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +39,6 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                   style: TextStyleManager.bodyText1,
                 ),
                 IconButton(
-                  enableFeedback: false,
                   onPressed: () {
                     context.pop();
                   },
@@ -55,14 +54,18 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
               ),
             ),
             Slider(
-              value: _focusSliderValue,
-              min: 0,
-              max: 100,
-              divisions: 100,
-              label: _focusSliderValue.toStringAsFixed(1),
+              //Working Slider
+              value:
+                  BlocProvider.of<TimerCubit>(context).durationTime.toDouble(),
+              min: 10,
+              max: 180,
+              divisions: 90,
+              label:
+                  BlocProvider.of<TimerCubit>(context).durationTime.toString(),
               onChanged: (value) {
                 setState(() {
-                  _focusSliderValue = value;
+                  BlocProvider.of<TimerCubit>(context).durationTime =
+                      value.round();
                 });
               },
             ),
@@ -74,14 +77,16 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
               ),
             ),
             Slider(
-              value: _breakSliderValue,
-              min: 0,
-              max: 100,
+              //Break Slider
+              value: BlocProvider.of<TimerCubit>(context).breakTime.toDouble(),
+              min: 2,
+              max: 30,
               divisions: 100,
-              label: _breakSliderValue.toStringAsFixed(1),
+              label: BlocProvider.of<TimerCubit>(context).breakTime.toString(),
               onChanged: (value) {
                 setState(() {
-                  _breakSliderValue = value;
+                  BlocProvider.of<TimerCubit>(context).breakTime =
+                      value.round();
                 });
               },
             ),
