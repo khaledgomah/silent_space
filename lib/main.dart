@@ -30,8 +30,11 @@ class SimpleBlocObserver extends BlocObserver {
 }
 
 Future<void> main() async {
+  //TODO: make states and save it locally
   WidgetsFlutterBinding.ensureInitialized();
   await locatorSetup();
   Bloc.observer = SimpleBlocObserver();
   runApp(const SilentSpace());
 }
+
+

@@ -117,7 +117,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                     style: TextStyleManager.bodyText1,
                   ),
                   Text(
-                    BlocProvider.of<TimerCubit>(context).soundLevel.toString(),
+                    BlocProvider.of<TimerCubit>(context).voiceLevel.toString(),
                     style: TextStyleManager.bodyText1,
                   ),
                 ],
@@ -125,14 +125,15 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
             ),
             Slider(
               //Break Slider
-              value: BlocProvider.of<TimerCubit>(context).soundLevel.toDouble(),
+              value: BlocProvider.of<TimerCubit>(context).voiceLevel.toDouble(),
               min: 0,
               max: 100,
               divisions: 100,
 
               onChanged: (value) {
                 setState(() {
-                  BlocProvider.of<TimerCubit>(context).setVolume(value.round());
+                  BlocProvider.of<TimerCubit>(context).voiceLevel =
+                      value.round();
                 });
               },
             ),

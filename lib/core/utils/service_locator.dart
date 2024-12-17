@@ -6,7 +6,7 @@ GetIt getIt = GetIt.instance;
 Future<void> locatorSetup() async {
   final sharedPreferencesWithCache = await SharedPreferencesWithCache.create(
     cacheOptions: const SharedPreferencesWithCacheOptions(
-      allowList: <String>{'language'},
+      allowList: <String>{'language','voiceLevel','focusTime','breakTime','sound'},
     ),
   );
   getIt.registerSingleton<SharedPreferencesWithCache>(
