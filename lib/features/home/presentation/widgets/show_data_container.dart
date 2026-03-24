@@ -17,7 +17,7 @@ class ShowDataContainer extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.grey.withOpacity(0.2)),
+          color: Colors.grey.withValues(alpha: 0.2)),
       child: Column(
         children: [
           Text(
