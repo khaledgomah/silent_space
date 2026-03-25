@@ -6,11 +6,11 @@ import 'package:silent_space/core/network/network_state.dart';
 
 class NetworkCubit extends Cubit<NetworkState> {
   final NetworkInfo networkInfo;
-  late StreamSubscription<ConnectivityResult> _subscription;
+  late StreamSubscription<List<ConnectivityResult>> _subscription;
 
   NetworkCubit({required this.networkInfo}) : super(NetworkInitial()) {
-    _subscription = networkInfo.onConnectivityChanged.listen((result) {
-      if (result == ConnectivityResult.none) {
+    _subscription = networkInfo.onConnectivityChanged.listen((results) {
+      if (results.contains(ConnectivityResult.none)) {
         emit(NetworkDisconnected());
       } else {
         emit(NetworkConnected());
