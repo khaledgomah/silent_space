@@ -77,5 +77,12 @@
   "focusSessionComplete": "Your focus session is complete.",
   "noConnection": "No internet connection. Please try again.",
   "invalidCredentials": "Invalid email or password.",
-  "unknownError": "An unexpected error occurred."
+  "unknownError": "An unexpected error occurred.",
+  "allTime": "All Time",
+  "totalFocusTime": "Total Focus Time",
+  "totalSessions": "Total Sessions",
+  "weeklyOverview": "Weekly Overview",
+  "retry": "Retry",
+  "loadingStats": "Loading stats...",
+  "statsError": "Could not load stats."
 }

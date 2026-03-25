@@ -15,6 +15,47 @@ class StatesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SessionCubit, SessionState>(
       builder: (context, state) {
+        // ── Loading ──
+        if (state is SessionLoading || state is SessionInitial) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                Text(AppStrings.loadingStats.tr()),
+              ],
+            ),
+          );
+        }
+
+        // ── Error ──
+        if (state is SessionError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.error_outline,
+                    size: 80, color: Theme.of(context).colorScheme.error),
+                const SizedBox(height: 16),
+                Text(AppStrings.statsError.tr(),
+                    style: TextStyleManager.headline2),
+                const SizedBox(height: 8),
+                Text(state.message,
+                    style: Theme.of(context).textTheme.bodyMedium),
+                const SizedBox(height: 24),
+                FilledButton.icon(
+                  onPressed: () =>
+                      context.read<SessionCubit>().loadSessions(),
+                  icon: const Icon(Icons.refresh),
+                  label: Text(AppStrings.retry.tr()),
+                ),
+              ],
+            ),
+          );
+        }
+
+        // ── Loaded but empty ──
         if (state is SessionLoaded && state.sessions.isEmpty) {
           return Center(
             child: Column(
@@ -38,34 +79,40 @@ class StatesScreen extends StatelessWidget {
             ),
           );
         }
-        return Padding(
-          padding: const EdgeInsets.all(16),
+
+        // ── Loaded with data ──
+        final loaded = state as SessionLoaded;
+        return SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 32,
-              ),
-              Text(
-                AppStrings.today.tr(),
-                style: TextStyleManager.headline2,
-              ),
+              const SizedBox(height: 32),
+
+              // ── Today Section ──
+              Text(AppStrings.today.tr(), style: TextStyleManager.headline2),
               const SizedBox(height: 8),
-              const ShowDetails(),
-              const SizedBox(height: 48),
-              Text(
-                AppStrings.summary.tr(),
-                style: TextStyleManager.headline2,
+              ShowDetails(
+                focusMinutes: loaded.todayMinutes,
+                sessionCount: loaded.todayCount,
               ),
+              const SizedBox(height: 32),
+
+              // ── All-Time Section ──
+              Text(AppStrings.allTime.tr(), style: TextStyleManager.headline2),
               const SizedBox(height: 8),
-              const ShowDetails(),
-              const SizedBox(height: 48),
-              Text(
-                AppStrings.focusTime.tr(),
-                style: TextStyleManager.headline2,
+              ShowDetails(
+                focusMinutes: loaded.totalMinutes,
+                sessionCount: loaded.totalCount,
               ),
+              const SizedBox(height: 32),
+
+              // ── Weekly Chart ──
+              Text(AppStrings.weeklyOverview.tr(),
+                  style: TextStyleManager.headline2),
               const SizedBox(height: 8),
-              const FocusChart(),
+              FocusChart(weeklyMinutes: loaded.weeklyMinutes),
+              const SizedBox(height: 24),
             ],
           ),
         );

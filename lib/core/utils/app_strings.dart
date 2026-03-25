@@ -78,4 +78,11 @@ class AppStrings {
   static const String noConnection = 'noConnection';
   static const String invalidCredentials = 'invalidCredentials';
   static const String unknownError = 'unknownError';
+  static const String allTime = 'allTime';
+  static const String totalFocusTime = 'totalFocusTime';
+  static const String totalSessions = 'totalSessions';
+  static const String weeklyOverview = 'weeklyOverview';
+  static const String retry = 'retry';
+  static const String loadingStats = 'loadingStats';
+  static const String statsError = 'statsError';
 }

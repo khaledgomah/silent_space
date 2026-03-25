@@ -77,5 +77,12 @@
   "focusSessionComplete": "اكتملت جلسة التركيز الخاصة بك.",
   "noConnection": "لا يوجد اتصال بالإنترنت. يرجى المحاولة مرة أخرى.",
   "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
-  "unknownError": "حدث خطأ غير متوقع."
+  "unknownError": "حدث خطأ غير متوقع.",
+  "allTime": "الإجمالي",
+  "totalFocusTime": "إجمالي وقت التركيز",
+  "totalSessions": "إجمالي الجلسات",
+  "weeklyOverview": "نظرة أسبوعية",
+  "retry": "إعادة المحاولة",
+  "loadingStats": "جاري تحميل الإحصائيات...",
+  "statsError": "تعذر تحميل الإحصائيات."
 }

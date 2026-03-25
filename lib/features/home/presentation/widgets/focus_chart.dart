@@ -4,7 +4,9 @@ import 'package:mrx_charts/mrx_charts.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
 
 class FocusChart extends StatelessWidget {
-  const FocusChart({super.key});
+  final List<int> weeklyMinutes;
+
+  const FocusChart({super.key, required this.weeklyMinutes});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +15,11 @@ class FocusChart extends StatelessWidget {
       color: theme.colorScheme.onSurface,
       fontSize: 10.0,
     );
+
+    final maxValue = weeklyMinutes.reduce(max);
+    // Round up to nearest 30 for nice axis, minimum 30
+    final yMax = maxValue <= 0 ? 30.0 : ((maxValue / 30).ceil() * 30).toDouble();
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -30,8 +37,8 @@ class FocusChart extends StatelessWidget {
               textStyle: textStyle,
             ),
             y: ChartAxisSettingsAxis(
-              frequency: 25,
-              max: 100.0,
+              frequency: yMax / 4,
+              max: yMax,
               min: 0.0,
               textStyle: textStyle,
             ),
@@ -44,8 +51,8 @@ class FocusChart extends StatelessWidget {
             7,
             (index) => ChartBarDataItem(
               color: theme.colorScheme.primary,
-              value: Random().nextInt(100).toDouble(),
-              x: index.toDouble(),
+              value: weeklyMinutes[index].toDouble(),
+              x: (6 - index).toDouble(),
             ),
           ),
           settings: const ChartBarSettings(

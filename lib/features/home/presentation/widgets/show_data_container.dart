@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 
 class ShowDataContainer extends StatelessWidget {
@@ -8,25 +7,31 @@ class ShowDataContainer extends StatelessWidget {
     required this.title,
     required this.value,
   });
+
   final String title;
-  final int value;
+  final String value;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
-      width: (context.width() / 2) - 24,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.grey.withValues(alpha: 0.2)),
+        borderRadius: BorderRadius.circular(12),
+        color: theme.colorScheme.surfaceContainerHighest.withAlpha(80),
+      ),
       child: Column(
         children: [
           Text(
             title,
-            style: TextStyleManager.bodyText1,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           ),
+          const SizedBox(height: 8),
           Text(
-            value.toString(),
-            style: TextStyleManager.bodyText1,
+            value,
+            style: TextStyleManager.headline2,
           ),
         ],
       ),
