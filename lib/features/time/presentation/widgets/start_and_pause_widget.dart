@@ -5,8 +5,8 @@ import 'package:silent_space/core/widgets/custom_icon_button.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 import 'package:just_audio/just_audio.dart';
 
-class StartAndPuaseWidget extends StatelessWidget {
-  const StartAndPuaseWidget({super.key, required this.countDownController});
+class StartAndPauseWidget extends StatelessWidget {
+  const StartAndPauseWidget({super.key, required this.countDownController});
   final CountDownController countDownController;
 
   @override
