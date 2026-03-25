@@ -6,9 +6,9 @@ extension MediaQuerySize on BuildContext {
 }
 
 
-getDate(double day) {
+String getDate(double day) {
   final date = DateTime.now();
-  DateTime dateTime = date.subtract(Duration(days: day.toInt()));
+  final DateTime dateTime = date.subtract(Duration(days: day.toInt()));
   return '${dateTime.day}/${dateTime.month}';
 }
 
