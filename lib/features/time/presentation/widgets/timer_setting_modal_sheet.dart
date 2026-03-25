@@ -74,8 +74,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
               divisions: 90,
               onChanged: (value) {
                 setState(() {
-                  BlocProvider.of<TimerCubit>(context).durationTime =
-                      value.round();
+                  BlocProvider.of<TimerCubit>(context).setDurationTime(value.round());
                 });
               },
             ),
@@ -103,8 +102,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
               divisions: 100,
               onChanged: (value) {
                 setState(() {
-                  BlocProvider.of<TimerCubit>(context).breakTime =
-                      value.round();
+                  BlocProvider.of<TimerCubit>(context).setBreakTime(value.round());
                 });
               },
             ),
@@ -133,8 +131,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
 
               onChanged: (value) {
                 setState(() {
-                  BlocProvider.of<TimerCubit>(context).voiceLevel =
-                      value.round();
+                  BlocProvider.of<TimerCubit>(context).setVoiceLevel(value.round());
                 });
               },
             ),

@@ -1,9 +1,44 @@
 part of 'timer_cubit.dart';
 
-sealed class TimerState {}
+enum TimerStatus { initial, inProgress, stopped }
 
-final class TimerInitState extends TimerState {}
+class TimerState extends Equatable {
+  final TimerStatus status;
+  final int durationTime;
+  final int breakTime;
+  final int voiceLevel;
+  final String path;
 
-final class InProgressTimerState extends TimerState {}
+  const TimerState({
+    this.status = TimerStatus.initial,
+    this.durationTime = 25,
+    this.breakTime = 5,
+    this.voiceLevel = 50,
+    this.path = '',
+  });
 
-final class TimerStopped extends TimerState {}
+  TimerState copyWith({
+    TimerStatus? status,
+    int? durationTime,
+    int? breakTime,
+    int? voiceLevel,
+    String? path,
+  }) {
+    return TimerState(
+      status: status ?? this.status,
+      durationTime: durationTime ?? this.durationTime,
+      breakTime: breakTime ?? this.breakTime,
+      voiceLevel: voiceLevel ?? this.voiceLevel,
+      path: path ?? this.path,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        status,
+        durationTime,
+        breakTime,
+        voiceLevel,
+        path,
+      ];
+}

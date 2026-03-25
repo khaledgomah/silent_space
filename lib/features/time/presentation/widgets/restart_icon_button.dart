@@ -14,18 +14,15 @@ class RestartTimerIconButton extends StatelessWidget {
   final CountDownController countDownController;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TimerCubit(),
-      child: CustomIconButton(
-        onPressed: () {
-          countDownController.restart(
-              duration: BlocProvider.of<TimerCubit>(context).durationTime * 60);
-          if (BlocProvider.of<TimerCubit>(context).isRunning == false) {
-            countDownController.pause();
-          }
-        },
-        icon: const Icon(Icons.restart_alt),
-      ),
+    return CustomIconButton(
+      onPressed: () {
+        countDownController.restart(
+            duration: BlocProvider.of<TimerCubit>(context).durationTime * 60);
+        if (BlocProvider.of<TimerCubit>(context).state.status != TimerStatus.inProgress) {
+          countDownController.pause();
+        }
+      },
+      icon: const Icon(Icons.restart_alt),
     );
   }
 }

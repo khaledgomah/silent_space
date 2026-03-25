@@ -97,7 +97,7 @@ class _AmbientBuilderWidgetState extends State<AmbientBuilderWidget> {
           onPressed: () {
             setState(() {
               selectedIndex = index;
-              BlocProvider.of<TimerCubit>(context).path = sounds[index].path;
+              BlocProvider.of<TimerCubit>(context).setPath(sounds[index].path);
             });
           },
           sound: sounds[index],

@@ -3,56 +3,68 @@ import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/utils/sounds_manager.dart';
+import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
+import 'package:uuid/uuid.dart';
+import 'package:equatable/equatable.dart';
 
 part 'timer_state.dart';
 
 class TimerCubit extends Cubit<TimerState> {
-  TimerCubit() : super(TimerInitState());
-  bool isRunning = false;
-  final player = AudioPlayer();
-  int _durationTime =
-      getIt<SharedPreferences>().getInt('focusTime') ?? 25;
-  int _breakTime = getIt<SharedPreferences>().getInt('breakTime') ?? 5;
+  late final AudioPlayer player;
+  final SharedPreferences _prefs;
 
-//breakTime getter and setter
-  int get breakTime => _breakTime;
-  set breakTime(int value) {
-    _breakTime = value;
-    getIt<SharedPreferences>().setInt('breakTime', value);
+  TimerCubit()
+      : _prefs = getIt<SharedPreferences>(),
+        super(TimerState(
+          durationTime: getIt<SharedPreferences>().getInt('focusTime') ?? 25,
+          breakTime: getIt<SharedPreferences>().getInt('breakTime') ?? 5,
+          voiceLevel: getIt<SharedPreferences>().getInt('voiceLevel') ?? 50,
+          path: getIt<SharedPreferences>().getString('soundPath') ?? SoundsManager.none,
+        )) {
+    player = AudioPlayer();
   }
 
-  int _voiceLevel =
-      getIt<SharedPreferences>().getInt('voiceLevel') ?? 50;
-  String _path = SoundsManager.none;
-
-  //soundLevel getter and setter
-  int get voiceLevel => _voiceLevel;
-  set voiceLevel(int value) {
-    _voiceLevel = value;
-    player.setVolume(_voiceLevel / 100);
-    getIt<SharedPreferences>().setInt('voiceLevel', value);
+  @override
+  Future<void> close() {
+    player.dispose();
+    return super.close();
   }
 
-  //durationTime getter and setter
-  int get durationTime => _durationTime;
-  set durationTime(int value) {
-    _durationTime = value;
-    getIt<SharedPreferences>().setInt('focusTime', value);
+  // ── Getters ──
+  int get breakTime => state.breakTime;
+  int get durationTime => state.durationTime;
+  int get voiceLevel => state.voiceLevel;
+  String get path => state.path;
+
+  // ── Setters ──
+  void setBreakTime(int value) {
+    _prefs.setInt('breakTime', value);
+    emit(state.copyWith(breakTime: value));
   }
 
-//path getter and setter
-  String get path => _path;
-  set path(String value) {
-    _path = value;
-    getIt<SharedPreferences>().setString('soundPath', value);
+  void setVoiceLevel(int value) {
+    player.setVolume(value / 100);
+    _prefs.setInt('voiceLevel', value);
+    emit(state.copyWith(voiceLevel: value));
+  }
+
+  void setDurationTime(int value) {
+    _prefs.setInt('focusTime', value);
+    emit(state.copyWith(durationTime: value));
+  }
+
+  void setPath(String value) {
+    _prefs.setString('soundPath', value);
+    emit(state.copyWith(path: value));
   }
 
   Future<void> _playSound() async {
-    if (path != SoundsManager.none) {
-      await player.setAsset(path);
+    if (state.path != SoundsManager.none && state.path.isNotEmpty) {
+      await player.setAsset(state.path);
       await player.setLoopMode(LoopMode.all);
       await player.play();
-      player.setVolume(voiceLevel / 100);
+      player.setVolume(state.voiceLevel / 100);
     }
   }
 
@@ -61,14 +73,27 @@ class TimerCubit extends Cubit<TimerState> {
   }
 
   void triggerTimer() {
-    if (isRunning) {
-      emit(TimerStopped());
+    if (state.status == TimerStatus.inProgress) {
+      emit(state.copyWith(status: TimerStatus.stopped));
       _pauseSound();
-      isRunning = false;
     } else {
-      emit(InProgressTimerState());
+      emit(state.copyWith(status: TimerStatus.inProgress));
       _playSound();
-      isRunning = true;
     }
+  }
+
+  /// Called when the timer naturally finishes
+  void completeSession(SessionCubit sessionCubit) {
+    emit(state.copyWith(status: TimerStatus.stopped));
+    _pauseSound();
+
+    final session = SessionEntity(
+      id: const Uuid().v4(),
+      startTime: DateTime.now().subtract(Duration(minutes: state.durationTime)),
+      durationMinutes: state.durationTime,
+      completedAt: DateTime.now(),
+    );
+
+    sessionCubit.saveSession(session);
   }
 }

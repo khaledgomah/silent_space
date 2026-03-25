@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/widgets/custom_icon_button.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
-import 'package:just_audio/just_audio.dart';
 
 class StartAndPauseWidget extends StatelessWidget {
   const StartAndPauseWidget({super.key, required this.countDownController});
@@ -11,15 +10,12 @@ class StartAndPauseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final player = AudioPlayer();
-
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, state) {
-        if (state is TimerInitState) {
+        if (state.status == TimerStatus.initial) {
           return CustomIconButton(
             onPressed: () async {
               countDownController.start();
-              await player.setLoopMode(LoopMode.all);
 
               if (!context.mounted) return;
               BlocProvider.of<TimerCubit>(context).triggerTimer();
@@ -27,7 +23,7 @@ class StartAndPauseWidget extends StatelessWidget {
             icon: const Icon(Icons.play_arrow),
           );
         }
-        if (state is InProgressTimerState) {
+        if (state.status == TimerStatus.inProgress) {
           return CustomIconButton(
             icon: const Icon(Icons.pause),
             onPressed: () async {
