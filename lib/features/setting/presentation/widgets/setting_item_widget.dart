@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/utils/constans.dart';
 import 'package:silent_space/features/setting/data/models/setting_item_model.dart';
 
 class SettingItemWidget extends StatelessWidget {
@@ -10,7 +9,7 @@ class SettingItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
-        overlayColor: WidgetStateProperty.all(Constants.secondaryColor),
+        overlayColor: WidgetStateProperty.all(Theme.of(context).colorScheme.surfaceContainerHighest),
         padding:
             WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 8)),
         shape: WidgetStateProperty.all(const RoundedRectangleBorder()),

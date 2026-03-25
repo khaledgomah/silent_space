@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/utils/constans.dart';
 import 'package:silent_space/features/time/data/models/sound.dart';
 
 class SoundTile extends StatelessWidget {
@@ -18,7 +17,7 @@ class SoundTile extends StatelessWidget {
       isSelected: isSelected,
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(
-            isSelected ? Constants.secondaryColor : Colors.transparent),
+            isSelected ? Theme.of(context).colorScheme.surfaceContainerHighest : Colors.transparent),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
