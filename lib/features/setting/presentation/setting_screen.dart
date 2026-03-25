@@ -1,15 +1,16 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:silent_space/core/helper/extentions.dart';
+import 'package:silent_space/core/helper/extensions.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/setting/data/models/setting_item_model.dart';
 import 'package:silent_space/features/setting/presentation/widgets/change_language_modal_sheet.dart';
 import 'package:silent_space/features/setting/presentation/widgets/setting_item_widget.dart';
-import 'package:silent_space/generated/l10n.dart';
 
-class SettingSceen extends StatelessWidget {
-  const SettingSceen({super.key});
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +19,11 @@ class SettingSceen extends StatelessWidget {
         onTap: () {
           context.pushNamed(RoutesName.categories);
         },
-        title: S.of(context).categories,
+        title: AppStrings.categories.tr(),
         icon: const Icon(Icons.category),
       ),
       SettingItemModel(
-          title: S.of(context).notifications,
+          title: AppStrings.notifications.tr(),
           icon: const Icon(Icons.notifications),
           onTap: () {}),
       SettingItemModel(
@@ -33,36 +34,36 @@ class SettingSceen extends StatelessWidget {
                 return const ChangeLanguageModalSheet();
               });
         },
-        title: S.of(context).language,
+        title: AppStrings.language.tr(),
         icon: const Icon(Icons.language),
       ),
       SettingItemModel(
         onTap: () {
           context.pushNamed(RoutesName.howToUse);
         },
-        title: S.of(context).howToUse,
+        title: AppStrings.howToUse.tr(),
         icon: const Icon(Icons.help),
       ),
       SettingItemModel(
         onTap: () {
           context.pushNamed(RoutesName.aboutApp);
         },
-        title: S.of(context).about,
+        title: AppStrings.about.tr(),
         icon: const Icon(Icons.info),
       ),
       SettingItemModel(
-        title: S.of(context).feedback,
+        title: AppStrings.feedback.tr(),
         onTap: () {
           context.pushNamed(RoutesName.feedbackScreen);
         },
         icon: const Icon(Icons.feedback),
       ),
       SettingItemModel(
-          title: S.of(context).RateUs,
+          title: AppStrings.rateUs.tr(),
           icon: const Icon(Icons.star),
           onTap: () {}),
       SettingItemModel(
-          title: S.of(context).share,
+          title: AppStrings.share.tr(),
           icon: const Icon(Icons.share),
           onTap: () {
             Share.share('check out my website https://example.com');
@@ -76,7 +77,7 @@ class SettingSceen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 50, left: 18, right: 18),
             child: Text(
-              S.of(context).generalSettings,
+              AppStrings.generalSettings.tr(),
               style: TextStyleManager.headline2,
             ),
           ),
