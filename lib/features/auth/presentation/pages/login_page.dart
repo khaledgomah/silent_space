@@ -5,6 +5,7 @@ import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:silent_space/features/auth/presentation/widgets/auth_widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -95,81 +95,22 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: 40),
 
                         // ── Email ──
-                        TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            labelText: AppStrings.email.tr(),
-                            prefixIcon: const Icon(Icons.email_outlined),
-                            border: const OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return AppStrings.fieldRequired.tr();
-                            }
-                            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                .hasMatch(value.trim())) {
-                              return AppStrings.invalidEmail.tr();
-                            }
-                            return null;
-                          },
-                        ),
+                        AuthEmailField(controller: _emailController),
                         const SizedBox(height: 16),
 
                         // ── Password ──
-                        TextFormField(
+                        AuthPasswordField(
                           controller: _passwordController,
-                          obscureText: _obscurePassword,
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (_) => _onSubmit(cubit),
-                          decoration: InputDecoration(
-                            labelText: AppStrings.password.tr(),
-                            prefixIcon: const Icon(Icons.lock_outline),
-                            border: const OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                              ),
-                              onPressed: () => setState(
-                                () => _obscurePassword = !_obscurePassword,
-                              ),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AppStrings.fieldRequired.tr();
-                            }
-                            if (value.length < 4) {
-                              return AppStrings.passwordTooShort.tr();
-                            }
-                            return null;
-                          },
+                          label: AppStrings.password.tr(),
+                          onFieldSubmitted: (val) => _onSubmit(cubit),
                         ),
                         const SizedBox(height: 24),
 
                         // ── Submit ──
-                        SizedBox(
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: state is AuthLoading
-                                ? null
-                                : () => _onSubmit(cubit),
-                            child: state is AuthLoading
-                                ? const SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : Text(
-                                    AppStrings.login.tr(),
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                          ),
+                        AuthSubmitButton(
+                          isLoading: state is AuthLoading,
+                          onPressed: () => _onSubmit(cubit),
+                          text: AppStrings.login.tr(),
                         ),
                         const SizedBox(height: 16),
 

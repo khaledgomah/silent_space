@@ -74,5 +74,8 @@
   "noSessionsTitle": "لا توجد جلسات بعد",
   "noSessionsSubtitle": "ابدأ مؤقت التركيز لرؤية الإحصائيات.",
   "timesUp": "انتهى الوقت!",
-  "focusSessionComplete": "اكتملت جلسة التركيز الخاصة بك."
+  "focusSessionComplete": "اكتملت جلسة التركيز الخاصة بك.",
+  "noConnection": "لا يوجد اتصال بالإنترنت. يرجى المحاولة مرة أخرى.",
+  "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+  "unknownError": "حدث خطأ غير متوقع."
 }

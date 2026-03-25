@@ -4,10 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
-import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:silent_space/features/auth/presentation/widgets/auth_widgets.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -21,7 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -46,11 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final theme = Theme.of(context);
 
     return BlocProvider(
-      create: (_) => AuthCubit(
-        signInUseCase: getIt<SignInUseCase>(),
-        signUpUseCase: getIt<SignUpUseCase>(),
-        signOutUseCase: getIt<SignOutUseCase>(),
-      ),
+      create: (_) => getIt<AuthCubit>(),
       child: Scaffold(
         body: SafeArea(
           child: Center(
@@ -96,71 +89,22 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: 40),
 
                         // ── Email ──
-                        TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            labelText: AppStrings.email.tr(),
-                            prefixIcon: const Icon(Icons.email_outlined),
-                            border: const OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return AppStrings.fieldRequired.tr();
-                            }
-                            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                .hasMatch(value.trim())) {
-                              return AppStrings.invalidEmail.tr();
-                            }
-                            return null;
-                          },
-                        ),
+                        AuthEmailField(controller: _emailController),
                         const SizedBox(height: 16),
 
                         // ── Password ──
-                        TextFormField(
+                        AuthPasswordField(
                           controller: _passwordController,
-                          obscureText: _obscurePassword,
+                          label: AppStrings.password.tr(),
                           textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            labelText: AppStrings.password.tr(),
-                            prefixIcon: const Icon(Icons.lock_outline),
-                            border: const OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                              ),
-                              onPressed: () => setState(
-                                () => _obscurePassword = !_obscurePassword,
-                              ),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AppStrings.fieldRequired.tr();
-                            }
-                            if (value.length < 4) {
-                              return AppStrings.passwordTooShort.tr();
-                            }
-                            return null;
-                          },
                         ),
                         const SizedBox(height: 16),
 
                         // ── Confirm Password ──
-                        TextFormField(
+                        AuthPasswordField(
                           controller: _confirmPasswordController,
-                          obscureText: _obscurePassword,
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (_) => _onSubmit(cubit),
-                          decoration: InputDecoration(
-                            labelText: AppStrings.confirmPassword.tr(),
-                            prefixIcon: const Icon(Icons.lock_outline),
-                            border: const OutlineInputBorder(),
-                          ),
+                          label: AppStrings.confirmPassword.tr(),
+                          onFieldSubmitted: (val) => _onSubmit(cubit),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return AppStrings.fieldRequired.tr();
@@ -174,25 +118,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: 24),
 
                         // ── Submit ──
-                        SizedBox(
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: state is AuthLoading
-                                ? null
-                                : () => _onSubmit(cubit),
-                            child: state is AuthLoading
-                                ? const SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : Text(
-                                    AppStrings.register.tr(),
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                          ),
+                        AuthSubmitButton(
+                          isLoading: state is AuthLoading,
+                          onPressed: () => _onSubmit(cubit),
+                          text: AppStrings.register.tr(),
                         ),
                         const SizedBox(height: 16),
 

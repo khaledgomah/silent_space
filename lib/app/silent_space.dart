@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/app/cubits/language_cubit/language_cubit.dart';
 import 'package:silent_space/core/theme/app_theme.dart';
 import 'package:silent_space/core/theme/theme_cubit.dart';
+import 'package:silent_space/core/utils/globals.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 
@@ -28,6 +29,7 @@ class SilentSpace extends StatelessWidget {
                 localizationsDelegates: context.localizationDelegates,
                 supportedLocales: context.supportedLocales,
                 debugShowCheckedModeBanner: false,
+                navigatorKey: navigatorKey,
                 initialRoute: RoutesName.splash,
                 onGenerateRoute: onGenerateRoute,
                 theme: AppTheme.lightTheme,

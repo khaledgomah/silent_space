@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:silent_space/core/errors/exceptions.dart';
 import 'package:silent_space/core/security/secure_storage_service.dart';
+import 'package:silent_space/core/utils/globals.dart';
+import 'package:silent_space/core/utils/on_generate_route.dart';
 
 /// Configures and provides a singleton [Dio] instance.
 class DioClient {
@@ -24,6 +26,7 @@ class DioClient {
 
     dio.interceptors.addAll([
       _authInterceptor(),
+      _unauthorizedInterceptor(),
       _errorInterceptor(),
       LogInterceptor(
         requestBody: true,
@@ -42,6 +45,19 @@ class DioClient {
           options.headers['Authorization'] = 'Bearer $token';
         }
         return handler.next(options);
+      },
+    );
+  }
+
+  /// Intercepts 401 Unauthorized errors and logs the user out globally.
+  InterceptorsWrapper _unauthorizedInterceptor() {
+    return InterceptorsWrapper(
+      onError: (error, handler) async {
+        if (error.response?.statusCode == 401) {
+          await _secureStorage.deleteToken();
+          navigatorKey.currentState?.pushReplacementNamed(RoutesName.login);
+        }
+        return handler.next(error);
       },
     );
   }

@@ -75,4 +75,7 @@ class AppStrings {
   static const String noSessionsSubtitle = 'noSessionsSubtitle';
   static const String timesUp = 'timesUp';
   static const String focusSessionComplete = 'focusSessionComplete';
+  static const String noConnection = 'noConnection';
+  static const String invalidCredentials = 'invalidCredentials';
+  static const String unknownError = 'unknownError';
 }

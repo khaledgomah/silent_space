@@ -74,5 +74,8 @@
   "noSessionsTitle": "No sessions yet",
   "noSessionsSubtitle": "Start your focus timer to see stats.",
   "timesUp": "Time's up!",
-  "focusSessionComplete": "Your focus session is complete."
+  "focusSessionComplete": "Your focus session is complete.",
+  "noConnection": "No internet connection. Please try again.",
+  "invalidCredentials": "Invalid email or password.",
+  "unknownError": "An unexpected error occurred."
 }
