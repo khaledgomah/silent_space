@@ -66,27 +66,36 @@ class DioClient {
   InterceptorsWrapper _errorInterceptor() {
     return InterceptorsWrapper(
       onError: (error, handler) {
+        String message = 'An unexpected error occurred.';
+
         switch (error.type) {
           case DioExceptionType.connectionTimeout:
           case DioExceptionType.sendTimeout:
           case DioExceptionType.receiveTimeout:
-            throw ServerException(
-              message: 'Connection timed out. Please try again.',
-              statusCode: error.response?.statusCode,
-            );
+            message = 'Connection timed out. Please try again.';
+            break;
           case DioExceptionType.connectionError:
-            throw ServerException(
-              message: 'Could not connect to the server.',
-              statusCode: error.response?.statusCode,
-            );
+            message = 'Could not connect to the server.';
+            break;
           default:
-            throw ServerException(
-              message: error.response?.data?['error']?.toString() ??
-                  error.message ??
-                  'An unexpected error occurred.',
-              statusCode: error.response?.statusCode,
-            );
+            final data = error.response?.data;
+            if (data is Map && data.containsKey('error')) {
+              message = data['error'].toString();
+            } else if (data is String && data.isNotEmpty) {
+              message = data;
+            } else {
+              message = error.message ?? message;
+            }
         }
+
+        return handler.reject(
+          error.copyWith(
+            error: ServerException(
+              message: message,
+              statusCode: error.response?.statusCode,
+            ),
+          ),
+        );
       },
     );
   }

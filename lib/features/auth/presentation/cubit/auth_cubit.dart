@@ -28,9 +28,17 @@ class AuthCubit extends Cubit<AuthState> {
 
   String _mapFailureToMessage(Failure failure) {
     if (failure is NetworkFailure) return AppStrings.noConnection.tr();
-    if (failure is ServerFailure && failure.statusCode == 400) {
-      return AppStrings.invalidCredentials.tr();
+    
+    if (failure is ServerFailure) {
+      if (failure.statusCode == 400 && (failure.message.isEmpty || failure.message == 'null')) {
+        return AppStrings.invalidCredentials.tr();
+      }
+      // If we have a specific message from the server, show it.
+      if (failure.message.isNotEmpty && failure.message != 'null') {
+        return failure.message;
+      }
     }
+    
     return AppStrings.unknownError.tr();
   }
 

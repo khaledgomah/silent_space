@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:silent_space/core/errors/exceptions.dart';
 import 'package:silent_space/core/network/dio_client.dart';
 import 'package:silent_space/features/auth/data/models/user_model.dart';
@@ -34,8 +35,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         response.data as Map<String, dynamic>,
         email: email,
       );
-    } on ServerException {
-      rethrow;
+    } on DioException catch (e) {
+      if (e.error is ServerException) throw e.error as ServerException;
+      throw ServerException(
+        message: e.message ?? 'An unknown error occurred during sign in.',
+        statusCode: e.response?.statusCode,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -55,8 +60,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         response.data as Map<String, dynamic>,
         email: email,
       );
-    } on ServerException {
-      rethrow;
+    } on DioException catch (e) {
+      if (e.error is ServerException) throw e.error as ServerException;
+      throw ServerException(
+        message: e.message ?? 'An unknown error occurred during sign up.',
+        statusCode: e.response?.statusCode,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
