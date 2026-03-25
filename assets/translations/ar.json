@@ -63,5 +63,16 @@
   "sessions": "الجلسات",
   "noSessions": "لا توجد جلسات بعد. ابدأ مؤقت التركيز!",
   "sessionCompleted": "اكتملت الجلسة!",
-  "minutes": "دقيقة"
+  "minutes": "دقيقة",
+  "categoriesTitle": "فئات التركيز",
+  "addCategory": "إضافة فئة",
+  "cancel": "إلغاء",
+  "add": "إضافة",
+  "aboutApp": "عن التطبيق",
+  "unknownPage": "صفحة غير معروفة",
+  "pageNotFound": "لم يتم العثور على الصفحة",
+  "noSessionsTitle": "لا توجد جلسات بعد",
+  "noSessionsSubtitle": "ابدأ مؤقت التركيز لرؤية الإحصائيات.",
+  "timesUp": "انتهى الوقت!",
+  "focusSessionComplete": "اكتملت جلسة التركيز الخاصة بك."
 }

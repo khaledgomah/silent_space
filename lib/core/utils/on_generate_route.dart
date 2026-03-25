@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:silent_space/features/auth/presentation/pages/login_page.dart';
 import 'package:silent_space/features/auth/presentation/pages/register_page.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:silent_space/features/setting/presentation/about_app_screen.dart';
 import 'package:silent_space/features/setting/presentation/categories_screen.dart';
 import 'package:silent_space/features/setting/presentation/feedback.dart';
@@ -39,10 +41,10 @@ class _UnknownPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Unknown Page'),
+        title: Text(AppStrings.unknownPage.tr()),
       ),
-      body: const Center(
-        child: Text('Page not found'),
+      body: Center(
+        child: Text(AppStrings.pageNotFound.tr()),
       ),
     );
   }

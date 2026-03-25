@@ -63,5 +63,16 @@
   "sessions": "Sessions",
   "noSessions": "No sessions yet. Start a focus timer!",
   "sessionCompleted": "Session completed!",
-  "minutes": "min"
+  "minutes": "min",
+  "categoriesTitle": "Focus Categories",
+  "addCategory": "Add Category",
+  "cancel": "Cancel",
+  "add": "Add",
+  "aboutApp": "About App",
+  "unknownPage": "Unknown Page",
+  "pageNotFound": "Page not found",
+  "noSessionsTitle": "No sessions yet",
+  "noSessionsSubtitle": "Start your focus timer to see stats.",
+  "timesUp": "Time's up!",
+  "focusSessionComplete": "Your focus session is complete."
 }

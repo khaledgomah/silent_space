@@ -64,4 +64,15 @@ class AppStrings {
   static const String noSessions = 'noSessions';
   static const String sessionCompleted = 'sessionCompleted';
   static const String minutes = 'minutes';
+  static const String categoriesTitle = 'categoriesTitle';
+  static const String addCategory = 'addCategory';
+  static const String cancel = 'cancel';
+  static const String add = 'add';
+  static const String aboutApp = 'aboutApp';
+  static const String unknownPage = 'unknownPage';
+  static const String pageNotFound = 'pageNotFound';
+  static const String noSessionsTitle = 'noSessionsTitle';
+  static const String noSessionsSubtitle = 'noSessionsSubtitle';
+  static const String timesUp = 'timesUp';
+  static const String focusSessionComplete = 'focusSessionComplete';
 }
