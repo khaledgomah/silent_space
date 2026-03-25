@@ -26,7 +26,7 @@ class SessionLoaded extends SessionState {
   // ── Weekly breakdown (last 7 days, index 0 = 6 days ago, 6 = today) ──
   final List<int> weeklyMinutes;
 
-  SessionLoaded._({
+  const SessionLoaded._({
     required this.sessions,
     required this.todayMinutes,
     required this.todayCount,
