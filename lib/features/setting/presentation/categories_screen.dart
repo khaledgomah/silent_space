@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:silent_space/features/setting/helper/category_functions.dart';
 import 'package:silent_space/features/setting/presentation/widgets/category_item.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 
 bool isCategoriesEmpty = false;
 
@@ -49,7 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               }),
         ],
         centerTitle: true,
-        title: const Text('Fucus Categories'),
+        title: Text(AppStrings.categoriesTitle.tr()),
       ),
       body: ListView.builder(
         itemCount: categories.length,
@@ -74,7 +76,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       builder: (context) {
         final textController = TextEditingController();
         return AlertDialog(
-          title: const Text('Add Category'),
+          title: Text(AppStrings.addCategory.tr()),
           content: TextField(
             controller: textController,
             decoration: const InputDecoration(
@@ -90,13 +92,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Cancel'),
+              child: Text(AppStrings.cancel.tr()),
             ),
             TextButton(
               onPressed: () {
                 _addCategory(textController);
               },
-              child: const Text('Add'),
+              child: Text(AppStrings.add.tr()),
             ),
           ],
         );

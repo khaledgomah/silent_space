@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/features/home/presentation/widgets/show_data_container.dart';
-import 'package:silent_space/generated/l10n.dart';
 
 class ShowDetails extends StatelessWidget {
   const ShowDetails({super.key});
@@ -9,9 +10,9 @@ class ShowDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ShowDataContainer(title: S.of(context).focusTime, value: 10),
+        ShowDataContainer(title: AppStrings.focusTime.tr(), value: 10),
         const SizedBox(width: 16),
-        ShowDataContainer(title: S.of(context).focusCount, value: 1),
+        ShowDataContainer(title: AppStrings.focusCount.tr(), value: 1),
       ],
     );
   }

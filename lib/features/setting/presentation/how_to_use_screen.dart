@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/features/setting/data/models/question_model.dart';
 import 'package:silent_space/features/setting/presentation/widgets/question_widget.dart';
-import 'package:silent_space/generated/l10n.dart';
 
 class HowToUseScreen extends StatelessWidget {
   const HowToUseScreen({super.key});
@@ -10,13 +11,13 @@ class HowToUseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<QuestionModel> questions = <QuestionModel>[
       QuestionModel(
-        question: S.of(context).configurwNotificationQuestion,
-        answer: S.of(context).configurwNotificationAnswer,
+        question: AppStrings.configurwNotificationQuestion.tr(),
+        answer: AppStrings.configurwNotificationAnswer.tr(),
       ),
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).howToUse),
+        title: Text(AppStrings.howToUse.tr()),
       ),
       body: ListView.builder(
         itemCount: questions.length,

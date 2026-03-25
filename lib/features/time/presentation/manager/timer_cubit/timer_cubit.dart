@@ -11,18 +11,18 @@ class TimerCubit extends Cubit<TimerState> {
   bool isRunning = false;
   final player = AudioPlayer();
   int _durationTime =
-      getIt<SharedPreferencesWithCache>().getInt('focusTime') ?? 25;
-  int _breakTime = getIt<SharedPreferencesWithCache>().getInt('breakTime') ?? 5;
+      getIt<SharedPreferences>().getInt('focusTime') ?? 25;
+  int _breakTime = getIt<SharedPreferences>().getInt('breakTime') ?? 5;
 
 //breakTime getter and setter
   int get breakTime => _breakTime;
   set breakTime(int value) {
     _breakTime = value;
-    getIt<SharedPreferencesWithCache>().setInt('breakTime', value);
+    getIt<SharedPreferences>().setInt('breakTime', value);
   }
 
   int _voiceLevel =
-      getIt<SharedPreferencesWithCache>().getInt('voiceLevel') ?? 50;
+      getIt<SharedPreferences>().getInt('voiceLevel') ?? 50;
   String _path = SoundsManager.none;
 
   //soundLevel getter and setter
@@ -30,24 +30,24 @@ class TimerCubit extends Cubit<TimerState> {
   set voiceLevel(int value) {
     _voiceLevel = value;
     player.setVolume(_voiceLevel / 100);
-    getIt<SharedPreferencesWithCache>().setInt('voiceLevel', value);
+    getIt<SharedPreferences>().setInt('voiceLevel', value);
   }
 
   //durationTime getter and setter
   int get durationTime => _durationTime;
   set durationTime(int value) {
     _durationTime = value;
-    getIt<SharedPreferencesWithCache>().setInt('focusTime', value);
+    getIt<SharedPreferences>().setInt('focusTime', value);
   }
 
 //path getter and setter
   String get path => _path;
   set path(String value) {
     _path = value;
-    getIt<SharedPreferencesWithCache>().setString('soundPath', value);
+    getIt<SharedPreferences>().setString('soundPath', value);
   }
 
-  _playSound() async {
+  Future<void> _playSound() async {
     if (path != SoundsManager.none) {
       await player.setAsset(path);
       await player.setLoopMode(LoopMode.all);
@@ -56,11 +56,11 @@ class TimerCubit extends Cubit<TimerState> {
     }
   }
 
-  _pauseSound() async {
+  Future<void> _pauseSound() async {
     await player.pause();
   }
 
-  triggerTimer() {
+  void triggerTimer() {
     if (isRunning) {
       emit(TimerStopped());
       _pauseSound();

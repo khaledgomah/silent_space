@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/core/helper/extentions.dart';
+import 'package:silent_space/core/helper/extensions.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
-import 'package:silent_space/generated/l10n.dart';
 
 class TimerSettingModalSheet extends StatefulWidget {
   const TimerSettingModalSheet({super.key});
@@ -35,7 +36,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                   icon: const Text(''),
                 ),
                 Text(
-                  S.of(context).timerSettings,
+                  AppStrings.timerSettings.tr(),
                   style: TextStyleManager.bodyText1,
                 ),
                 IconButton(
@@ -52,7 +53,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    S.of(context).focusDuration,
+                    AppStrings.focusDuration.tr(),
                     style: TextStyleManager.bodyText1,
                   ),
                   Text(
@@ -84,7 +85,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    S.of(context).breakDuration,
+                    AppStrings.breakDuration.tr(),
                     style: TextStyleManager.bodyText1,
                   ),
                   Text(
@@ -113,7 +114,7 @@ class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    S.of(context).soundLevel,
+                    AppStrings.soundLevel.tr(),
                     style: TextStyleManager.bodyText1,
                   ),
                   Text(

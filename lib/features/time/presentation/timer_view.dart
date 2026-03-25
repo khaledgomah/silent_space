@@ -4,7 +4,7 @@ import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/features/time/presentation/widgets/custom_count_down_timer.dart';
 import 'package:silent_space/features/time/presentation/widgets/restart_icon_button.dart';
 import 'package:silent_space/features/time/presentation/widgets/select_music_modal_sheet.dart';
-import 'package:silent_space/features/time/presentation/widgets/start_and_puase_widget.dart';
+import 'package:silent_space/features/time/presentation/widgets/start_and_pause_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silent_space/features/time/presentation/widgets/timer_setting_modal_sheet.dart';
 
@@ -13,8 +13,21 @@ class TimerView extends StatelessWidget {
   final CountDownController _countDownController = CountDownController();
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final iconColor = theme.colorScheme.onSurface;
 
-    return Column(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            theme.colorScheme.primary.withAlpha(25),
+            theme.colorScheme.surface,
+          ],
+        ),
+      ),
+      child: Column(
       children: [
         const Spacer(),
         Row(
@@ -29,9 +42,9 @@ class TimerView extends StatelessWidget {
                     builder: (context) => const SelectMusicSheet(),
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   FontAwesomeIcons.music,
-                  color: Colors.white,
+                  color: iconColor,
                 )),
             IconButton(
                 onPressed: () {
@@ -42,15 +55,15 @@ class TimerView extends StatelessWidget {
                     },
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   FontAwesomeIcons.sliders,
-                  color: Colors.white,
+                  color: iconColor,
                 )),
             IconButton(
                 onPressed: () {},
-                icon: const Icon(
+                icon: Icon(
                   Icons.music_note,
-                  color: Colors.white,
+                  color: iconColor,
                 )),
             SizedBox(width: context.width() * 0.05),
           ],
@@ -62,7 +75,7 @@ class TimerView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            StartAndPuaseWidget(
+            StartAndPauseWidget(
               countDownController: _countDownController,
             ),
             SizedBox(
@@ -75,6 +88,7 @@ class TimerView extends StatelessWidget {
         ),
         const Spacer(),
       ],
+      ),
     );
   }
 }

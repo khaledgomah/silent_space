@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
-import 'package:silent_space/core/utils/constans.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
+import 'package:silent_space/core/utils/constants.dart';
 import 'package:silent_space/core/widgets/custom_button.dart';
 import 'package:silent_space/core/widgets/custom_text_form_field.dart';
-import 'package:silent_space/generated/l10n.dart';
 
 class FeedbackScreen extends StatelessWidget {
   final TextEditingController _feedbackController = TextEditingController();
@@ -15,7 +16,7 @@ class FeedbackScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).feedback),
+        title: Text(AppStrings.feedback.tr()),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,27 +24,27 @@ class FeedbackScreen extends StatelessWidget {
           children: [
             CustomTextFormField(
               borderRadius: 16,
-              hintText: S.of(context).enterYourMail,
+              hintText: AppStrings.enterYourMail.tr(),
               controller: _emailController,
             ),
             const SizedBox(height: 20),
             CustomTextFormField(
               borderRadius: 16,
-              hintText: S.of(context).enterYourFeedback,
+              hintText: AppStrings.enterYourFeedback.tr(),
               maxLines: 5,
               controller: _feedbackController,
             ),
             const SizedBox(height: 20),
             CustomButton(
-              child: Text(S.of(context).send),
+              child: Text(AppStrings.send.tr()),
               onPressed: () async {
                 if (_feedbackController.text.isEmpty ||
                     _emailController.text.isEmpty) {
                   showSnackBar(
                       context,
                       _feedbackController.text.isEmpty
-                          ? S.of(context).noFeedbackError
-                          : S.of(context).noMailErro);
+                          ? AppStrings.noFeedbackError.tr()
+                          : AppStrings.noMailErro.tr());
                 } else {
                   final Email email = Email(
                     body: _feedbackController.text,
@@ -54,12 +55,12 @@ class FeedbackScreen extends StatelessWidget {
                   try {
                     await FlutterEmailSender.send(email);
                     if (context.mounted) {
-                      showSnackBar( context, S.of(context).feedbackSent);
+                      showSnackBar( context, AppStrings.feedbackSent.tr());
                     }
                   } catch (error) {
                     if (context.mounted) {
                       showSnackBar(
-                          context, S.of(context).feedbackNotSent);
+                          context, AppStrings.feedbackNotSent.tr());
                     }
                   }
                 }

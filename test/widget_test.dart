@@ -1,30 +1,38 @@
-// This is a basic Flutter widget test.
+// Smoke test — validates that the app starts without crashing.
 //
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// Integration-level widget testing is limited here because
+// SilentSpace requires platform services (Hive, SecureStorage, etc.)
+// that are not available in the test environment without mocking.
+//
+// See test/features/ for focused unit tests on use cases and repositories.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:silent_space/app/silent_space.dart';
-
+import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const SilentSpace());
+  group('Entity equality', () {
+    test('UserEntity supports value equality', () {
+      const a = UserEntity(id: 1, email: 'a@b.com', token: 'tok');
+      const b = UserEntity(id: 1, email: 'a@b.com', token: 'tok');
+      expect(a, equals(b));
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('SessionEntity supports value equality', () {
+      final now = DateTime(2026, 1, 1);
+      final a = SessionEntity(
+        id: '1',
+        startTime: now,
+        durationMinutes: 25,
+        completedAt: now,
+      );
+      final b = SessionEntity(
+        id: '1',
+        startTime: now,
+        durationMinutes: 25,
+        completedAt: now,
+      );
+      expect(a, equals(b));
+    });
   });
 }

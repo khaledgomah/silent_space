@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 import 'package:silent_space/features/time/data/models/sound.dart';
 import 'package:silent_space/features/time/presentation/widgets/sound_tile.dart';
-import 'package:silent_space/generated/l10n.dart';
 import 'package:silent_space/core/utils/sounds_manager.dart';
 
 class AmbientBuilderWidget extends StatefulWidget {
@@ -23,62 +24,62 @@ class _AmbientBuilderWidgetState extends State<AmbientBuilderWidget> {
   Widget build(BuildContext context) {
     final List<Sound> sounds = [
       Sound(
-        name: S.of(context).none,
+        name: AppStrings.none.tr(),
         icon: Icons.volume_off,
         path: SoundsManager.none,
       ),
       Sound(
-        name: S.of(context).tide,
+        name: AppStrings.tide.tr(),
         icon: Icons.water,
         path: SoundsManager.tide,
       ),
       Sound(
-        name: S.of(context).forest,
+        name: AppStrings.forest.tr(),
         icon: FontAwesomeIcons.tree,
         path: SoundsManager.forest,
       ),
       Sound(
-        name: S.of(context).cafe,
+        name: AppStrings.cafe.tr(),
         icon: Icons.local_cafe,
         path: SoundsManager.cafe,
       ),
       Sound(
-        name: S.of(context).storm,
+        name: AppStrings.storm.tr(),
         icon: Icons.thunderstorm,
         path: SoundsManager.storm,
       ),
       Sound(
-        name: S.of(context).clock,
+        name: AppStrings.clock.tr(),
         icon: FontAwesomeIcons.clock,
         path: SoundsManager.clock,
       ),
       Sound(
-        name: S.of(context).bonfire,
+        name: AppStrings.bonfire.tr(),
         icon: FontAwesomeIcons.fire,
         path: SoundsManager.bonfire,
       ),
       Sound(
-        name: S.of(context).books,
+        name: AppStrings.books.tr(),
         icon: FontAwesomeIcons.bookOpen,
         path: SoundsManager.books,
       ),
       Sound(
-        name: S.of(context).grass,
+        name: AppStrings.grass.tr(),
         icon: Icons.grass,
         path: SoundsManager.grass,
       ),
       Sound(
-        name: S.of(context).mosque,
+        name: AppStrings.mosque.tr(),
         icon: FontAwesomeIcons.mosque,
         path: SoundsManager.mosque,
       ),
       Sound(
-        name: S.of(context).library,
+        name: AppStrings.library.tr(),
         icon: Icons.account_balance,
         path: SoundsManager.library,
       ),
       Sound(
-        name: S.of(context).stream,
+        name: AppStrings.stream.tr(),
         icon: Icons.water_drop,
         path: SoundsManager.stream,
       ),

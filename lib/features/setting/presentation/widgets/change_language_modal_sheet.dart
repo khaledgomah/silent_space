@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/app/cubits/language_cubit/language_cubit.dart';
-import 'package:silent_space/core/helper/extentions.dart';
+import 'package:silent_space/core/helper/extensions.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
-import 'package:silent_space/generated/l10n.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 
 class ChangeLanguageModalSheet extends StatelessWidget {
   const ChangeLanguageModalSheet({
@@ -12,7 +13,6 @@ class ChangeLanguageModalSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
         return Container(
@@ -29,7 +29,7 @@ class ChangeLanguageModalSheet extends StatelessWidget {
                   leading: const SizedBox(),
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
-                  title: Text(S.of(context).selectLanguage),
+                  title: Text(AppStrings.selectLanguage.tr()),
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -41,18 +41,24 @@ class ChangeLanguageModalSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 ListTile(
-                  title: Text(S.of(context).english),
+                  title: Text(AppStrings.english.tr()),
+                  trailing: context.locale.languageCode == 'en'
+                      ? const Icon(Icons.check, color: Colors.blue)
+                      : null,
                   onTap: () {
-                    BlocProvider.of<LanguageCubit>(context)
-                        .changeLanguage(Language.english);
+                    context.setLocale(const Locale('en'));
+                    context.read<LanguageCubit>().changeLanguage('en');
                     context.pop();
                   },
                 ),
                 ListTile(
-                  title: Text(S.of(context).arabic),
+                  title: Text(AppStrings.arabic.tr()),
+                  trailing: context.locale.languageCode == 'ar'
+                      ? const Icon(Icons.check, color: Colors.blue)
+                      : null,
                   onTap: () {
-                    BlocProvider.of<LanguageCubit>(context)
-                        .changeLanguage(Language.arabic);
+                    context.setLocale(const Locale('ar'));
+                    context.read<LanguageCubit>().changeLanguage('ar');
                     context.pop();
                   },
                 ),
