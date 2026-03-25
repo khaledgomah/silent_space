@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/app/silent_space.dart';
+import 'package:silent_space/core/app/silent_space.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/notifications/notification_service.dart';
 

@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/app/cubits/language_cubit/language_cubit.dart';
+import 'package:silent_space/core/cubits/language_cubit/language_cubit.dart';
 import 'package:silent_space/core/helper/extensions.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/utils/app_strings.dart';

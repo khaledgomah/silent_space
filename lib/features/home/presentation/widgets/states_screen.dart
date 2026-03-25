@@ -8,8 +8,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
-class StatesScreen extends StatelessWidget {
+class StatesScreen extends StatefulWidget {
   const StatesScreen({super.key});
+
+  @override
+  State<StatesScreen> createState() => _StatesScreenState();
+}
+
+class _StatesScreenState extends State<StatesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<SessionCubit>().loadSessions();
+  }
 
   @override
   Widget build(BuildContext context) {
