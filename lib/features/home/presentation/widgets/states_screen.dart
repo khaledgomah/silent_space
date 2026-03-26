@@ -6,6 +6,7 @@ import 'package:silent_space/features/home/presentation/widgets/focus_chart.dart
 import 'package:silent_space/features/home/presentation/widgets/show_details.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
+import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
 class StatesScreen extends StatefulWidget {
@@ -94,40 +95,72 @@ class _StatesScreenState extends State<StatesScreen> {
         // ── Loaded with data ──
         final loaded = state as SessionLoaded;
         return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 32),
+              // ── Header ──
+              Text(
+                AppStrings.summary.tr(),
+                style: TextStyleManager.headline1.copyWith(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 28,
+                  letterSpacing: -1,
+                ),
+              ),
+              const SizedBox(height: 24),
 
               // ── Today Section ──
-              Text(AppStrings.today.tr(), style: TextStyleManager.headline2),
-              const SizedBox(height: 8),
+              _buildSectionTitle(context, AppStrings.today.tr()),
+              const SizedBox(height: 12),
               ShowDetails(
                 focusMinutes: loaded.todayMinutes,
                 sessionCount: loaded.todayCount,
               ),
               const SizedBox(height: 32),
 
+              // ── Weekly Chart ──
+              _buildSectionTitle(context, AppStrings.weeklyOverview.tr()),
+              const SizedBox(height: 12),
+              FocusChart(weeklyMinutes: loaded.weeklyMinutes),
+              const SizedBox(height: 32),
+
               // ── All-Time Section ──
-              Text(AppStrings.allTime.tr(), style: TextStyleManager.headline2),
-              const SizedBox(height: 8),
+              _buildSectionTitle(context, AppStrings.allTime.tr()),
+              const SizedBox(height: 12),
               ShowDetails(
                 focusMinutes: loaded.totalMinutes,
                 sessionCount: loaded.totalCount,
               ),
-              const SizedBox(height: 32),
-
-              // ── Weekly Chart ──
-              Text(AppStrings.weeklyOverview.tr(),
-                  style: TextStyleManager.headline2),
-              const SizedBox(height: 8),
-              FocusChart(weeklyMinutes: loaded.weeklyMinutes),
-              const SizedBox(height: 24),
+              const SizedBox(height: 40),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 16,
+          decoration: BoxDecoration(
+            color: AppColors.navBarIndicator,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: TextStyleManager.headline2.copyWith(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey.shade700,
+          ),
+        ),
+      ],
     );
   }
 }

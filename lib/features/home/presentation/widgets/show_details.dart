@@ -21,6 +21,7 @@ class ShowDetails extends StatelessWidget {
           child: ShowDataContainer(
             title: AppStrings.focusTime.tr(),
             value: '$focusMinutes ${AppStrings.minutes.tr()}',
+            icon: Icons.timer_outlined,
           ),
         ),
         const SizedBox(width: 16),
@@ -28,6 +29,7 @@ class ShowDetails extends StatelessWidget {
           child: ShowDataContainer(
             title: AppStrings.focusCount.tr(),
             value: sessionCount.toString(),
+            icon: Icons.check_circle_outline,
           ),
         ),
       ],
