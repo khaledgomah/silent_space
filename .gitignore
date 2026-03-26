@@ -41,3 +41,34 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# API Keys and Secrets
+.env
+.env.*
+config.json
+*secret*
+
+# Android
+android/key.properties
+android/app/google-services.json
+*.keystore
+*.jks
+
+# iOS
+ios/Runner/GoogleService-Info.plist
+
+# MacOS
+macos/Runner/GoogleService-Info.plist
+
+# Web
+web/index.html.sig
+
+# Firebase
+lib/firebase_options.dart
+.firebaserc
+# firebase.json # usually kept, but uncomment if you want it ignored
+functions/node_modules/
+functions/.runtimeconfig.json
+storage.rules
+firestore.rules
+firestore.indexes.json
