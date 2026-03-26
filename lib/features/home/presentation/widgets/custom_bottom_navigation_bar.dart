@@ -1,6 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/utils/app_strings.dart';
+import 'package:silent_space/core/theme/app_colors.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -14,49 +13,98 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).shadowColor.withValues(alpha: 0.08),
-              blurRadius: 20,
-              spreadRadius: 2,
-              offset: const Offset(0, 8),
-            ),
-          ],
+    return Container(
+      height: 64,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey.withValues(alpha: 0.1),
+            width: 0.5,
+          ),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: NavigationBar(
-            height: 70,
-            elevation: 0,
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            indicatorColor:
-                Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.6),
-            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-            selectedIndex: currentIndex,
-            onDestinationSelected: onDestinationSelected,
-            destinations: [
-              NavigationDestination(
-                icon: const Icon(Icons.timer_outlined),
-                selectedIcon: Icon(Icons.timer,
-                    color: Theme.of(context).colorScheme.primary),
-                label: AppStrings.focusTime.tr(),
+      ),
+      child: Row(
+        children: [
+          _NavBarItem(
+            index: 0,
+            currentIndex: currentIndex,
+            icon: Icons.timer_outlined,
+            label: 'Timer',
+            onTap: () => onDestinationSelected(0),
+          ),
+          _NavBarItem(
+            index: 1,
+            currentIndex: currentIndex,
+            icon: Icons.bar_chart_outlined,
+            label: 'Summary',
+            onTap: () => onDestinationSelected(1),
+          ),
+          _NavBarItem(
+            index: 2,
+            currentIndex: currentIndex,
+            icon: Icons.settings_outlined,
+            label: 'Settings',
+            onTap: () => onDestinationSelected(2),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NavBarItem extends StatelessWidget {
+  final int index;
+  final int currentIndex;
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _NavBarItem({
+    required this.index,
+    required this.currentIndex,
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isActive = index == currentIndex;
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color:
+                    isActive ? AppColors.navBarIndicator : Colors.transparent,
+                width: 2,
               ),
-              NavigationDestination(
-                icon: const Icon(Icons.bar_chart_outlined),
-                selectedIcon: Icon(Icons.bar_chart,
-                    color: Theme.of(context).colorScheme.primary),
-                label: AppStrings.summary.tr(),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: isActive
+                    ? AppColors.navBarActive
+                    : AppColors.navBarInactiveLabel,
+                size: 24,
               ),
-              NavigationDestination(
-                icon: const Icon(Icons.settings_outlined),
-                selectedIcon: Icon(Icons.settings,
-                    color: Theme.of(context).colorScheme.primary),
-                label: AppStrings.generalSettings.tr(),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  color: isActive
+                      ? AppColors.navBarActive
+                      : AppColors.navBarInactiveLabel,
+                  fontSize: 12,
+                  fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+                ),
               ),
             ],
           ),
