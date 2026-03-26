@@ -18,24 +18,30 @@ class SessionModelAdapter extends TypeAdapter<SessionModel> {
     };
     return SessionModel(
       id: fields[0] as String,
-      startTime: fields[1] as DateTime,
-      durationMinutes: fields[2] as int,
-      completedAt: fields[3] as DateTime,
+      userId: fields[1] as String,
+      startTime: fields[2] as DateTime,
+      endTime: fields[3] as DateTime,
+      durationInSeconds: fields[4] as int,
+      category: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, SessionModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.startTime)
+      ..write(obj.userId)
       ..writeByte(2)
-      ..write(obj.durationMinutes)
+      ..write(obj.startTime)
       ..writeByte(3)
-      ..write(obj.completedAt);
+      ..write(obj.endTime)
+      ..writeByte(4)
+      ..write(obj.durationInSeconds)
+      ..writeByte(5)
+      ..write(obj.category);
   }
 
   @override

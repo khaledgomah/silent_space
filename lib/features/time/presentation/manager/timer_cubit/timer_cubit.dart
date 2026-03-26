@@ -3,7 +3,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/utils/sounds_manager.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 import 'package:uuid/uuid.dart';
 import 'package:equatable/equatable.dart';
@@ -87,11 +88,16 @@ class TimerCubit extends Cubit<TimerState> {
     emit(state.copyWith(status: TimerStatus.stopped));
     _pauseSound();
 
-    final session = SessionEntity(
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return; // Should ideally be logged in
+
+    final session = FocusSession(
       id: const Uuid().v4(),
+      userId: user.uid,
       startTime: DateTime.now().subtract(Duration(minutes: state.durationTime)),
-      durationMinutes: state.durationTime,
-      completedAt: DateTime.now(),
+      endTime: DateTime.now(),
+      durationInSeconds: state.durationTime * 60,
+      category: 'Focus', // Default category
     );
 
     sessionCubit.saveSession(session);

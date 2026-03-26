@@ -40,7 +40,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email: userCredential.user!.email,
       );
     } on FirebaseAuthException catch (e) {
-      throw ServerException(message: e.message ?? 'Unknown error', statusCode: 0);
+      throw ServerException(
+        message: e.message ?? 'Unknown error',
+        statusCode: 0,
+        errorCode: e.code,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -61,7 +65,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email: userCredential.user!.email,
       );
     } on FirebaseAuthException catch (e) {
-      throw ServerException(message: e.message ?? 'Unknown error', statusCode: 0);
+      throw ServerException(
+        message: e.message ?? 'Unknown error',
+        statusCode: 0,
+        errorCode: e.code,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -82,7 +90,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email: userCredential.user!.email,
       );
     } on FirebaseAuthException catch (e) {
-      throw ServerException(message: e.message ?? 'Unknown error', statusCode: 0);
+      throw ServerException(
+        message: e.message ?? 'Unknown error',
+        statusCode: 0,
+        errorCode: e.code,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -104,7 +116,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email: userCredential.user!.email,
       );
     } on FirebaseAuthException catch (e) {
-      throw ServerException(message: e.message ?? 'Unknown error', statusCode: 0);
+      throw ServerException(
+        message: e.message ?? 'Unknown error',
+        statusCode: 0,
+        errorCode: e.code,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }

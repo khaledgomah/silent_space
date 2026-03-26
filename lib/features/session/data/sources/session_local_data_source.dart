@@ -24,7 +24,7 @@ class SessionLocalDataSourceImpl implements SessionLocalDataSource {
       final box = await _box;
       await box.put(session.id, session);
     } catch (e) {
-      throw CacheException(message: 'Failed to save session: $e');
+      throw CacheException(message: 'Failed to save session locally: $e');
     }
   }
 
@@ -33,9 +33,9 @@ class SessionLocalDataSourceImpl implements SessionLocalDataSource {
     try {
       final box = await _box;
       return box.values.toList()
-        ..sort((a, b) => b.completedAt.compareTo(a.completedAt));
+        ..sort((a, b) => b.startTime.compareTo(a.startTime));
     } catch (e) {
-      throw CacheException(message: 'Failed to load sessions: $e');
+      throw CacheException(message: 'Failed to load local sessions: $e');
     }
   }
 
@@ -45,7 +45,7 @@ class SessionLocalDataSourceImpl implements SessionLocalDataSource {
       final box = await _box;
       await box.clear();
     } catch (e) {
-      throw CacheException(message: 'Failed to clear sessions: $e');
+      throw CacheException(message: 'Failed to clear local sessions: $e');
     }
   }
 }

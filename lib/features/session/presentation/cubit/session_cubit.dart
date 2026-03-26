@@ -1,33 +1,44 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/core/usecases/usecase.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
-import 'package:silent_space/features/session/domain/usecases/get_sessions_usecase.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
+import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
 class SessionCubit extends Cubit<SessionState> {
-  final GetSessionsUseCase getSessionsUseCase;
   final SaveSessionUseCase saveSessionUseCase;
+  final GetSessionsByDateRangeUseCase getSessionsByDateRangeUseCase;
 
   SessionCubit({
-    required this.getSessionsUseCase,
     required this.saveSessionUseCase,
-  }) : super(SessionInitial());
+    required this.getSessionsByDateRangeUseCase,
+  }) : super(const SessionInitial());
 
-  Future<void> loadSessions() async {
-    emit(SessionLoading());
-    final result = await getSessionsUseCase(NoParams());
-    result.fold(
-      (failure) => emit(SessionError(message: failure.message)),
-      (sessions) => emit(SessionLoaded(sessions: sessions)),
-    );
-  }
-
-  Future<void> saveSession(SessionEntity session) async {
+  Future<void> saveSession(FocusSession session) async {
     final result = await saveSessionUseCase(session);
     result.fold(
       (failure) => emit(SessionError(message: failure.message)),
-      (session) => loadSessions(), // Reload sessions after save
+      (_) => null, // Successfully saved locally and remotely
+    );
+  }
+
+  Future<void> loadSessions({
+    required String userId,
+    required DateTime startTime,
+    required DateTime endTime,
+  }) async {
+    emit(const SessionLoading());
+
+    final result = await getSessionsByDateRangeUseCase(
+      GetSessionsByDateRangeParams(
+        userId: userId,
+        startTime: startTime,
+        endTime: endTime,
+      ),
+    );
+
+    result.fold(
+      (failure) => emit(SessionError(message: failure.message)),
+      (sessions) => emit(SessionLoaded(sessions)),
     );
   }
 }

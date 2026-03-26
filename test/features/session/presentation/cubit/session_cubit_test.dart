@@ -2,33 +2,37 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:silent_space/core/errors/failures.dart';
-import 'package:silent_space/core/usecases/usecase.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
-import 'package:silent_space/features/session/domain/usecases/get_sessions_usecase.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
+import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
-class MockGetSessionsUseCase extends Mock implements GetSessionsUseCase {}
+class MockGetSessionsByDateRangeUseCase extends Mock
+    implements GetSessionsByDateRangeUseCase {}
 
 class MockSaveSessionUseCase extends Mock implements SaveSessionUseCase {}
 
-class FakeNoParams extends Fake implements NoParams {}
+class FakeGetSessionsByDateRangeParams extends Fake
+    implements GetSessionsByDateRangeParams {}
+
+class FakeFocusSession extends Fake implements FocusSession {}
 
 void main() {
   late SessionCubit cubit;
-  late MockGetSessionsUseCase mockGetSessionsUseCase;
+  late MockGetSessionsByDateRangeUseCase mockGetSessionsByDateRangeUseCase;
   late MockSaveSessionUseCase mockSaveSessionUseCase;
 
   setUpAll(() {
-    registerFallbackValue(FakeNoParams());
+    registerFallbackValue(FakeGetSessionsByDateRangeParams());
+    registerFallbackValue(FakeFocusSession());
   });
 
   setUp(() {
-    mockGetSessionsUseCase = MockGetSessionsUseCase();
+    mockGetSessionsByDateRangeUseCase = MockGetSessionsByDateRangeUseCase();
     mockSaveSessionUseCase = MockSaveSessionUseCase();
     cubit = SessionCubit(
-      getSessionsUseCase: mockGetSessionsUseCase,
+      getSessionsByDateRangeUseCase: mockGetSessionsByDateRangeUseCase,
       saveSessionUseCase: mockSaveSessionUseCase,
     );
   });
@@ -39,90 +43,109 @@ void main() {
 
   final now = DateTime.now();
   final tSessions = [
-    SessionEntity(
+    FocusSession(
       id: '1',
+      userId: 'user123',
       startTime: now.subtract(const Duration(minutes: 30)),
-      durationMinutes: 30,
-      completedAt: now,
+      endTime: now,
+      durationInSeconds: 30 * 60,
+      category: 'Work',
     ),
-    SessionEntity(
+    FocusSession(
       id: '2',
+      userId: 'user123',
       startTime: now.subtract(const Duration(days: 1)),
-      durationMinutes: 45,
-      completedAt: now.subtract(const Duration(days: 1)),
+      endTime: now.subtract(const Duration(days: 1, minutes: -45)),
+      durationInSeconds: 45 * 60,
+      category: 'Study',
     ),
   ];
 
   group('loadSessions', () {
     test('initial state should be SessionInitial', () {
-      expect(cubit.state, equals(SessionInitial()));
+      expect(cubit.state, equals(const SessionInitial()));
     });
 
     test('should emit [SessionLoading, SessionLoaded] when successful',
         () async {
       // arrange
-      when(() => mockGetSessionsUseCase(any()))
+      when(() => mockGetSessionsByDateRangeUseCase(any()))
           .thenAnswer((_) async => Right(tSessions));
 
       // assert later
       final expected = [
-        SessionLoading(),
-        isA<SessionLoaded>()
-            .having((s) => s.sessions, 'sessions', tSessions)
-            .having((s) => s.totalCount, 'totalCount', 2)
-            .having((s) => s.totalMinutes, 'totalMinutes', 75)
-            .having((s) => s.todayMinutes, 'todayMinutes', 30),
+        const SessionLoading(),
+        SessionLoaded(tSessions),
       ];
       expectLater(cubit.stream, emitsInOrder(expected));
 
       // act
-      await cubit.loadSessions();
+      await cubit.loadSessions(
+        userId: 'user123',
+        startTime: now,
+        endTime: now,
+      );
     });
 
     test('should emit SessionLoaded with empty list when no sessions exist',
         () async {
-      when(() => mockGetSessionsUseCase(any()))
+      when(() => mockGetSessionsByDateRangeUseCase(any()))
           .thenAnswer((_) async => const Right([]));
 
       final expected = [
-        SessionLoading(),
-        isA<SessionLoaded>()
-            .having((s) => s.sessions, 'sessions', isEmpty)
-            .having((s) => s.totalMinutes, 'totalMinutes', 0),
+        const SessionLoading(),
+        const SessionLoaded([]),
       ];
       expectLater(cubit.stream, emitsInOrder(expected));
 
-      await cubit.loadSessions();
+      await cubit.loadSessions(
+        userId: 'user123',
+        startTime: now,
+        endTime: now,
+      );
     });
 
     test('should emit [SessionLoading, SessionError] when failure occurs',
         () async {
-      when(() => mockGetSessionsUseCase(any())).thenAnswer(
-          (_) async => const Left(CacheFailure(message: 'Cache Error')));
+      when(() => mockGetSessionsByDateRangeUseCase(any())).thenAnswer(
+          (_) async => const Left(ServerFailure(message: 'Server Error')));
 
       final expected = [
-        SessionLoading(),
-        const SessionError(message: 'Cache Error'),
+        const SessionLoading(),
+        const SessionError(message: 'Server Error'),
       ];
       expectLater(cubit.stream, emitsInOrder(expected));
 
-      await cubit.loadSessions();
+      await cubit.loadSessions(
+        userId: 'user123',
+        startTime: now,
+        endTime: now,
+      );
     });
   });
 
-  group('SessionLoaded computed values', () {
-    test('should correctly compute today, total, and weekly minutes', () {
-      final state = SessionLoaded(sessions: tSessions);
+  group('saveSession', () {
+    test('should call saveSessionUseCase and not emit error if successful',
+        () async {
+      when(() => mockSaveSessionUseCase(any()))
+          .thenAnswer((_) async => const Right(null));
 
-      expect(state.sessions, tSessions);
-      expect(state.todayMinutes, 30);
-      expect(state.todayCount, 1);
-      expect(state.totalMinutes, 75);
-      expect(state.totalCount, 2);
+      await cubit.saveSession(tSessions.first);
 
-      // Verify weekly minutes (index 6 is today, 5 is yesterday)
-      expect(state.weeklyMinutes[6], 30);
-      expect(state.weeklyMinutes[5], 45);
+      verify(() => mockSaveSessionUseCase(tSessions.first)).called(1);
+      expect(cubit.state, const SessionInitial());
+    });
+
+    test('should emit SessionError when failing to save', () async {
+      when(() => mockSaveSessionUseCase(any())).thenAnswer(
+          (_) async => const Left(ServerFailure(message: 'Save Error')));
+
+      final expected = [
+        const SessionError(message: 'Save Error'),
+      ];
+      expectLater(cubit.stream, emitsInOrder(expected));
+
+      await cubit.saveSession(tSessions.first);
     });
   });
 }

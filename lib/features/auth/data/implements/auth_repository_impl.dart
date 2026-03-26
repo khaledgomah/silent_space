@@ -27,7 +27,11 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await remoteDataSource.signInAnonymously();
       return Right(user);
     } on ServerException catch (e) {
-      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 
@@ -46,7 +50,11 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return Right(user);
     } on ServerException catch (e) {
-      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 
@@ -65,7 +73,11 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return Right(user);
     } on ServerException catch (e) {
-      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 
@@ -84,7 +96,11 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return Right(user);
     } on ServerException catch (e) {
-      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 
@@ -95,7 +111,11 @@ class AuthRepositoryImpl implements AuthRepository {
       await localDataSource.clearToken();
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(AuthFailure(message: e.message));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 

@@ -7,7 +7,7 @@
 // See test/features/ for focused unit tests on use cases and repositories.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 
 void main() {
@@ -18,19 +18,23 @@ void main() {
       expect(a, equals(b));
     });
 
-    test('SessionEntity supports value equality', () {
+    test('FocusSession supports value equality', () {
       final now = DateTime(2026, 1, 1);
-      final a = SessionEntity(
+      final a = FocusSession(
         id: '1',
+        userId: 'user1',
         startTime: now,
-        durationMinutes: 25,
-        completedAt: now,
+        endTime: now,
+        durationInSeconds: 25 * 60,
+        category: 'Focus',
       );
-      final b = SessionEntity(
+      final b = FocusSession(
         id: '1',
+        userId: 'user1',
         startTime: now,
-        durationMinutes: 25,
-        completedAt: now,
+        endTime: now,
+        durationInSeconds: 25 * 60,
+        category: 'Focus',
       );
       expect(a, equals(b));
     });

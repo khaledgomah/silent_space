@@ -4,7 +4,7 @@ import 'package:silent_space/core/errors/failures.dart';
 import 'package:silent_space/features/session/data/models/session_model.dart';
 import 'package:silent_space/features/session/data/sources/session_local_data_source.dart';
 import 'package:silent_space/features/session/data/sources/session_remote_data_source.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
 
 class SessionRepositoryImpl implements SessionRepository {
@@ -17,18 +17,16 @@ class SessionRepositoryImpl implements SessionRepository {
   });
 
   @override
-  Future<Either<Failure, void>> saveSession(SessionEntity session) async {
+  Future<Either<Failure, void>> saveSession(FocusSession session) async {
     try {
       final model = SessionModel.fromEntity(session);
-      // Save locally
+      // Save locally for offline access
       await localDataSource.saveSession(model);
-      // Save remotely
-      try {
-        await remoteDataSource.saveSession(model);
-      } catch (_) {
-        // Continue if remote fails for now
-      }
+      // Save remotely to Firestore
+      await remoteDataSource.saveSession(model);
       return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     } catch (e) {
@@ -37,23 +35,21 @@ class SessionRepositoryImpl implements SessionRepository {
   }
 
   @override
-  Future<Either<Failure, List<SessionEntity>>> getSessions() async {
+  Future<Either<Failure, List<FocusSession>>> getSessionsByDateRange(
+    String userId,
+    DateTime start,
+    DateTime end,
+  ) async {
     try {
-      final models = await localDataSource.getSessions();
+      // Fetch from remote for accurate range filtering
+      final models =
+          await remoteDataSource.getSessionsByDateRange(userId, start, end);
       final entities = models.map((m) => m.toEntity()).toList();
       return Right(entities);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> clearSessions() async {
-    try {
-      await localDataSource.clearSessions();
-      return const Right(null);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    } catch (e) {
+      return Left(ServerFailure(message: 'Unexpected error: $e'));
     }
   }
 }

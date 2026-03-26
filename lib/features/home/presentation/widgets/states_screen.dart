@@ -5,9 +5,10 @@ import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/home/presentation/widgets/focus_chart.dart';
 import 'package:silent_space/features/home/presentation/widgets/show_details.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
+import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
+import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 
 class StatesScreen extends StatefulWidget {
   const StatesScreen({super.key});
@@ -20,7 +21,23 @@ class _StatesScreenState extends State<StatesScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<SessionCubit>().loadSessions();
+    _loadSessions();
+  }
+
+  void _loadSessions() {
+    final authState = context.read<AuthCubit>().state;
+    String? userId;
+    if (authState is AuthSuccess) {
+      userId = authState.user.id;
+    }
+
+    if (userId != null) {
+      context.read<SessionCubit>().loadSessions(
+            userId: userId,
+            startTime: DateTime(2024), // Load all for now or specific range
+            endTime: DateTime.now(),
+          );
+    }
   }
 
   @override
@@ -43,62 +60,86 @@ class _StatesScreenState extends State<StatesScreen> {
 
         // ── Error ──
         if (state is SessionError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.error_outline,
-                    size: 80, color: Theme.of(context).colorScheme.error),
-                const SizedBox(height: 16),
-                Text(AppStrings.statsError.tr(),
-                    style: TextStyleManager.headline2),
-                const SizedBox(height: 8),
-                Text(state.message,
-                    style: Theme.of(context).textTheme.bodyMedium),
-                const SizedBox(height: 24),
-                FilledButton.icon(
-                  onPressed: () =>
-                      context.read<SessionCubit>().loadSessions(),
-                  icon: const Icon(Icons.refresh),
-                  label: Text(AppStrings.retry.tr()),
+          return RefreshIndicator(
+            onRefresh: () async => _loadSessions(),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: SizedBox(
+                height: MediaQuery.of(context)
+                    .size
+                    .height, // Ensure it fills the screen to be scrollable
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.error_outline,
+                          size: 80, color: Theme.of(context).colorScheme.error),
+                      const SizedBox(height: 16),
+                      Text(AppStrings.statsError.tr(),
+                          style: TextStyleManager.headline2),
+                      const SizedBox(height: 8),
+                      Text(state.message,
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(height: 24),
+                      FilledButton.icon(
+                        onPressed: _loadSessions,
+                        icon: const Icon(Icons.refresh),
+                        label: Text(AppStrings.retry.tr()),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
           );
         }
 
         // ── Loaded but empty ──
         if (state is SessionLoaded && state.sessions.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.query_stats,
-                    size: 100, color: Theme.of(context).disabledColor),
-                const SizedBox(height: 24),
-                Text(
-                  AppStrings.noSessionsTitle.tr(),
-                  style: TextStyleManager.headline2,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  AppStrings.noSessionsSubtitle.tr(),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+          return RefreshIndicator(
+            onRefresh: () async => _loadSessions(),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.query_stats,
+                          size: 100, color: Theme.of(context).disabledColor),
+                      const SizedBox(height: 24),
+                      Text(
+                        AppStrings.noSessionsTitle.tr(),
+                        style: TextStyleManager.headline2,
                       ),
+                      const SizedBox(height: 8),
+                      Text(
+                        AppStrings.noSessionsSubtitle.tr(),
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
           );
         }
 
         // ── Loaded with data ──
         final loaded = state as SessionLoaded;
-        return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        return RefreshIndicator(
+          onRefresh: () async => _loadSessions(),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               // ── Header ──
               Text(
                 AppStrings.summary.tr(),
@@ -135,7 +176,8 @@ class _StatesScreenState extends State<StatesScreen> {
               const SizedBox(height: 40),
             ],
           ),
-        );
+        ),
+      );
       },
     );
   }

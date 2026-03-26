@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 
 part 'session_model.g.dart';
 
@@ -9,58 +10,84 @@ class SessionModel extends HiveObject {
   final String id;
 
   @HiveField(1)
-  final DateTime startTime;
+  final String userId;
 
   @HiveField(2)
-  final int durationMinutes;
+  final DateTime startTime;
 
   @HiveField(3)
-  final DateTime completedAt;
+  final DateTime endTime;
+
+  @HiveField(4)
+  final int durationInSeconds;
+
+  @HiveField(5)
+  final String category;
 
   SessionModel({
     required this.id,
+    required this.userId,
     required this.startTime,
-    required this.durationMinutes,
-    required this.completedAt,
+    required this.endTime,
+    required this.durationInSeconds,
+    required this.category,
   });
 
-  /// Converts from domain entity to Hive model.
-  factory SessionModel.fromEntity(SessionEntity entity) {
+  /// Converts from domain entity to model.
+  factory SessionModel.fromEntity(FocusSession entity) {
     return SessionModel(
       id: entity.id,
+      userId: entity.userId,
       startTime: entity.startTime,
-      durationMinutes: entity.durationMinutes,
-      completedAt: entity.completedAt,
+      endTime: entity.endTime,
+      durationInSeconds: entity.durationInSeconds,
+      category: entity.category,
     );
   }
 
-  /// Converts from Hive model to domain entity.
-  SessionEntity toEntity() {
-    return SessionEntity(
+  /// Converts from model to domain entity.
+  FocusSession toEntity() {
+    return FocusSession(
       id: id,
+      userId: userId,
       startTime: startTime,
-      durationMinutes: durationMinutes,
-      completedAt: completedAt,
+      endTime: endTime,
+      durationInSeconds: durationInSeconds,
+      category: category,
     );
   }
 
-  /// Converts to JSON for Firestore.
+  /// Converts to JSON for Firestore with Timestamps.
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'startTime': startTime.toIso8601String(),
-      'durationMinutes': durationMinutes,
-      'completedAt': completedAt.toIso8601String(),
+      'userId': userId,
+      'startTime': Timestamp.fromDate(startTime),
+      'endTime': Timestamp.fromDate(endTime),
+      'durationInSeconds': durationInSeconds,
+      'category': category,
     };
   }
 
-  /// Converts from JSON for Firestore.
+  /// Converts from JSON for Firestore handling both Timestamps and ISO Strings.
   factory SessionModel.fromJson(Map<String, dynamic> json) {
     return SessionModel(
       id: json['id'] as String,
-      startTime: DateTime.parse(json['startTime'] as String),
-      durationMinutes: json['durationMinutes'] as int,
-      completedAt: DateTime.parse(json['completedAt'] as String),
+      userId: json['userId'] as String,
+      startTime: _parseDateTime(json['startTime']),
+      endTime: _parseDateTime(json['endTime']),
+      durationInSeconds: json['durationInSeconds'] as int,
+      category: json['category'] as String,
     );
+  }
+
+  static DateTime _parseDateTime(dynamic value) {
+    if (value is Timestamp) {
+      return value.toDate();
+    } else if (value is String) {
+      return DateTime.parse(value);
+    } else {
+      throw ArgumentError('Invalid DateTime format: $value');
+    }
   }
 }

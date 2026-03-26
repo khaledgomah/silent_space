@@ -23,7 +23,7 @@ import 'package:silent_space/features/session/data/implements/session_repository
 import 'package:silent_space/features/session/data/models/session_model.dart';
 import 'package:silent_space/features/session/data/sources/session_local_data_source.dart';
 import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
-import 'package:silent_space/features/session/domain/usecases/get_sessions_usecase.dart';
+import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
@@ -105,7 +105,6 @@ Future<void> locatorSetup() async {
   getIt.registerLazySingleton<SessionRemoteDataSource>(
     () => SessionRemoteDataSourceImpl(
       firestore: getIt<FirebaseFirestore>(),
-      auth: getIt<FirebaseAuth>(),
     ),
   );
 
@@ -120,8 +119,8 @@ Future<void> locatorSetup() async {
     () => SaveSessionUseCase(getIt<SessionRepository>()),
   );
 
-  getIt.registerLazySingleton<GetSessionsUseCase>(
-    () => GetSessionsUseCase(getIt<SessionRepository>()),
+  getIt.registerLazySingleton<GetSessionsByDateRangeUseCase>(
+    () => GetSessionsByDateRangeUseCase(getIt<SessionRepository>()),
   );
 
   // ── Presentation BLoC/Cubit ──
@@ -145,7 +144,7 @@ Future<void> locatorSetup() async {
 
   getIt.registerFactory<SessionCubit>(
     () => SessionCubit(
-      getSessionsUseCase: getIt<GetSessionsUseCase>(),
+      getSessionsByDateRangeUseCase: getIt<GetSessionsByDateRangeUseCase>(),
       saveSessionUseCase: getIt<SaveSessionUseCase>(),
     ),
   );

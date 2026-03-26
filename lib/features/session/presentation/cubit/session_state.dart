@@ -1,77 +1,67 @@
 import 'package:equatable/equatable.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 
 abstract class SessionState extends Equatable {
   const SessionState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-class SessionInitial extends SessionState {}
+class SessionInitial extends SessionState {
+  const SessionInitial();
+}
 
-class SessionLoading extends SessionState {}
+class SessionLoading extends SessionState {
+  const SessionLoading();
+}
 
 class SessionLoaded extends SessionState {
-  final List<SessionEntity> sessions;
+  final List<FocusSession> sessions;
 
-  // ── Today stats ──
-  final int todayMinutes;
-  final int todayCount;
+  const SessionLoaded(this.sessions);
 
-  // ── All-time stats ──
-  final int totalMinutes;
-  final int totalCount;
+  int get totalMinutes =>
+      sessions.fold(0, (sum, s) => sum + (s.durationInSeconds ~/ 60));
+  int get totalCount => sessions.length;
 
-  // ── Weekly breakdown (last 7 days, index 0 = 6 days ago, 6 = today) ──
-  final List<int> weeklyMinutes;
-
-  const SessionLoaded._({
-    required this.sessions,
-    required this.todayMinutes,
-    required this.todayCount,
-    required this.totalMinutes,
-    required this.totalCount,
-    required this.weeklyMinutes,
-  });
-
-  factory SessionLoaded({required List<SessionEntity> sessions}) {
+  int get todayMinutes {
     final now = DateTime.now();
-    final todayStart = DateTime(now.year, now.month, now.day);
+    return sessions
+        .where((s) =>
+            s.startTime.year == now.year &&
+            s.startTime.month == now.month &&
+            s.startTime.day == now.day)
+        .fold(0, (sum, s) => sum + (s.durationInSeconds ~/ 60));
+  }
 
-    // Today
-    final todaySessions = sessions
-        .where((s) => s.completedAt.isAfter(todayStart))
-        .toList();
+  int get todayCount {
+    final now = DateTime.now();
+    return sessions
+        .where((s) =>
+            s.startTime.year == now.year &&
+            s.startTime.month == now.month &&
+            s.startTime.day == now.day)
+        .length;
+  }
 
-    // Weekly (last 7 days)
-    final weekly = List<int>.filled(7, 0);
-    for (final session in sessions) {
-      final diff = now.difference(session.completedAt).inDays;
-      if (diff >= 0 && diff < 7) {
-        weekly[6 - diff] += session.durationMinutes;
-      }
+  List<int> get weeklyMinutes {
+    final now = DateTime.now();
+    final weekData = List.filled(7, 0);
+    for (var i = 0; i < 7; i++) {
+        final date = now.subtract(Duration(days: 6 - i));
+        weekData[i] = sessions
+            .where((s) =>
+                s.startTime.year == date.year &&
+                s.startTime.month == date.month &&
+                s.startTime.day == date.day)
+            .fold(0, (sum, s) => sum + (s.durationInSeconds ~/ 60));
     }
-
-    return SessionLoaded._(
-      sessions: sessions,
-      todayMinutes: todaySessions.fold(0, (sum, s) => sum + s.durationMinutes),
-      todayCount: todaySessions.length,
-      totalMinutes: sessions.fold(0, (sum, s) => sum + s.durationMinutes),
-      totalCount: sessions.length,
-      weeklyMinutes: weekly,
-    );
+    return weekData;
   }
 
   @override
-  List<Object> get props => [
-        sessions,
-        todayMinutes,
-        todayCount,
-        totalMinutes,
-        totalCount,
-        weeklyMinutes,
-      ];
+  List<Object?> get props => [sessions];
 }
 
 class SessionError extends SessionState {
@@ -80,5 +70,5 @@ class SessionError extends SessionState {
   const SessionError({required this.message});
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 }

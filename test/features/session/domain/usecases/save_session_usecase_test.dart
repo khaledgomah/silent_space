@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:silent_space/core/errors/failures.dart';
-import 'package:silent_space/features/session/domain/entities/session_entity.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 
@@ -17,11 +17,13 @@ void main() {
     useCase = SaveSessionUseCase(mockRepository);
   });
 
-  final tSession = SessionEntity(
+  final tSession = FocusSession(
     id: '1',
+    userId: 'user123',
     startTime: DateTime(2026, 3, 24, 10, 0),
-    durationMinutes: 25,
-    completedAt: DateTime(2026, 3, 24, 10, 25),
+    endTime: DateTime(2026, 3, 24, 10, 25),
+    durationInSeconds: 25 * 60,
+    category: 'Focus',
   );
 
   group('SaveSessionUseCase', () {
@@ -39,9 +41,9 @@ void main() {
       verifyNoMoreInteractions(mockRepository);
     });
 
-    test('should return CacheFailure when saving fails', () async {
+    test('should return ServerFailure when saving fails', () async {
       // arrange
-      const tFailure = CacheFailure(message: 'Failed to save session');
+      const tFailure = ServerFailure(message: 'Failed to save session');
       when(() => mockRepository.saveSession(tSession))
           .thenAnswer((_) async => const Left(tFailure));
 
