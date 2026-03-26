@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846638036143",
+    "project_id": "silent-space-21990",
+    "storage_bucket": "silent-space-21990.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846638036143:android:dff0051f473b668c80105a",
+        "android_client_info": {
+          "package_name": "com.example.silent_space"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB_4jcl6c3acNzKMz-2iN0m2fbL_QFATo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,8 +13,8 @@ import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 void main() {
   group('Entity equality', () {
     test('UserEntity supports value equality', () {
-      const a = UserEntity(id: 1, email: 'a@b.com', token: 'tok');
-      const b = UserEntity(id: 1, email: 'a@b.com', token: 'tok');
+      const a = UserEntity(id: '1', email: 'a@b.com', token: 'tok');
+      const b = UserEntity(id: '1', email: 'a@b.com', token: 'tok');
       expect(a, equals(b));
     });
 

@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,9 +11,12 @@ import 'package:silent_space/features/auth/data/implements/auth_repository_impl.
 import 'package:silent_space/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:silent_space/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
+import 'package:silent_space/features/auth/domain/usecases/link_account_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/sign_in_anonymously_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:silent_space/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:silent_space/features/session/data/implements/session_repository_impl.dart';
 import 'package:silent_space/features/session/data/models/session_model.dart';
 import 'package:silent_space/features/session/data/sources/session_local_data_source.dart';
@@ -49,8 +53,10 @@ Future<void> locatorSetup() async {
   getIt.registerSingleton<HiveService>(hiveService);
 
   // ── Auth Feature ──
+  getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(dioClient: getIt<DioClient>()),
+    () => AuthRemoteDataSourceImpl(firebaseAuth: getIt<FirebaseAuth>()),
   );
 
   getIt.registerLazySingleton<AuthLocalDataSource>(
@@ -65,12 +71,20 @@ Future<void> locatorSetup() async {
     ),
   );
 
+  getIt.registerLazySingleton<SignInAnonymouslyUseCase>(
+    () => SignInAnonymouslyUseCase(getIt<AuthRepository>()),
+  );
+
   getIt.registerLazySingleton<SignInUseCase>(
     () => SignInUseCase(getIt<AuthRepository>()),
   );
 
   getIt.registerLazySingleton<SignUpUseCase>(
     () => SignUpUseCase(getIt<AuthRepository>()),
+  );
+
+  getIt.registerLazySingleton<LinkAccountUseCase>(
+    () => LinkAccountUseCase(getIt<AuthRepository>()),
   );
 
   getIt.registerLazySingleton<SignOutUseCase>(
@@ -97,7 +111,17 @@ Future<void> locatorSetup() async {
     () => GetSessionsUseCase(getIt<SessionRepository>()),
   );
 
-  // ── Presentation Cubits ──
+  // ── Presentation BLoC/Cubit ──
+  getIt.registerFactory<AuthBloc>(
+    () => AuthBloc(
+      signInAnonymouslyUseCase: getIt<SignInAnonymouslyUseCase>(),
+      signInUseCase: getIt<SignInUseCase>(),
+      signUpUseCase: getIt<SignUpUseCase>(),
+      linkAccountUseCase: getIt<LinkAccountUseCase>(),
+      signOutUseCase: getIt<SignOutUseCase>(),
+    ),
+  );
+
   getIt.registerFactory<AuthCubit>(
     () => AuthCubit(
       signInUseCase: getIt<SignInUseCase>(),

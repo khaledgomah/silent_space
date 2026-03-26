@@ -35,7 +35,7 @@ void main() {
   const tEmail = 'eve.holt@reqres.in';
   const tPassword = 'cityslicka';
   const tUserModel = UserModel(
-    id: 4,
+    id: '4',
     email: tEmail,
     token: 'QpwL5tke4Pnpja7X4',
   );
@@ -44,7 +44,7 @@ void main() {
     test('should check if the device is online', () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-      when(() => mockRemoteDataSource.signIn(
+      when(() => mockRemoteDataSource.signInWithEmailAndPassword(
             email: any(named: 'email'),
             password: any(named: 'password'),
           )).thenAnswer((_) async => tUserModel);
@@ -52,7 +52,7 @@ void main() {
           .thenAnswer((_) async {});
 
       // act
-      await repository.signIn(email: tEmail, password: tPassword);
+      await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       verify(() => mockNetworkInfo.isConnected).called(1);
@@ -64,7 +64,7 @@ void main() {
 
       // act
       final result =
-          await repository.signIn(email: tEmail, password: tPassword);
+          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       expect(result, isA<Left>());
@@ -79,7 +79,7 @@ void main() {
         () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-      when(() => mockRemoteDataSource.signIn(
+      when(() => mockRemoteDataSource.signInWithEmailAndPassword(
             email: tEmail,
             password: tPassword,
           )).thenAnswer((_) async => tUserModel);
@@ -88,7 +88,7 @@ void main() {
 
       // act
       final result =
-          await repository.signIn(email: tEmail, password: tPassword);
+          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       expect(result, const Right(tUserModel));
@@ -100,7 +100,7 @@ void main() {
         () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-      when(() => mockRemoteDataSource.signIn(
+      when(() => mockRemoteDataSource.signInWithEmailAndPassword(
             email: tEmail,
             password: tPassword,
           )).thenThrow(
@@ -109,7 +109,7 @@ void main() {
 
       // act
       final result =
-          await repository.signIn(email: tEmail, password: tPassword);
+          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       expect(result, isA<Left>());
@@ -152,7 +152,7 @@ void main() {
   group('isLoggedIn', () {
     test('should return true when token exists', () async {
       // arrange
-      when(() => mockLocalDataSource.hasToken())
+      when(() => mockRemoteDataSource.isLoggedIn())
           .thenAnswer((_) async => true);
 
       // act
@@ -164,7 +164,7 @@ void main() {
 
     test('should return false when no token', () async {
       // arrange
-      when(() => mockLocalDataSource.hasToken())
+      when(() => mockRemoteDataSource.isLoggedIn())
           .thenAnswer((_) async => false);
 
       // act

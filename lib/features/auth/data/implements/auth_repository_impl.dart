@@ -19,34 +19,20 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<Failure, UserEntity>> signInAnonymously() async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure());
     }
     try {
-      final user = await remoteDataSource.signIn(
-        email: email,
-        password: password,
-      );
-      if (user.token != null) {
-        await localDataSource.cacheToken(user.token!);
-      }
+      final user = await remoteDataSource.signInAnonymously();
       return Right(user);
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-        message: e.message,
-        statusCode: e.statusCode,
-      ));
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
+      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signUp({
+  Future<Either<Failure, UserEntity>> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -54,36 +40,67 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Left(NetworkFailure());
     }
     try {
-      final user = await remoteDataSource.signUp(
+      final user = await remoteDataSource.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      if (user.token != null) {
-        await localDataSource.cacheToken(user.token!);
-      }
       return Right(user);
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-        message: e.message,
-        statusCode: e.statusCode,
-      ));
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
+      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> registerWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure());
+    }
+    try {
+      final user = await remoteDataSource.registerWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> linkAccountWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure());
+    }
+    try {
+      final user = await remoteDataSource.linkAccountWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(message: e.message, statusCode: e.statusCode));
     }
   }
 
   @override
   Future<Either<Failure, void>> signOut() async {
     try {
+      await remoteDataSource.signOut();
       await localDataSource.clearToken();
       return const Right(null);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
+    } on ServerException catch (e) {
+      return Left(AuthFailure(message: e.message));
     }
   }
 
   @override
   Future<bool> isLoggedIn() async {
-    return await localDataSource.hasToken();
+    return await remoteDataSource.isLoggedIn();
   }
 }

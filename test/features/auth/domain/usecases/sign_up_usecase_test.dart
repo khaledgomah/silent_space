@@ -20,12 +20,12 @@ void main() {
   const tEmail = 'eve.holt@reqres.in';
   const tPassword = 'pistol';
   const tParams = SignUpParams(email: tEmail, password: tPassword);
-  const tUser = UserEntity(id: 4, email: tEmail, token: 'QpwL5tke4Pnpja7X4');
+  const tUser = UserEntity(id: '4', email: tEmail, token: 'QpwL5tke4Pnpja7X4');
 
   group('SignUpUseCase', () {
     test('should return UserEntity when registration is successful', () async {
       // arrange
-      when(() => mockRepository.signUp(email: tEmail, password: tPassword))
+      when(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
           .thenAnswer((_) async => const Right(tUser));
 
       // act
@@ -33,7 +33,7 @@ void main() {
 
       // assert
       expect(result, const Right(tUser));
-      verify(() => mockRepository.signUp(email: tEmail, password: tPassword))
+      verify(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
           .called(1);
       verifyNoMoreInteractions(mockRepository);
     });
@@ -42,7 +42,7 @@ void main() {
       // arrange
       const tFailure =
           ServerFailure(message: 'Missing email or password', statusCode: 400);
-      when(() => mockRepository.signUp(email: tEmail, password: tPassword))
+      when(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
           .thenAnswer((_) async => const Left(tFailure));
 
       // act
@@ -50,7 +50,7 @@ void main() {
 
       // assert
       expect(result, const Left(tFailure));
-      verify(() => mockRepository.signUp(email: tEmail, password: tPassword))
+      verify(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
           .called(1);
     });
   });

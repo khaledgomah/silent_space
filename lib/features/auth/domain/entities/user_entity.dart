@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 /// Pure domain entity — no framework dependencies.
 class UserEntity extends Equatable {
-  final int? id;
+  final String? id;
   final String email;
   final String? token;
 

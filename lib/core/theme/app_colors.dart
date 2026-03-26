@@ -12,6 +12,11 @@ class AppColors {
   static const Color primaryColor = Color(0xFF1A1A1A);
   static final Color secondaryColor = Colors.grey.withValues(alpha: .2);
 
+  // ── Navigation Bar Colors (Figma) ──
+  static const Color navBarActive = Color(0xFF00AA5B);
+  static const Color navBarInactiveLabel = Color(0xFF5E5F60);
+  static const Color navBarIndicator = Color(0xFF00AA5B);
+
   // ── Specific Colors Used in App ──
   static const Color chartPurple = Color(0xFF8043F9);
   static const Color textFormBorder = Color.fromARGB(255, 155, 165, 244);

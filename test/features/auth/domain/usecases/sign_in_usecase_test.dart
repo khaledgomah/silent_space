@@ -20,12 +20,12 @@ void main() {
   const tEmail = 'eve.holt@reqres.in';
   const tPassword = 'cityslicka';
   const tParams = SignInParams(email: tEmail, password: tPassword);
-  const tUser = UserEntity(id: 4, email: tEmail, token: 'QpwL5tke4Pnpja7X4');
+  const tUser = UserEntity(id: '4', email: tEmail, token: 'QpwL5tke4Pnpja7X4');
 
   group('SignInUseCase', () {
     test('should return UserEntity when sign in is successful', () async {
       // arrange
-      when(() => mockRepository.signIn(email: tEmail, password: tPassword))
+      when(() => mockRepository.signInWithEmailAndPassword(email: tEmail, password: tPassword))
           .thenAnswer((_) async => const Right(tUser));
 
       // act
@@ -33,7 +33,7 @@ void main() {
 
       // assert
       expect(result, const Right(tUser));
-      verify(() => mockRepository.signIn(email: tEmail, password: tPassword))
+      verify(() => mockRepository.signInWithEmailAndPassword(email: tEmail, password: tPassword))
           .called(1);
       verifyNoMoreInteractions(mockRepository);
     });
@@ -41,7 +41,7 @@ void main() {
     test('should return ServerFailure when sign in fails', () async {
       // arrange
       const tFailure = ServerFailure(message: 'user not found', statusCode: 400);
-      when(() => mockRepository.signIn(email: tEmail, password: tPassword))
+      when(() => mockRepository.signInWithEmailAndPassword(email: tEmail, password: tPassword))
           .thenAnswer((_) async => const Left(tFailure));
 
       // act
@@ -49,14 +49,14 @@ void main() {
 
       // assert
       expect(result, const Left(tFailure));
-      verify(() => mockRepository.signIn(email: tEmail, password: tPassword))
+      verify(() => mockRepository.signInWithEmailAndPassword(email: tEmail, password: tPassword))
           .called(1);
     });
 
     test('should return NetworkFailure when offline', () async {
       // arrange
       const tFailure = NetworkFailure();
-      when(() => mockRepository.signIn(email: tEmail, password: tPassword))
+      when(() => mockRepository.signInWithEmailAndPassword(email: tEmail, password: tPassword))
           .thenAnswer((_) async => const Left(tFailure));
 
       // act

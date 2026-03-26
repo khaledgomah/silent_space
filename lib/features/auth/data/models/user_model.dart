@@ -10,7 +10,7 @@ class UserModel extends UserEntity {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       email: json['email'] as String? ?? '',
       token: json['token'] as String?,
     );
@@ -24,16 +24,16 @@ class UserModel extends UserEntity {
     };
   }
 
-  /// Creates a [UserModel] from a login/register response + the
-  /// original email (since reqres.in doesn't echo it back).
-  factory UserModel.fromLoginResponse(
-    Map<String, dynamic> json, {
-    required String email,
+  /// Creates a [UserModel] from a Firebase User object.
+  factory UserModel.fromFirebaseUser({
+    required String uid,
+    required String? email,
+    String? token,
   }) {
     return UserModel(
-      id: json['id'] as int?,
-      email: email,
-      token: json['token'] as String?,
+      id: uid,
+      email: email ?? '',
+      token: token,
     );
   }
 }
