@@ -1,7 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/features/setting/presentation/setting_screen.dart';
+import 'package:silent_space/features/home/presentation/widgets/custom_bottom_navigation_bar.dart';
 import 'package:silent_space/features/home/presentation/widgets/states_screen.dart';
 import 'package:silent_space/features/time/presentation/timer_view.dart';
 
@@ -31,34 +30,18 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
         transitionBuilder: (child, animation) =>
             FadeTransition(opacity: animation, child: child),
         child: _buildScreen(_currentIndex),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() => _currentIndex = index);
         },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.timer_outlined),
-            selectedIcon: const Icon(Icons.timer),
-            label: AppStrings.focusTime.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.bar_chart_outlined),
-            selectedIcon: const Icon(Icons.bar_chart),
-            label: AppStrings.summary.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.settings_outlined),
-            selectedIcon: const Icon(Icons.settings),
-            label: AppStrings.generalSettings.tr(),
-          ),
-        ],
       ),
     );
   }
