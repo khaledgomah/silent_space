@@ -7,6 +7,7 @@ import 'package:silent_space/features/time/presentation/manager/timer_cubit/time
 import 'package:silent_space/core/notifications/notification_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
+import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 
 class CustomCountDownTimer extends StatelessWidget {
   const CustomCountDownTimer({
@@ -39,6 +40,8 @@ class CustomCountDownTimer extends StatelessWidget {
               title: AppStrings.timesUp.tr(),
               body: AppStrings.focusSessionComplete.tr(),
             );
+            // Save the session data
+            context.read<TimerCubit>().completeSession(context.read<SessionCubit>());
           },
         );
       },

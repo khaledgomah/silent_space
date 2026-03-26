@@ -1,8 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:silent_space/features/session/data/sources/session_remote_data_source.dart';
 import 'package:silent_space/core/cache/hive_service.dart';
 import 'package:silent_space/core/network/dio_client.dart';
 import 'package:silent_space/core/network/network_info.dart';
@@ -54,6 +56,7 @@ Future<void> locatorSetup() async {
 
   // ── Auth Feature ──
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
 
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(firebaseAuth: getIt<FirebaseAuth>()),
@@ -99,8 +102,18 @@ Future<void> locatorSetup() async {
     () => SessionLocalDataSourceImpl(hiveService: getIt<HiveService>()),
   );
 
+  getIt.registerLazySingleton<SessionRemoteDataSource>(
+    () => SessionRemoteDataSourceImpl(
+      firestore: getIt<FirebaseFirestore>(),
+      auth: getIt<FirebaseAuth>(),
+    ),
+  );
+
   getIt.registerLazySingleton<SessionRepository>(
-    () => SessionRepositoryImpl(localDataSource: getIt<SessionLocalDataSource>()),
+    () => SessionRepositoryImpl(
+      localDataSource: getIt<SessionLocalDataSource>(),
+      remoteDataSource: getIt<SessionRemoteDataSource>(),
+    ),
   );
 
   getIt.registerLazySingleton<SaveSessionUseCase>(

@@ -43,4 +43,24 @@ class SessionModel extends HiveObject {
       completedAt: completedAt,
     );
   }
+
+  /// Converts to JSON for Firestore.
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'startTime': startTime.toIso8601String(),
+      'durationMinutes': durationMinutes,
+      'completedAt': completedAt.toIso8601String(),
+    };
+  }
+
+  /// Converts from JSON for Firestore.
+  factory SessionModel.fromJson(Map<String, dynamic> json) {
+    return SessionModel(
+      id: json['id'] as String,
+      startTime: DateTime.parse(json['startTime'] as String),
+      durationMinutes: json['durationMinutes'] as int,
+      completedAt: DateTime.parse(json['completedAt'] as String),
+    );
+  }
 }
