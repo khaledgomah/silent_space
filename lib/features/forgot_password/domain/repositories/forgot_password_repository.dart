@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:silent_space/core/errors/failures.dart';
-import 'package:silent_space/features/forgot_password/domain/entities/forgot_password_entity.dart';
+import 'package:silent_space/features/auth/domain/entities/forgot_password_entity.dart';
 
 abstract class ForgotPasswordRepository {
   Future<Either<Failure, void>> requestPasswordReset(String email);

@@ -27,7 +27,8 @@ class ShowDataContainer extends StatelessWidget {
             : Colors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: AppColors.navBarIndicator.withValues(alpha: isDark ? 0.1 : 0.05),
+          color:
+              AppColors.navBarIndicator.withValues(alpha: isDark ? 0.1 : 0.05),
           width: 1,
         ),
         boxShadow: [

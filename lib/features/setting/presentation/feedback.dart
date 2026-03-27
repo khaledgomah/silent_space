@@ -55,12 +55,11 @@ class FeedbackScreen extends StatelessWidget {
                   try {
                     await FlutterEmailSender.send(email);
                     if (context.mounted) {
-                      showSnackBar( context, AppStrings.feedbackSent.tr());
+                      showSnackBar(context, AppStrings.feedbackSent.tr());
                     }
                   } catch (error) {
                     if (context.mounted) {
-                      showSnackBar(
-                          context, AppStrings.feedbackNotSent.tr());
+                      showSnackBar(context, AppStrings.feedbackNotSent.tr());
                     }
                   }
                 }

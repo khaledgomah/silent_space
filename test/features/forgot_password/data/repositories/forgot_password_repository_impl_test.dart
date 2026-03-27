@@ -7,7 +7,8 @@ import 'package:silent_space/core/network/network_info.dart';
 import 'package:silent_space/features/forgot_password/data/implements/forgot_password_repository_impl.dart';
 import 'package:silent_space/features/forgot_password/data/sources/forgot_password_remote_data_source.dart';
 
-class MockForgotPasswordRemoteDataSource extends Mock implements ForgotPasswordRemoteDataSource {}
+class MockForgotPasswordRemoteDataSource extends Mock
+    implements ForgotPasswordRemoteDataSource {}
 
 class MockNetworkInfo extends Mock implements NetworkInfo {}
 
@@ -28,7 +29,8 @@ void main() {
   group('ForgotPasswordRepositoryImpl', () {
     const tEmail = 'test@example.com';
 
-    test('requestPasswordReset_WhenConnectedAndSuccessful_ReturnsRightNull', () async {
+    test('requestPasswordReset_WhenConnectedAndSuccessful_ReturnsRightNull',
+        () async {
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(() => mockRemoteDataSource.requestPasswordReset(any()))
           .thenAnswer((_) async => Future.value());
@@ -38,7 +40,8 @@ void main() {
       expect(result, const Right(null));
     });
 
-    test('requestPasswordReset_WhenConnectedAndFails_ReturnsServerFailure', () async {
+    test('requestPasswordReset_WhenConnectedAndFails_ReturnsServerFailure',
+        () async {
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(() => mockRemoteDataSource.requestPasswordReset(any()))
           .thenThrow(const ServerException(message: 'Error'));
@@ -48,12 +51,14 @@ void main() {
       expect(result, const Left(ServerFailure(message: 'Error')));
     });
 
-    test('requestPasswordReset_WhenDisconnected_ReturnsNetworkFailure', () async {
+    test('requestPasswordReset_WhenDisconnected_ReturnsNetworkFailure',
+        () async {
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
 
       final result = await repository.requestPasswordReset(tEmail);
 
-      expect(result, const Left(NetworkFailure(message: 'No internet connection.')));
+      expect(result,
+          const Left(NetworkFailure(message: 'No internet connection.')));
     });
   });
 }

@@ -20,8 +20,10 @@ class AppStrings {
   static const String arabic = 'arabic';
   static const String english = 'english';
   static const String selectLanguage = 'selectLanguage';
-  static const String configurwNotificationQuestion = 'configurwNotificationQuestion';
-  static const String configurwNotificationAnswer = 'configurwNotificationAnswer';
+  static const String configurwNotificationQuestion =
+      'configurwNotificationQuestion';
+  static const String configurwNotificationAnswer =
+      'configurwNotificationAnswer';
   static const String enterYourMail = 'enterYourMail';
   static const String enterYourFeedback = 'enterYourFeedback';
   static const String send = 'send';

@@ -21,7 +21,8 @@ class TimerCubit extends Cubit<TimerState> {
           durationTime: getIt<SharedPreferences>().getInt('focusTime') ?? 25,
           breakTime: getIt<SharedPreferences>().getInt('breakTime') ?? 5,
           voiceLevel: getIt<SharedPreferences>().getInt('voiceLevel') ?? 50,
-          path: getIt<SharedPreferences>().getString('soundPath') ?? SoundsManager.none,
+          path: getIt<SharedPreferences>().getString('soundPath') ??
+              SoundsManager.none,
         )) {
     player = AudioPlayer();
   }

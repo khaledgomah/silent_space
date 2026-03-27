@@ -5,5 +5,5 @@ class Sound {
   final IconData icon;
   final String path;
 
-  Sound({required this.name, required this.icon,required this.path});
+  Sound({required this.name, required this.icon, required this.path});
 }

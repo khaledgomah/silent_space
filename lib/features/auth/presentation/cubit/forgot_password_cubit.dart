@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/features/forgot_password/domain/usecases/request_password_reset_usecase.dart';
-import 'package:silent_space/features/forgot_password/domain/usecases/reset_password_usecase.dart';
-import 'package:silent_space/features/forgot_password/domain/usecases/verify_reset_token_usecase.dart';
-import 'package:silent_space/features/forgot_password/presentation/cubit/forgot_password_state.dart';
+import 'package:silent_space/features/auth/domain/usecases/request_password_reset_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/reset_password_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_usecase.dart';
+import 'package:silent_space/features/auth/presentation/cubit/forgot_password_state.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   final RequestPasswordResetUseCase requestPasswordResetUseCase;
@@ -20,8 +20,8 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     final result = await requestPasswordResetUseCase(email);
     result.fold(
       (failure) => emit(ForgotPasswordFailure(error: failure.message)),
-      (_) => emit(
-          const ForgotPasswordRequestSuccess(message: 'Password reset link sent to your email.')),
+      (_) => emit(const ForgotPasswordRequestSuccess(
+          message: 'Password reset link sent to your email.')),
     );
   }
 
@@ -36,11 +36,12 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   Future<void> resetPassword(String token, String newPassword) async {
     emit(ForgotPasswordLoading());
-    final result =
-        await resetPasswordUseCase(ResetPasswordParams(token: token, newPassword: newPassword));
+    final result = await resetPasswordUseCase(
+        ResetPasswordParams(token: token, newPassword: newPassword));
     result.fold(
       (failure) => emit(ForgotPasswordFailure(error: failure.message)),
-      (_) => emit(const ForgotPasswordResetSuccess(message: 'Password successfully reset.')),
+      (_) => emit(const ForgotPasswordResetSuccess(
+          message: 'Password successfully reset.')),
     );
   }
 }

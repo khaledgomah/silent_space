@@ -2,26 +2,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
+import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
-import 'package:silent_space/features/forgot_password/presentation/cubit/forgot_password_cubit.dart';
-import 'package:silent_space/features/forgot_password/presentation/cubit/forgot_password_state.dart';
+import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cubit.dart';
+import 'package:silent_space/features/auth/presentation/cubit/forgot_password_state.dart';
+import 'package:silent_space/features/auth/presentation/widgets/email_input_tile.dart';
 
-class ResetPasswordPage extends StatefulWidget {
-  final String token;
-
-  const ResetPasswordPage({super.key, required this.token});
+class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
-  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
-  final TextEditingController _passwordController = TextEditingController();
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _passwordController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -44,11 +44,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(state.error)),
                 );
-              } else if (state is ForgotPasswordResetSuccess) {
+              } else if (state is ForgotPasswordRequestSuccess) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(state.message)),
                 );
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.pushReplacementNamed(
+                    context, RoutesName.resetPassword);
               }
             },
             builder: (context, state) {
@@ -59,7 +60,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      AppStrings.resetPasswordTitle.tr(),
+                      AppStrings.forgotPasswordTitle.tr(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 28,
@@ -69,7 +70,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      AppStrings.resetPasswordDesc.tr(),
+                      AppStrings.forgotPasswordDesc.tr(),
                       style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 16,
@@ -77,41 +78,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: AppStrings.newPassword.tr(),
-                        labelStyle: const TextStyle(color: Colors.white70),
-                        filled: true,
-                        fillColor: const Color(0xFF2C2C2C),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: Color(0xFF6C63FF), width: 1.5),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppStrings.fieldRequired.tr();
-                        }
-                        if (value.length < 6) {
-                          return AppStrings.passwordMinLength6.tr();
-                        }
-                        return null;
-                      },
+                    EmailInputTile(
+                      controller: _emailController,
+                      labelText: AppStrings.email.tr(),
                     ),
                     const SizedBox(height: 24),
                     if (state is ForgotPasswordLoading)
-                      const Center(child: CircularProgressIndicator(color: Color(0xFF6C63FF)))
+                      const Center(
+                          child: CircularProgressIndicator(
+                              color: Color(0xFF6C63FF)))
                     else
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -124,15 +99,17 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            context.read<ForgotPasswordCubit>().resetPassword(
-                                  widget.token,
-                                  _passwordController.text,
+                            context
+                                .read<ForgotPasswordCubit>()
+                                .requestPasswordReset(
+                                  _emailController.text.trim(),
                                 );
                           }
                         },
                         child: Text(
-                          AppStrings.submitNewPassword.tr(),
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          AppStrings.resetPasswordTitle.tr(),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
                     const Spacer(),

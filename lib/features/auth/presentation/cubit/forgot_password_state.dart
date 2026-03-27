@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:silent_space/features/forgot_password/domain/entities/forgot_password_entity.dart';
+import 'package:silent_space/features/auth/domain/entities/forgot_password_entity.dart';
 
 abstract class ForgotPasswordState extends Equatable {
   const ForgotPasswordState();

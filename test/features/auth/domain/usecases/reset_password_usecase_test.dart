@@ -2,22 +2,23 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:silent_space/core/errors/failures.dart';
-import 'package:silent_space/features/forgot_password/domain/repositories/forgot_password_repository.dart';
-import 'package:silent_space/features/forgot_password/domain/usecases/reset_password_usecase.dart';
+import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
+import 'package:silent_space/features/auth/domain/usecases/reset_password_usecase.dart';
 
-class MockForgotPasswordRepository extends Mock implements ForgotPasswordRepository {}
+class MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
   late ResetPasswordUseCase useCase;
-  late MockForgotPasswordRepository mockRepository;
+  late MockAuthRepository mockRepository;
 
   setUp(() {
-    mockRepository = MockForgotPasswordRepository();
+    mockRepository = MockAuthRepository();
     useCase = ResetPasswordUseCase(mockRepository);
   });
 
   group('ResetPasswordUseCase', () {
-    const tParams = ResetPasswordParams(token: 'token', newPassword: 'password123');
+    const tParams =
+        ResetPasswordParams(token: 'token', newPassword: 'password123');
 
     test('resetPassword_WhenSuccessful_ReturnsRightNull', () async {
       when(() => mockRepository.resetPassword(any(), any()))
@@ -26,7 +27,9 @@ void main() {
       final result = await useCase(tParams);
 
       expect(result, const Right(null));
-      verify(() => mockRepository.resetPassword(tParams.token, tParams.newPassword)).called(1);
+      verify(() =>
+              mockRepository.resetPassword(tParams.token, tParams.newPassword))
+          .called(1);
     });
 
     test('resetPassword_WhenFailed_ReturnsFailure', () async {

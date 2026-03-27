@@ -6,7 +6,8 @@ class SessionFixtures {
       id: '1',
       userId: 'user123',
       startTime: DateTime.now().subtract(const Duration(days: 1, hours: 2)),
-      endTime: DateTime.now().subtract(const Duration(days: 1, hours: 1, minutes: 15)),
+      endTime: DateTime.now()
+          .subtract(const Duration(days: 1, hours: 1, minutes: 15)),
       durationInSeconds: 45 * 60,
       category: 'Work',
     ),

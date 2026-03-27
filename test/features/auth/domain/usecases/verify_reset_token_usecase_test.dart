@@ -2,24 +2,25 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:silent_space/core/errors/failures.dart';
-import 'package:silent_space/features/forgot_password/domain/entities/forgot_password_entity.dart';
-import 'package:silent_space/features/forgot_password/domain/repositories/forgot_password_repository.dart';
-import 'package:silent_space/features/forgot_password/domain/usecases/verify_reset_token_usecase.dart';
+import 'package:silent_space/features/auth/domain/entities/forgot_password_entity.dart';
+import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
+import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_usecase.dart';
 
-class MockForgotPasswordRepository extends Mock implements ForgotPasswordRepository {}
+class MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
   late VerifyResetTokenUseCase useCase;
-  late MockForgotPasswordRepository mockRepository;
+  late MockAuthRepository mockRepository;
 
   setUp(() {
-    mockRepository = MockForgotPasswordRepository();
+    mockRepository = MockAuthRepository();
     useCase = VerifyResetTokenUseCase(mockRepository);
   });
 
   group('VerifyResetTokenUseCase', () {
     const tToken = 'some_token';
-    const tEntity = ForgotPasswordEntity(email: 'test@example.com', token: tToken);
+    const tEntity =
+        ForgotPasswordEntity(email: 'test@example.com', token: tToken);
 
     test('verifyResetToken_WhenSuccessful_ReturnsEntity', () async {
       when(() => mockRepository.verifyResetToken(any()))

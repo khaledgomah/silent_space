@@ -125,13 +125,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                             hintText: AppStrings.username.tr(),
-                            hintStyle: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
+                            hintStyle: const TextStyle(
+                                color: AppColors.logifyGrey, fontSize: 14),
                             prefixIcon: const Icon(Icons.person_outline,
                                 size: 20, color: AppColors.logifyPrimary),
                             filled: true,
                             fillColor: AppColors.logifyLightGrey,
-                            contentPadding:
-                                const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 20),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide.none,
@@ -142,8 +143,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
-                              borderSide:
-                                  const BorderSide(color: AppColors.logifyPrimary, width: 1.5),
+                              borderSide: const BorderSide(
+                                  color: AppColors.logifyPrimary, width: 1.5),
                             ),
                           ),
                         ),
@@ -192,7 +193,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: [
                             Text(
                               AppStrings.hasAccount.tr(),
-                              style: const TextStyle(color: AppColors.logifyDark),
+                              style:
+                                  const TextStyle(color: AppColors.logifyDark),
                             ),
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(),

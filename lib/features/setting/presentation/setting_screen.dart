@@ -19,8 +19,12 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<SettingItemModel> settingItems = [
       SettingItemModel(
-        title: context.watch<ThemeCubit>().state.isDark ? AppStrings.lightMode.tr() : AppStrings.darkMode.tr(),
-        icon: Icon(context.watch<ThemeCubit>().state.isDark ? Icons.light_mode : Icons.dark_mode),
+        title: context.watch<ThemeCubit>().state.isDark
+            ? AppStrings.lightMode.tr()
+            : AppStrings.darkMode.tr(),
+        icon: Icon(context.watch<ThemeCubit>().state.isDark
+            ? Icons.light_mode
+            : Icons.dark_mode),
         onTap: () {
           context.read<ThemeCubit>().toggleTheme();
         },

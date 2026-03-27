@@ -28,66 +28,65 @@ class TimerView extends StatelessWidget {
         ),
       ),
       child: Column(
-      children: [
-        const Spacer(),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(width: context.width() * 0.05),
-            IconButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const SelectMusicSheet(),
-                  );
-                },
-                icon: Icon(
-                  FontAwesomeIcons.music,
-                  color: iconColor,
-                )),
-            IconButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return const TimerSettingModalSheet();
-                    },
-                  );
-                },
-                icon: Icon(
-                  FontAwesomeIcons.sliders,
-                  color: iconColor,
-                )),
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.music_note,
-                  color: iconColor,
-                )),
-            SizedBox(width: context.width() * 0.05),
-          ],
-        ),
-        const Spacer(),
-        CustomCountDownTimer(
-            countDownController: _countDownController),
-        const Spacer(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            StartAndPauseWidget(
-              countDownController: _countDownController,
-            ),
-            SizedBox(
-              width: context.width() * 0.2,
-            ),
-            RestartTimerIconButton(
-              countDownController: _countDownController,
-            )
-          ],
-        ),
-        const Spacer(),
-      ],
+        children: [
+          const Spacer(),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(width: context.width() * 0.05),
+              IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => const SelectMusicSheet(),
+                    );
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.music,
+                    color: iconColor,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return const TimerSettingModalSheet();
+                      },
+                    );
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.sliders,
+                    color: iconColor,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.music_note,
+                    color: iconColor,
+                  )),
+              SizedBox(width: context.width() * 0.05),
+            ],
+          ),
+          const Spacer(),
+          CustomCountDownTimer(countDownController: _countDownController),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              StartAndPauseWidget(
+                countDownController: _countDownController,
+              ),
+              SizedBox(
+                width: context.width() * 0.2,
+              ),
+              RestartTimerIconButton(
+                countDownController: _countDownController,
+              )
+            ],
+          ),
+          const Spacer(),
+        ],
       ),
     );
   }

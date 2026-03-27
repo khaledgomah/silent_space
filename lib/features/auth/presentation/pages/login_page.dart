@@ -135,21 +135,25 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Checkbox(
                                   value: _rememberMe,
-                                  onChanged: (v) => setState(() => _rememberMe = v ?? false),
+                                  onChanged: (v) =>
+                                      setState(() => _rememberMe = v ?? false),
                                   activeColor: AppColors.logifyPrimary,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4)),
                                 ),
                                 Text(
                                   AppStrings.rememberMe.tr(),
-                                  style: const TextStyle(fontSize: 14, color: AppColors.logifyDark),
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.logifyDark),
                                 ),
                               ],
                             ),
                             TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, RoutesName.forgotPassword);
-                                },
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, RoutesName.forgotPassword);
+                              },
                               child: Text(
                                 AppStrings.forgotPassword.tr(),
                                 style: const TextStyle(
@@ -174,16 +178,22 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           children: [
                             const Expanded(
-                                child: Divider(color: AppColors.logifyLightGrey, thickness: 1)),
+                                child: Divider(
+                                    color: AppColors.logifyLightGrey,
+                                    thickness: 1)),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
                                 AppStrings.orContinueWith.tr(),
-                                style: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
+                                style: const TextStyle(
+                                    color: AppColors.logifyGrey, fontSize: 14),
                               ),
                             ),
                             const Expanded(
-                                child: Divider(color: AppColors.logifyLightGrey, thickness: 1)),
+                                child: Divider(
+                                    color: AppColors.logifyLightGrey,
+                                    thickness: 1)),
                           ],
                         ),
                         const SizedBox(height: 32),
@@ -198,11 +208,13 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Text(
                               AppStrings.noAccount.tr(),
-                              style: const TextStyle(color: AppColors.logifyDark),
+                              style:
+                                  const TextStyle(color: AppColors.logifyDark),
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed(RoutesName.register);
+                                Navigator.of(context)
+                                    .pushNamed(RoutesName.register);
                               },
                               child: Text(
                                 AppStrings.register.tr(),

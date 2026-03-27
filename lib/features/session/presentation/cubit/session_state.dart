@@ -49,13 +49,13 @@ class SessionLoaded extends SessionState {
     final now = DateTime.now();
     final weekData = List.filled(7, 0);
     for (var i = 0; i < 7; i++) {
-        final date = now.subtract(Duration(days: 6 - i));
-        weekData[i] = sessions
-            .where((s) =>
-                s.startTime.year == date.year &&
-                s.startTime.month == date.month &&
-                s.startTime.day == date.day)
-            .fold(0, (sum, s) => sum + (s.durationInSeconds ~/ 60));
+      final date = now.subtract(Duration(days: 6 - i));
+      weekData[i] = sessions
+          .where((s) =>
+              s.startTime.year == date.year &&
+              s.startTime.month == date.month &&
+              s.startTime.day == date.day)
+          .fold(0, (sum, s) => sum + (s.durationInSeconds ~/ 60));
     }
     return weekData;
   }

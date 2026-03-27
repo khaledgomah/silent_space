@@ -21,7 +21,8 @@ class CustomCountDownTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, state) {
-        final int maxTime = BlocProvider.of<TimerCubit>(context).durationTime * 60;
+        final int maxTime =
+            BlocProvider.of<TimerCubit>(context).durationTime * 60;
         return CircularCountDownTimer(
           strokeWidth: Constants.circleThikness,
           controller: _countDownController,
@@ -41,7 +42,9 @@ class CustomCountDownTimer extends StatelessWidget {
               body: AppStrings.focusSessionComplete.tr(),
             );
             // Save the session data
-            context.read<TimerCubit>().completeSession(context.read<SessionCubit>());
+            context
+                .read<TimerCubit>()
+                .completeSession(context.read<SessionCubit>());
           },
         );
       },

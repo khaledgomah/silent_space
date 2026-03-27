@@ -2,17 +2,17 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:silent_space/core/errors/failures.dart';
-import 'package:silent_space/features/forgot_password/domain/repositories/forgot_password_repository.dart';
-import 'package:silent_space/features/forgot_password/domain/usecases/request_password_reset_usecase.dart';
+import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
+import 'package:silent_space/features/auth/domain/usecases/request_password_reset_usecase.dart';
 
-class MockForgotPasswordRepository extends Mock implements ForgotPasswordRepository {}
+class MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
   late RequestPasswordResetUseCase useCase;
-  late MockForgotPasswordRepository mockRepository;
+  late MockAuthRepository mockRepository;
 
   setUp(() {
-    mockRepository = MockForgotPasswordRepository();
+    mockRepository = MockAuthRepository();
     useCase = RequestPasswordResetUseCase(mockRepository);
   });
 

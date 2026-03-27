@@ -18,7 +18,8 @@ class RestartTimerIconButton extends StatelessWidget {
       onPressed: () {
         countDownController.restart(
             duration: BlocProvider.of<TimerCubit>(context).durationTime * 60);
-        if (BlocProvider.of<TimerCubit>(context).state.status != TimerStatus.inProgress) {
+        if (BlocProvider.of<TimerCubit>(context).state.status !=
+            TimerStatus.inProgress) {
           countDownController.pause();
         }
       },

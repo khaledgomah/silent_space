@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:silent_space/core/errors/failures.dart';
 import 'package:silent_space/core/usecases/usecase.dart';
-import 'package:silent_space/features/forgot_password/domain/repositories/forgot_password_repository.dart';
+import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
 
 class ResetPasswordParams extends Equatable {
   final String token;
@@ -18,7 +18,7 @@ class ResetPasswordParams extends Equatable {
 }
 
 class ResetPasswordUseCase implements UseCase<void, ResetPasswordParams> {
-  final ForgotPasswordRepository repository;
+  final AuthRepository repository;
 
   ResetPasswordUseCase(this.repository);
 

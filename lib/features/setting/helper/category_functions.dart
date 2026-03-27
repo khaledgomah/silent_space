@@ -22,5 +22,3 @@ Future<List<String>> getCategeories() async {
 
   return sharedPreferencesWithCache.getStringList('categories') ?? [];
 }
-
-

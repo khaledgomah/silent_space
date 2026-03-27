@@ -8,7 +8,6 @@ import 'package:silent_space/core/cache/hive_service.dart';
 import 'package:silent_space/core/network/dio_client.dart';
 import 'package:silent_space/core/network/network_info.dart';
 import 'package:silent_space/core/security/secure_storage_service.dart';
-import 'package:silent_space/core/utils/forgot_password_service_locator.dart';
 import 'package:silent_space/features/auth/data/implements/auth_repository_impl.dart';
 import 'package:silent_space/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:silent_space/features/auth/data/sources/auth_remote_data_source.dart';
@@ -20,6 +19,10 @@ import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart
 import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:silent_space/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:silent_space/features/auth/domain/usecases/request_password_reset_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/reset_password_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_usecase.dart';
+import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:silent_space/features/session/data/implements/session_repository_impl.dart';
 import 'package:silent_space/features/session/data/models/session_model.dart';
 import 'package:silent_space/features/session/data/sources/session_local_data_source.dart';
@@ -57,12 +60,15 @@ Future<void> locatorSetup() async {
 
   // ── Auth Feature ──
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(
+      () => FirebaseFirestore.instance);
 
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(firebaseAuth: getIt<FirebaseAuth>()),
+    () => AuthRemoteDataSourceImpl(
+      firebaseAuth: getIt<FirebaseAuth>(),
+      dio: getIt<DioClient>().dio,
+    ),
   );
-
   getIt.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(secureStorage: getIt<SecureStorageService>()),
   );
@@ -95,6 +101,18 @@ Future<void> locatorSetup() async {
     () => SignOutUseCase(getIt<AuthRepository>()),
   );
 
+  getIt.registerLazySingleton<RequestPasswordResetUseCase>(
+    () => RequestPasswordResetUseCase(getIt<AuthRepository>()),
+  );
+
+  getIt.registerLazySingleton<VerifyResetTokenUseCase>(
+    () => VerifyResetTokenUseCase(getIt<AuthRepository>()),
+  );
+
+  getIt.registerLazySingleton<ResetPasswordUseCase>(
+    () => ResetPasswordUseCase(getIt<AuthRepository>()),
+  );
+
   // ── Session Feature ──
   // Register Hive adapter
   Hive.registerAdapter(SessionModelAdapter());
@@ -125,7 +143,6 @@ Future<void> locatorSetup() async {
   );
 
   // ── Forgot Password Feature ──
-  setupForgotPasswordLocator(getIt);
 
   // ── Presentation BLoC/Cubit ──
   getIt.registerFactory<AuthBloc>(
@@ -143,6 +160,14 @@ Future<void> locatorSetup() async {
       signInUseCase: getIt<SignInUseCase>(),
       signUpUseCase: getIt<SignUpUseCase>(),
       signOutUseCase: getIt<SignOutUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<ForgotPasswordCubit>(
+    () => ForgotPasswordCubit(
+      requestPasswordResetUseCase: getIt<RequestPasswordResetUseCase>(),
+      verifyResetTokenUseCase: getIt<VerifyResetTokenUseCase>(),
+      resetPasswordUseCase: getIt<ResetPasswordUseCase>(),
     ),
   );
 

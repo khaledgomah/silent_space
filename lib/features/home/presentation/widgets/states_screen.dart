@@ -140,44 +140,44 @@ class _StatesScreenState extends State<StatesScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              // ── Header ──
-              Text(
-                AppStrings.summary.tr(),
-                style: TextStyleManager.headline1.copyWith(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 28,
-                  letterSpacing: -1,
+                // ── Header ──
+                Text(
+                  AppStrings.summary.tr(),
+                  style: TextStyleManager.headline1.copyWith(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 28,
+                    letterSpacing: -1,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
 
-              // ── Today Section ──
-              _buildSectionTitle(context, AppStrings.today.tr()),
-              const SizedBox(height: 12),
-              ShowDetails(
-                focusMinutes: loaded.todayMinutes,
-                sessionCount: loaded.todayCount,
-              ),
-              const SizedBox(height: 32),
+                // ── Today Section ──
+                _buildSectionTitle(context, AppStrings.today.tr()),
+                const SizedBox(height: 12),
+                ShowDetails(
+                  focusMinutes: loaded.todayMinutes,
+                  sessionCount: loaded.todayCount,
+                ),
+                const SizedBox(height: 32),
 
-              // ── Weekly Chart ──
-              _buildSectionTitle(context, AppStrings.weeklyOverview.tr()),
-              const SizedBox(height: 12),
-              FocusChart(weeklyMinutes: loaded.weeklyMinutes),
-              const SizedBox(height: 32),
+                // ── Weekly Chart ──
+                _buildSectionTitle(context, AppStrings.weeklyOverview.tr()),
+                const SizedBox(height: 12),
+                FocusChart(weeklyMinutes: loaded.weeklyMinutes),
+                const SizedBox(height: 32),
 
-              // ── All-Time Section ──
-              _buildSectionTitle(context, AppStrings.allTime.tr()),
-              const SizedBox(height: 12),
-              ShowDetails(
-                focusMinutes: loaded.totalMinutes,
-                sessionCount: loaded.totalCount,
-              ),
-              const SizedBox(height: 40),
-            ],
+                // ── All-Time Section ──
+                _buildSectionTitle(context, AppStrings.allTime.tr()),
+                const SizedBox(height: 12),
+                ShowDetails(
+                  focusMinutes: loaded.totalMinutes,
+                  sessionCount: loaded.totalCount,
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
-        ),
-      );
+        );
       },
     );
   }

@@ -52,7 +52,8 @@ void main() {
           .thenAnswer((_) async {});
 
       // act
-      await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
+      await repository.signInWithEmailAndPassword(
+          email: tEmail, password: tPassword);
 
       // assert
       verify(() => mockNetworkInfo.isConnected).called(1);
@@ -63,8 +64,8 @@ void main() {
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
 
       // act
-      final result =
-          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
+      final result = await repository.signInWithEmailAndPassword(
+          email: tEmail, password: tPassword);
 
       // assert
       expect(result, isA<Left>());
@@ -74,8 +75,7 @@ void main() {
       );
     });
 
-    test(
-        'should return UserEntity and cache token when remote call is successful',
+    test('should return UserEntity when remote call is successful',
         () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
@@ -83,20 +83,16 @@ void main() {
             email: tEmail,
             password: tPassword,
           )).thenAnswer((_) async => tUserModel);
-      when(() => mockLocalDataSource.cacheToken(any()))
-          .thenAnswer((_) async {});
 
       // act
-      final result =
-          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
+      final result = await repository.signInWithEmailAndPassword(
+          email: tEmail, password: tPassword);
 
       // assert
       expect(result, const Right(tUserModel));
-      verify(() => mockLocalDataSource.cacheToken('QpwL5tke4Pnpja7X4'))
-          .called(1);
     });
 
-    test('should return ServerFailure when remote call throws ServerException',
+    test('should return AuthFailure when remote call throws ServerException',
         () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
@@ -108,14 +104,14 @@ void main() {
       );
 
       // act
-      final result =
-          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
+      final result = await repository.signInWithEmailAndPassword(
+          email: tEmail, password: tPassword);
 
       // assert
       expect(result, isA<Left>());
       result.fold(
         (failure) {
-          expect(failure, isA<ServerFailure>());
+          expect(failure, isA<AuthFailure>());
           expect(failure.message, 'user not found');
         },
         (_) => fail('Should have returned Left'),
@@ -126,6 +122,7 @@ void main() {
   group('signOut', () {
     test('should clear token and return Right(null)', () async {
       // arrange
+      when(() => mockRemoteDataSource.signOut()).thenAnswer((_) async {});
       when(() => mockLocalDataSource.clearToken()).thenAnswer((_) async {});
 
       // act
@@ -133,13 +130,14 @@ void main() {
 
       // assert
       expect(result, const Right(null));
+      verify(() => mockRemoteDataSource.signOut()).called(1);
       verify(() => mockLocalDataSource.clearToken()).called(1);
     });
 
-    test('should return CacheFailure when clearing token fails', () async {
+    test('should return AuthFailure when remote call throws ServerException', () async {
       // arrange
-      when(() => mockLocalDataSource.clearToken())
-          .thenThrow(const CacheException(message: 'Failed to clear token'));
+      when(() => mockRemoteDataSource.signOut()).thenThrow(
+          const ServerException(message: 'Sign out failed'));
 
       // act
       final result = await repository.signOut();

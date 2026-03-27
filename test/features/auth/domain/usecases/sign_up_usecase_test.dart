@@ -25,16 +25,17 @@ void main() {
   group('SignUpUseCase', () {
     test('should return UserEntity when registration is successful', () async {
       // arrange
-      when(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
-          .thenAnswer((_) async => const Right(tUser));
+      when(() => mockRepository.registerWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword)).thenAnswer((_) async => const Right(tUser));
 
       // act
       final result = await useCase(tParams);
 
       // assert
       expect(result, const Right(tUser));
-      verify(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
-          .called(1);
+      verify(() => mockRepository.registerWithEmailAndPassword(
+          email: tEmail, password: tPassword)).called(1);
       verifyNoMoreInteractions(mockRepository);
     });
 
@@ -42,16 +43,17 @@ void main() {
       // arrange
       const tFailure =
           ServerFailure(message: 'Missing email or password', statusCode: 400);
-      when(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
-          .thenAnswer((_) async => const Left(tFailure));
+      when(() => mockRepository.registerWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword)).thenAnswer((_) async => const Left(tFailure));
 
       // act
       final result = await useCase(tParams);
 
       // assert
       expect(result, const Left(tFailure));
-      verify(() => mockRepository.registerWithEmailAndPassword(email: tEmail, password: tPassword))
-          .called(1);
+      verify(() => mockRepository.registerWithEmailAndPassword(
+          email: tEmail, password: tPassword)).called(1);
     });
   });
 }

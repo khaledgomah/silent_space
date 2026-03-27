@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:silent_space/features/forgot_password/presentation/cubit/forgot_password_cubit.dart';
-import 'package:silent_space/features/forgot_password/presentation/cubit/forgot_password_state.dart';
-import 'package:silent_space/features/forgot_password/presentation/pages/reset_password_page.dart';
+import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cubit.dart';
+import 'package:silent_space/features/auth/presentation/cubit/forgot_password_state.dart';
+import 'package:silent_space/features/auth/presentation/pages/forgot_password_page.dart';
 
 class MockForgotPasswordCubit extends Mock implements ForgotPasswordCubit {}
 
@@ -27,15 +27,16 @@ void main() {
     );
   }
 
-  testWidgets('ResetPasswordPage displays UI elements successfully', (WidgetTester tester) async {
+  testWidgets('ForgotPasswordPage displays UI elements successfully',
+      (WidgetTester tester) async {
     when(() => mockCubit.state).thenReturn(ForgotPasswordInitial());
     when(() => mockCubit.stream).thenAnswer((_) => const Stream.empty());
     when(() => mockCubit.close()).thenAnswer((_) async {});
 
-    await tester.pumpWidget(buildTestableWidget(const ResetPasswordPage(token: 'dummy_token')));
+    await tester.pumpWidget(buildTestableWidget(const ForgotPasswordPage()));
     await tester.pump();
 
-    // Verify fields by type instead of localized text
+    // Verify email field logic exists via keys or types (since text is localized)
     expect(find.byType(TextFormField), findsOneWidget);
     expect(find.byType(ElevatedButton), findsOneWidget);
   });

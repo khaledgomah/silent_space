@@ -7,9 +7,11 @@ extension Navigation on BuildContext {
       MaterialPageRoute(builder: (context) => page),
     );
   }
+
   void pushNamed(String routeName) {
     Navigator.pushNamed(this, routeName);
   }
+
   void pushAndReplacement(Widget page) {
     Navigator.pushReplacement(
       this,

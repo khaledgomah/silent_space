@@ -5,16 +5,15 @@ extension MediaQuerySize on BuildContext {
   double width() => MediaQuery.of(this).size.width;
 }
 
-
 String getDate(double day) {
   final date = DateTime.now();
   final DateTime dateTime = date.subtract(Duration(days: day.toInt()));
   return '${dateTime.day}/${dateTime.month}';
 }
 
-void showSnackBar(BuildContext context, String message,{int duration = 2}) {
+void showSnackBar(BuildContext context, String message, {int duration = 2}) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(message),
-    duration:  Duration(seconds: duration),
+    duration: Duration(seconds: duration),
   ));
 }

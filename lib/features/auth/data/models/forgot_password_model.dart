@@ -1,4 +1,4 @@
-import 'package:silent_space/features/forgot_password/domain/entities/forgot_password_entity.dart';
+import 'package:silent_space/features/auth/domain/entities/forgot_password_entity.dart';
 
 class ForgotPasswordModel extends ForgotPasswordEntity {
   const ForgotPasswordModel({
@@ -11,7 +11,9 @@ class ForgotPasswordModel extends ForgotPasswordEntity {
     return ForgotPasswordModel(
       email: json['email'] as String? ?? '',
       token: json['token'] as String?,
-      expiresAt: json['expiresAt'] != null ? DateTime.tryParse(json['expiresAt'] as String) : null,
+      expiresAt: json['expiresAt'] != null
+          ? DateTime.tryParse(json['expiresAt'] as String)
+          : null,
     );
   }
 

@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:silent_space/core/errors/exceptions.dart';
 import 'package:silent_space/core/errors/failures.dart';
 import 'package:silent_space/core/network/network_info.dart';
+import 'package:silent_space/features/auth/domain/entities/forgot_password_entity.dart';
 import 'package:silent_space/features/forgot_password/data/sources/forgot_password_remote_data_source.dart';
-import 'package:silent_space/features/forgot_password/domain/entities/forgot_password_entity.dart';
 import 'package:silent_space/features/forgot_password/domain/repositories/forgot_password_repository.dart';
 
 class ForgotPasswordRepositoryImpl implements ForgotPasswordRepository {
@@ -32,7 +32,8 @@ class ForgotPasswordRepositoryImpl implements ForgotPasswordRepository {
   }
 
   @override
-  Future<Either<Failure, ForgotPasswordEntity>> verifyResetToken(String token) async {
+  Future<Either<Failure, ForgotPasswordEntity>> verifyResetToken(
+      String token) async {
     if (await networkInfo.isConnected) {
       try {
         final result = await remoteDataSource.verifyResetToken(token);
@@ -48,7 +49,8 @@ class ForgotPasswordRepositoryImpl implements ForgotPasswordRepository {
   }
 
   @override
-  Future<Either<Failure, void>> resetPassword(String token, String newPassword) async {
+  Future<Either<Failure, void>> resetPassword(
+      String token, String newPassword) async {
     if (await networkInfo.isConnected) {
       try {
         await remoteDataSource.resetPassword(token, newPassword);

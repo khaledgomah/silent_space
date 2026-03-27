@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:silent_space/core/errors/exceptions.dart';
-import 'package:silent_space/features/forgot_password/data/models/forgot_password_model.dart';
+import 'package:silent_space/features/auth/data/models/forgot_password_model.dart';
 
 abstract class ForgotPasswordRemoteDataSource {
   Future<void> requestPasswordReset(String email);
@@ -8,7 +8,8 @@ abstract class ForgotPasswordRemoteDataSource {
   Future<void> resetPassword(String token, String newPassword);
 }
 
-class ForgotPasswordRemoteDataSourceImpl implements ForgotPasswordRemoteDataSource {
+class ForgotPasswordRemoteDataSourceImpl
+    implements ForgotPasswordRemoteDataSource {
   final Dio dio;
 
   ForgotPasswordRemoteDataSourceImpl({required this.dio});
@@ -24,7 +25,8 @@ class ForgotPasswordRemoteDataSourceImpl implements ForgotPasswordRemoteDataSour
         throw const ServerException(message: 'User not found for this email.');
       }
       throw ServerException(
-          message: e.message ?? 'An error occurred while requesting password reset.');
+          message: e.message ??
+              'An error occurred while requesting password reset.');
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -36,12 +38,14 @@ class ForgotPasswordRemoteDataSourceImpl implements ForgotPasswordRemoteDataSour
       final response = await dio.post('/auth/forgot-password/verify', data: {
         'token': token,
       });
-      return ForgotPasswordModel.fromJson(response.data as Map<String, dynamic>);
+      return ForgotPasswordModel.fromJson(
+          response.data as Map<String, dynamic>);
     } on DioException catch (e) {
       if (e.response != null && e.response!.statusCode == 400) {
         throw const ServerException(message: 'Invalid or expired token.');
       }
-      throw ServerException(message: e.message ?? 'An error occurred while verifying the token.');
+      throw ServerException(
+          message: e.message ?? 'An error occurred while verifying the token.');
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -58,7 +62,8 @@ class ForgotPasswordRemoteDataSourceImpl implements ForgotPasswordRemoteDataSour
       if (e.response != null && e.response!.statusCode == 400) {
         throw const ServerException(message: 'Invalid or expired token.');
       }
-      throw ServerException(message: e.message ?? 'An error occurred while resetting password.');
+      throw ServerException(
+          message: e.message ?? 'An error occurred while resetting password.');
     } catch (e) {
       throw ServerException(message: e.toString());
     }

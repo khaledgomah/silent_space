@@ -16,8 +16,9 @@ class SoundTile extends StatelessWidget {
     return IconButton(
       isSelected: isSelected,
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(
-            isSelected ? Theme.of(context).colorScheme.surfaceContainerHighest : Colors.transparent),
+        backgroundColor: WidgetStateProperty.all(isSelected
+            ? Theme.of(context).colorScheme.surfaceContainerHighest
+            : Colors.transparent),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),

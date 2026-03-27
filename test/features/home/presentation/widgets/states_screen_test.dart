@@ -14,6 +14,7 @@ import 'package:silent_space/features/session/presentation/cubit/session_state.d
 
 // Mock Cubits
 class MockSessionCubit extends Mock implements SessionCubit {}
+
 class MockAuthCubit extends Mock implements AuthCubit {}
 
 void main() {
@@ -72,8 +73,7 @@ void main() {
     testWidgets(
         'shows empty query stats icon when SessionLoaded with empty sessions',
         (tester) async {
-      when(() => mockSessionCubit.state)
-          .thenReturn(const SessionLoaded([]));
+      when(() => mockSessionCubit.state).thenReturn(const SessionLoaded([]));
 
       await tester.pumpWidget(buildTestableWidget());
 
@@ -110,10 +110,10 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
     });
 
-    testWidgets('shows RefreshIndicator across different states', (tester) async {
+    testWidgets('shows RefreshIndicator across different states',
+        (tester) async {
       // 1. Loaded Empty
-      when(() => mockSessionCubit.state)
-          .thenReturn(const SessionLoaded([]));
+      when(() => mockSessionCubit.state).thenReturn(const SessionLoaded([]));
       await tester.pumpWidget(buildTestableWidget());
       expect(find.byType(RefreshIndicator), findsOneWidget);
 
@@ -124,13 +124,14 @@ void main() {
       expect(find.byType(RefreshIndicator), findsOneWidget);
     });
 
-    testWidgets('pulling RefreshIndicator triggers loadSessions', (tester) async {
-      when(() => mockSessionCubit.state)
-          .thenReturn(const SessionLoaded([]));
+    testWidgets('pulling RefreshIndicator triggers loadSessions',
+        (tester) async {
+      when(() => mockSessionCubit.state).thenReturn(const SessionLoaded([]));
 
       await tester.pumpWidget(buildTestableWidget());
 
-      await tester.drag(find.byType(RefreshIndicator), const Offset(0.0, 300.0));
+      await tester.drag(
+          find.byType(RefreshIndicator), const Offset(0.0, 300.0));
       await tester.pumpAndSettle();
 
       verify(() => mockSessionCubit.loadSessions(

@@ -32,7 +32,7 @@ class AppColors {
   static const Color logifyGrey = Color(0xFF757575); // Secondary text grey
   static const Color logifyLightGrey = Color(0xFFD1D1D1); // Underline color
   static const Color logifyWhite = Color(0xFFFFFFFF);
-  static const Color logifyDark = Color(0xFF000000); 
+  static const Color logifyDark = Color(0xFF000000);
   static const Color logifyGoogleRed = Color(0xFFDB4437);
   static const Color logifyFacebookBlue = Color(0xFF4267B2);
 
