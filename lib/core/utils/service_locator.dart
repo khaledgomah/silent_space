@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silent_space/core/cache/hive_service.dart';
-import 'package:silent_space/core/network/dio_client.dart';
 import 'package:silent_space/core/network/network_info.dart';
 import 'package:silent_space/core/security/secure_storage_service.dart';
 import 'package:silent_space/features/auth/data/implements/auth_repository_impl.dart';
@@ -13,15 +12,14 @@ import 'package:silent_space/features/auth/data/sources/auth_local_data_source.d
 import 'package:silent_space/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
 import 'package:silent_space/features/auth/domain/usecases/link_account_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/request_password_reset_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/reset_password_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_anonymously_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:silent_space/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:silent_space/features/auth/domain/usecases/request_password_reset_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/reset_password_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_usecase.dart';
 import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:silent_space/features/session/data/implements/session_repository_impl.dart';
 import 'package:silent_space/features/session/data/models/session_model.dart';
@@ -31,6 +29,8 @@ import 'package:silent_space/features/session/domain/repositories/session_reposi
 import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
+
+import '../../features/auth/domain/usecases/verify_reset_token_usecase.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -49,10 +49,6 @@ Future<void> locatorSetup() async {
     () => NetworkInfoImpl(connectivity: Connectivity()),
   );
 
-  getIt.registerLazySingleton<DioClient>(
-    () => DioClient(secureStorage: getIt<SecureStorageService>()),
-  );
-
   // ── Cache ──
   final hiveService = HiveService();
   await hiveService.init();
@@ -60,15 +56,14 @@ Future<void> locatorSetup() async {
 
   // ── Auth Feature ──
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton<FirebaseFirestore>(
-      () => FirebaseFirestore.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
 
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(
       firebaseAuth: getIt<FirebaseAuth>(),
-      dio: getIt<DioClient>().dio,
     ),
   );
+
   getIt.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(secureStorage: getIt<SecureStorageService>()),
   );
@@ -141,8 +136,6 @@ Future<void> locatorSetup() async {
   getIt.registerLazySingleton<GetSessionsByDateRangeUseCase>(
     () => GetSessionsByDateRangeUseCase(getIt<SessionRepository>()),
   );
-
-  // ── Forgot Password Feature ──
 
   // ── Presentation BLoC/Cubit ──
   getIt.registerFactory<AuthBloc>(

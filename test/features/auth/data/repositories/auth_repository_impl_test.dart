@@ -48,12 +48,10 @@ void main() {
             email: any(named: 'email'),
             password: any(named: 'password'),
           )).thenAnswer((_) async => tUserModel);
-      when(() => mockLocalDataSource.cacheToken(any()))
-          .thenAnswer((_) async {});
+      when(() => mockLocalDataSource.cacheToken(any())).thenAnswer((_) async {});
 
       // act
-      await repository.signInWithEmailAndPassword(
-          email: tEmail, password: tPassword);
+      await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       verify(() => mockNetworkInfo.isConnected).called(1);
@@ -64,8 +62,8 @@ void main() {
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
 
       // act
-      final result = await repository.signInWithEmailAndPassword(
-          email: tEmail, password: tPassword);
+      final result =
+          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       expect(result, isA<Left>());
@@ -75,8 +73,7 @@ void main() {
       );
     });
 
-    test('should return UserEntity when remote call is successful',
-        () async {
+    test('should return UserEntity when remote call is successful', () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(() => mockRemoteDataSource.signInWithEmailAndPassword(
@@ -85,15 +82,14 @@ void main() {
           )).thenAnswer((_) async => tUserModel);
 
       // act
-      final result = await repository.signInWithEmailAndPassword(
-          email: tEmail, password: tPassword);
+      final result =
+          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       expect(result, const Right(tUserModel));
     });
 
-    test('should return AuthFailure when remote call throws ServerException',
-        () async {
+    test('should return AuthFailure when remote call throws ServerException', () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(() => mockRemoteDataSource.signInWithEmailAndPassword(
@@ -104,8 +100,8 @@ void main() {
       );
 
       // act
-      final result = await repository.signInWithEmailAndPassword(
-          email: tEmail, password: tPassword);
+      final result =
+          await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
       expect(result, isA<Left>());
@@ -136,8 +132,8 @@ void main() {
 
     test('should return AuthFailure when remote call throws ServerException', () async {
       // arrange
-      when(() => mockRemoteDataSource.signOut()).thenThrow(
-          const ServerException(message: 'Sign out failed'));
+      when(() => mockRemoteDataSource.signOut())
+          .thenThrow(const ServerException(message: 'Sign out failed'));
 
       // act
       final result = await repository.signOut();
@@ -150,8 +146,7 @@ void main() {
   group('isLoggedIn', () {
     test('should return true when token exists', () async {
       // arrange
-      when(() => mockRemoteDataSource.isLoggedIn())
-          .thenAnswer((_) async => true);
+      when(() => mockRemoteDataSource.isLoggedIn()).thenAnswer((_) async => true);
 
       // act
       final result = await repository.isLoggedIn();
@@ -162,8 +157,7 @@ void main() {
 
     test('should return false when no token', () async {
       // arrange
-      when(() => mockRemoteDataSource.isLoggedIn())
-          .thenAnswer((_) async => false);
+      when(() => mockRemoteDataSource.isLoggedIn()).thenAnswer((_) async => false);
 
       // act
       final result = await repository.isLoggedIn();

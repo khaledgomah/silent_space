@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silent_space/core/errors/exceptions.dart';
 import 'package:silent_space/features/auth/data/models/forgot_password_model.dart';
@@ -27,7 +26,7 @@ abstract class AuthRemoteDataSource {
 
   Future<bool> isLoggedIn();
 
-  // Forgot Password API methods
+  // Forgot Password methods
   Future<void> requestPasswordReset(String email);
   Future<ForgotPasswordModel> verifyResetToken(String token);
   Future<void> resetPassword(String token, String newPassword);
@@ -35,11 +34,9 @@ abstract class AuthRemoteDataSource {
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
-  final Dio? dio;
 
   const AuthRemoteDataSourceImpl({
     required this.firebaseAuth,
-    this.dio,
   });
 
   @override
@@ -149,17 +146,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> requestPasswordReset(String email) async {
-    if (dio == null) throw const ServerException(message: 'Dio client not initialized.');
     try {
-      await dio!.post('/auth/forgot-password/request', data: {
-        'email': email,
-      });
-    } on DioException catch (e) {
-      if (e.response != null && e.response!.statusCode == 404) {
-        throw const ServerException(message: 'User not found for this email.');
-      }
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
       throw ServerException(
-          message: e.message ?? 'An error occurred while requesting password reset.');
+        message: e.message ?? 'An error occurred while requesting password reset.',
+        statusCode: 0,
+        errorCode: e.code,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -167,17 +161,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<ForgotPasswordModel> verifyResetToken(String token) async {
-    if (dio == null) throw const ServerException(message: 'Dio client not initialized.');
     try {
-      final response = await dio!.post('/auth/forgot-password/verify', data: {
-        'token': token,
-      });
-      return ForgotPasswordModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
-      if (e.response != null && e.response!.statusCode == 400) {
-        throw const ServerException(message: 'Invalid or expired token.');
-      }
-      throw ServerException(message: e.message ?? 'An error occurred while verifying the token.');
+      final email = await firebaseAuth.verifyPasswordResetCode(token);
+      return ForgotPasswordModel(
+        email: email,
+        token: token,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'An error occurred while verifying the token.',
+        statusCode: 0,
+        errorCode: e.code,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -185,17 +180,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> resetPassword(String token, String newPassword) async {
-    if (dio == null) throw const ServerException(message: 'Dio client not initialized.');
     try {
-      await dio!.post('/auth/forgot-password/reset', data: {
-        'token': token,
-        'newPassword': newPassword,
-      });
-    } on DioException catch (e) {
-      if (e.response != null && e.response!.statusCode == 400) {
-        throw const ServerException(message: 'Invalid or expired token.');
-      }
-      throw ServerException(message: e.message ?? 'An error occurred while resetting password.');
+      await firebaseAuth.confirmPasswordReset(
+        code: token,
+        newPassword: newPassword,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'An error occurred while resetting password.',
+        statusCode: 0,
+        errorCode: e.code,
+      );
     } catch (e) {
       throw ServerException(message: e.toString());
     }
