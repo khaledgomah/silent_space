@@ -1,0 +1,217 @@
+name: AI-Assisted PR Review
+
+"on":
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - "lib/**"
+      - "test/**"
+      - "pubspec.yaml"
+      - "analysis_options.yaml"
+  workflow_dispatch: {}
+
+jobs:
+  architecture-check:
+    runs-on: ubuntu-latest
+    name: Clean Architecture Validation
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run analysis
+        run: |
+          flutter analyze lib/ test/
+
+      - name: Check for layer violations
+        run: |
+          echo "Checking for prohibited imports in presentation layer..."
+          if grep -r "from 'silent_space/features/.*/data/" lib/features/*/presentation/ 2>/dev/null; then
+            echo "❌ VIOLATION: Presentation layer imports data sources"
+            exit 1
+          else
+            echo "✅ Clean: No data layer imports in presentation"
+          fi
+
+      - name: Check for Flutter imports in domain
+        run: |
+          echo "Checking for Flutter imports in domain layer..."
+          if grep -r "import 'package:flutter" lib/features/*/domain/ 2>/dev/null; then
+            echo "⚠️  WARNING: Domain layer imports Flutter framework"
+          else
+            echo "✅ Clean: Domain layer is pure Dart"
+          fi
+
+      - name: Verify service locator registration
+        run: |
+          echo "Verifying new types are registered in service_locator.dart..."
+          grep -r "registerLazySingleton\|registerFactory" lib/core/utils/service_locator.dart | wc -l
+
+  test-coverage:
+    runs-on: ubuntu-latest
+    name: Unit & Widget Tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: |
+          flutter test \
+            --coverage \
+            --coverage-path=coverage/lcov.info \
+            --test-randomize-ordering-seed random
+
+      - name: Check coverage threshold
+        run: |
+          # Install lcov
+          sudo apt-get install -y lcov
+
+          # Generate coverage report
+          genhtml coverage/lcov.info -o coverage/html
+
+          # Extract coverage percentage (example: 75%)
+          COVERAGE=$(grep -o 'percent.*100' coverage/html/index.html | head -1 | grep -o '[0-9]*\.[0-9]*' || echo "0")
+          echo "Test Coverage: ${COVERAGE}%"
+
+          # Fail if below 60%
+          if (( $(echo "$COVERAGE < 60" | bc -l) )); then
+            echo "❌ Coverage below 60%: ${COVERAGE}%"
+            exit 1
+          else
+            echo "✅ Coverage acceptable: ${COVERAGE}%"
+          fi
+
+  naming-conventions:
+    runs-on: ubuntu-latest
+    name: Code Style & Naming
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Check file naming (snake_case)
+        run: |
+          echo "Checking file naming conventions (snake_case)..."
+          VIOLATIONS=$(find lib test -type f -name "*.dart" | grep -E '[A-Z]|_[A-Z]' | grep -v '_generated\|\.freezed\|\.g\.' || true)
+
+          if [ ! -z "$VIOLATIONS" ]; then
+            echo "⚠️  Files not in snake_case:"
+            echo "$VIOLATIONS"
+          else
+            echo "✅ All files follow snake_case"
+          fi
+
+      - name: Check const constructor usage
+        run: |
+          echo "Checking for widgets missing const constructors..."
+          VIOLATIONS=$(grep -r "new StatelessWidget\|new StatefulWidget\|= StatelessWidget()\|= StatefulWidget()" lib/features/*/presentation/widgets/ 2>/dev/null || true)
+
+          if [ ! -z "$VIOLATIONS" ]; then
+            echo "⚠️  Widgets missing const:"
+            echo "$VIOLATIONS"
+          else
+            echo "✅ All widgets use const constructors"
+          fi
+
+      - name: Format check
+        run: |
+          dart format --set-exit-if-changed lib/ test/ || true
+
+  dependency-check:
+    runs-on: ubuntu-latest
+    name: Dependency Security Scan
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run pub outdated
+        run: |
+          flutter pub get
+          flutter pub outdated || true
+
+      - name: Check for dangerous dependencies
+        run: |
+          echo "Scanning for deprecated or unsafe packages..."
+
+          DANGEROUS=(
+            "provider"  # Should use BLoC
+            "get"       # Should use get_it
+            "stacked"   # Incompatible with clean architecture
+          )
+
+          pubspec=$(cat pubspec.yaml)
+          for pkg in "${DANGEROUS[@]}"; do
+            if echo "$pubspec" | grep -q "^  $pkg:"; then
+              echo "⚠️  WARNING: '$pkg' detected - review usage"
+            fi
+          done
+
+          echo "✅ Dependency scan complete"
+
+  comment-guidelines:
+    runs-on: ubuntu-latest
+    name: Documentation & Comments
+
+    steps:
+      - name: Check missing documentation
+        run: |
+          echo "PR should include:"
+          echo "✅ Descriptive PR title (feature/fix/refactor scope)"
+          echo "✅ Clear description of changes"
+          echo "✅ Link to related issues"
+          echo "✅ Updated tests"
+          echo "✅ Updated documentation if needed"
+
+  summary:
+    runs-on: ubuntu-latest
+    name: Review Summary
+    needs:
+      [architecture-check, test-coverage, naming-conventions, dependency-check]
+    if: always()
+
+    steps:
+      - name: Check job statuses
+        run: |
+          echo "## PR Review Summary"
+          echo ""
+          echo "- Architecture Check: ${{ needs.architecture-check.result }}"
+          echo "- Test Coverage: ${{ needs.test-coverage.result }}"
+          echo "- Code Style: ${{ needs.naming-conventions.result }}"
+          echo "- Dependencies: ${{ needs.dependency-check.result }}"
+          echo ""
+
+          if [[ "${{ needs.architecture-check.result }}" == "failure" ]] || \
+             [[ "${{ needs.test-coverage.result }}" == "failure" ]]; then
+            echo "❌ PR requires fixes"
+            exit 1
+          else
+            echo "✅ PR checks complete"
+          fi

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
@@ -18,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -37,12 +39,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final theme = Theme.of(context);
-
     return BlocProvider(
       create: (_) => getIt<AuthCubit>(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(state.message),
-                        backgroundColor: theme.colorScheme.error,
+                        backgroundColor: Colors.red,
                       ),
                     );
                   }
@@ -68,31 +68,40 @@ class _LoginPageState extends State<LoginPage> {
                     key: _formKey,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const SizedBox(height: 20),
+                        // ── Logo ──
+                        Container(
+                          height: 80,
+                          width: 80,
+                          decoration: const BoxDecoration(
+                            color: AppColors.logifyPrimary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'L',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 48,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+
                         // ── Header ──
-                        Icon(
-                          Icons.self_improvement,
-                          size: 72,
-                          color: theme.colorScheme.primary,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          AppStrings.loginTitle.tr(),
-                          style: theme.textTheme.headlineMedium?.copyWith(
+                        const Text(
+                          'Log in to your Account',
+                          style: TextStyle(
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
+                            color: AppColors.logifyDark,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          AppStrings.loginSubtitle.tr(),
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 32),
 
                         // ── Email ──
                         AuthEmailField(controller: _emailController),
@@ -104,30 +113,82 @@ class _LoginPageState extends State<LoginPage> {
                           label: AppStrings.password.tr(),
                           onFieldSubmitted: (val) => _onSubmit(cubit),
                         ),
+                        const SizedBox(height: 12),
+
+                        // ── Remember Me & Forgot ──
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: _rememberMe,
+                              onChanged: (v) =>
+                                  setState(() => _rememberMe = v!),
+                              activeColor: AppColors.logifyPrimary,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4)),
+                            ),
+                            const Text('Remember me'),
+                            const Spacer(),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Forgot Password?',
+                                style:
+                                    TextStyle(color: AppColors.logifyPrimary),
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 24),
 
-                        // ── Submit ──
+                        // ── Submit Button ──
                         AuthSubmitButton(
                           isLoading: state is AuthLoading,
                           onPressed: () => _onSubmit(cubit),
-                          text: AppStrings.login.tr(),
+                          text: 'Log In',
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 32),
 
-                        // ── Register link ──
+                        // ── Divider ──
+                        const Row(
+                          children: [
+                            Expanded(child: Divider()),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Text(
+                                'Or continue with',
+                                style: TextStyle(color: AppColors.logifyGrey),
+                              ),
+                            ),
+                            Expanded(child: Divider()),
+                          ],
+                        ),
+                        const SizedBox(height: 32),
+
+                        // ── Social Buttons ──
+                        const SocialLoginButtons(),
+                        const SizedBox(height: 32),
+
+                        // ── Footer ──
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(AppStrings.noAccount.tr()),
+                            const Text("Don't have an account?"),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushNamed(RoutesName.register);
                               },
-                              child: Text(AppStrings.register.tr()),
+                              child: const Text(
+                                'Sign up',
+                                style: TextStyle(
+                                  color: AppColors.logifyPrimary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   );

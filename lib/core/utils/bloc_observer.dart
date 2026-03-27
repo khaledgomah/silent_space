@@ -34,6 +34,7 @@ class SimpleBlocObserver extends BlocObserver {
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
-    _logger.e('onError -- ${bloc.runtimeType}, $error', error: error, stackTrace: stackTrace);
+    _logger.e('onError -- ${bloc.runtimeType}, $error',
+        error: error, stackTrace: stackTrace);
   }
 }

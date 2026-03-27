@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +30,7 @@ class SilentSpace extends StatelessWidget {
           return BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, themeState) {
               return MaterialApp(
-                locale: DevicePreview.locale(context),
-                builder: DevicePreview.appBuilder,
+                locale: context.locale,
                 localizationsDelegates: context.localizationDelegates,
                 supportedLocales: context.supportedLocales,
                 debugShowCheckedModeBanner: false,
@@ -41,8 +39,7 @@ class SilentSpace extends StatelessWidget {
                 onGenerateRoute: onGenerateRoute,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
-                themeMode:
-                    themeState.isDark ? ThemeMode.dark : ThemeMode.light,
+                themeMode: themeState.isDark ? ThemeMode.dark : ThemeMode.light,
               );
             },
           );

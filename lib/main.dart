@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:silent_space/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,16 +21,11 @@ Future<void> main() async {
     Bloc.observer = SimpleBlocObserver();
   }
   runApp(
-    DevicePreview(
-      enabled: kDebugMode,
-      builder: (context) => EasyLocalization(
-        supportedLocales: const [Locale('en'), Locale('ar')],
-        path: 'assets/translations',
-        fallbackLocale: const Locale('en'),
-        child: const SilentSpace(),
-      ),
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: const SilentSpace(),
     ),
   );
 }
-
-
