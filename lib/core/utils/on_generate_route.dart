@@ -1,15 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
+import 'package:silent_space/core/utils/page_transitions.dart';
 import 'package:silent_space/features/auth/presentation/pages/login_page.dart';
 import 'package:silent_space/features/auth/presentation/pages/register_page.dart';
-import 'package:silent_space/core/utils/app_strings.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:silent_space/features/forgot_password/presentation/pages/forgot_password_page.dart';
+import 'package:silent_space/features/forgot_password/presentation/pages/reset_password_page.dart';
+import 'package:silent_space/features/home/presentation/views/home_view.dart';
 import 'package:silent_space/features/setting/presentation/about_app_screen.dart';
 import 'package:silent_space/features/setting/presentation/categories_screen.dart';
 import 'package:silent_space/features/setting/presentation/feedback.dart';
 import 'package:silent_space/features/setting/presentation/how_to_use_screen.dart';
 import 'package:silent_space/features/splash/presentation/views/splash_view.dart';
-import 'package:silent_space/features/home/presentation/views/home_view.dart';
-import 'package:silent_space/core/utils/page_transitions.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -19,6 +21,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return FadePageRoute(page: const LoginPage());
     case RoutesName.register:
       return FadePageRoute(page: const RegisterPage());
+    case RoutesName.forgotPassword:
+      return FadePageRoute(page: const ForgotPasswordPage());
+    case RoutesName.resetPassword:
+      final token = settings.arguments as String? ?? '';
+      return FadePageRoute(page: ResetPasswordPage(token: token));
     case RoutesName.homeView:
       return FadePageRoute(page: const HomeView());
     case RoutesName.howToUse:
@@ -54,6 +61,8 @@ class RoutesName {
   static const String splash = '/';
   static const String login = '/login';
   static const String register = '/register';
+  static const String forgotPassword = '/forgotPassword';
+  static const String resetPassword = '/resetPassword';
   static const String unknown = '/unknown';
   static const String homeView = '/home';
   static const String howToUse = '/howToUse';

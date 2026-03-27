@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
@@ -17,12 +18,14 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
+    _nameController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -39,12 +42,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final theme = Theme.of(context);
-
     return BlocProvider(
       create: (_) => getIt<AuthCubit>(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -59,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(state.message),
-                        backgroundColor: theme.colorScheme.error,
+                        backgroundColor: Colors.red,
                       ),
                     );
                   }
@@ -72,21 +73,81 @@ class _RegisterPageState extends State<RegisterPage> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // ── Header ──
-                        Icon(
-                          Icons.person_add_outlined,
-                          size: 72,
-                          color: theme.colorScheme.primary,
+                        const SizedBox(height: 40),
+                        // ── Logo ──
+                        Container(
+                          height: 80,
+                          width: 80,
+                          decoration: const BoxDecoration(
+                            color: AppColors.logifyPrimary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'S',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 24),
+
+                        // ── Header ──
                         Text(
                           AppStrings.registerTitle.tr(),
-                          style: theme.textTheme.headlineMedium?.copyWith(
+                          style: const TextStyle(
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
+                            color: AppColors.logifyDark,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+
+                        // ── Subtitle ──
+                        Text(
+                          AppStrings.registerSubtitle.tr(),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.logifyGrey,
                           ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 40),
+
+                        // ── Username / Name ──
+                        TextFormField(
+                          controller: _nameController,
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: AppStrings.username.tr(),
+                            hintStyle: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
+                            prefixIcon: const Icon(Icons.person_outline,
+                                size: 20, color: AppColors.logifyPrimary),
+                            filled: true,
+                            fillColor: AppColors.logifyLightGrey,
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide:
+                                  const BorderSide(color: AppColors.logifyPrimary, width: 1.5),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
 
                         // ── Email ──
                         AuthEmailField(controller: _emailController),
@@ -115,27 +176,37 @@ class _RegisterPageState extends State<RegisterPage> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 32),
 
-                        // ── Submit ──
+                        // ── Submit Button ──
                         AuthSubmitButton(
                           isLoading: state is AuthLoading,
                           onPressed: () => _onSubmit(cubit),
                           text: AppStrings.register.tr(),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 40),
 
-                        // ── Login link ──
+                        // ── Footer ──
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(AppStrings.hasAccount.tr()),
+                            Text(
+                              AppStrings.hasAccount.tr(),
+                              style: const TextStyle(color: AppColors.logifyDark),
+                            ),
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(),
-                              child: Text(AppStrings.login.tr()),
+                              child: Text(
+                                AppStrings.login.tr(),
+                                style: const TextStyle(
+                                  color: AppColors.logifyPrimary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   );

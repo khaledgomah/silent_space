@@ -14,7 +14,8 @@ class AppStrings {
   static const String focusTime = 'focusTime';
   static const String today = 'today';
   static const String summary = 'summary';
-  static const String focusTimeMin = 'focasTime(min)'; // Keep original key for now to avoid breaking translations
+  static const String focusTimeMin =
+      'focasTime(min)'; // Keep original key for now to avoid breaking translations
   static const String focusCount = 'focusCount';
   static const String arabic = 'arabic';
   static const String english = 'english';
@@ -85,4 +86,18 @@ class AppStrings {
   static const String retry = 'retry';
   static const String loadingStats = 'loadingStats';
   static const String statsError = 'statsError';
+
+  // Auth & Forgot Password Additions
+  static const String forgotPassword = 'forgotPassword';
+  static const String rememberMe = 'rememberMe';
+  static const String orContinueWith = 'orContinueWith';
+  static const String registerSubtitle = 'registerSubtitle';
+  static const String username = 'username';
+  static const String forgotPasswordTitle = 'forgotPasswordTitle';
+  static const String forgotPasswordDesc = 'forgotPasswordDesc';
+  static const String resetPasswordTitle = 'resetPasswordTitle';
+  static const String resetPasswordDesc = 'resetPasswordDesc';
+  static const String newPassword = 'newPassword';
+  static const String passwordMinLength6 = 'passwordMinLength6';
+  static const String submitNewPassword = 'submitNewPassword';
 }

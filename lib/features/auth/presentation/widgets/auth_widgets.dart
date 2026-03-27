@@ -17,9 +17,11 @@ class AuthEmailField extends StatelessWidget {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         hintText: AppStrings.email.tr(),
-        prefixIcon: const Icon(Icons.email_outlined, size: 20),
+        hintStyle: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
+        prefixIcon: const Icon(Icons.email_outlined, size: 20, color: AppColors.logifyPrimary),
         filled: true,
         fillColor: AppColors.logifyLightGrey,
+        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
@@ -30,16 +32,14 @@ class AuthEmailField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide:
-              const BorderSide(color: AppColors.logifyPrimary, width: 1),
+          borderSide: const BorderSide(color: AppColors.logifyPrimary, width: 1.5),
         ),
       ),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return AppStrings.fieldRequired.tr();
         }
-        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-            .hasMatch(value.trim())) {
+        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value.trim())) {
           return AppStrings.invalidEmail.tr();
         }
         return null;
@@ -82,9 +82,11 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
           : (_) => widget.onFieldSubmitted!(widget.controller.text),
       decoration: InputDecoration(
         hintText: widget.label,
-        prefixIcon: const Icon(Icons.lock_outline, size: 20),
+        hintStyle: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
+        prefixIcon: const Icon(Icons.lock_outline, size: 20, color: AppColors.logifyPrimary),
         filled: true,
         fillColor: AppColors.logifyLightGrey,
+        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
@@ -95,13 +97,13 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide:
-              const BorderSide(color: AppColors.logifyPrimary, width: 1),
+          borderSide: const BorderSide(color: AppColors.logifyPrimary, width: 1.5),
         ),
         suffixIcon: IconButton(
           icon: Icon(
             _obscurePassword ? Icons.visibility_off : Icons.visibility,
             size: 20,
+            color: AppColors.logifyGrey,
           ),
           onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
         ),

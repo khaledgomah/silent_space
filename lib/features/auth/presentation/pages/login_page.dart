@@ -2,11 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/theme/app_colors.dart';
-import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/auth/presentation/widgets/auth_widgets.dart';
+
+import '../../../../core/utils/app_strings.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 40),
                         // ── Logo ──
                         Container(
                           height: 80,
@@ -80,28 +81,39 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           child: const Center(
                             child: Text(
-                              'L',
+                              'S',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 48,
+                                fontSize: 40,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 24),
 
                         // ── Header ──
-                        const Text(
-                          'Log in to your Account',
-                          style: TextStyle(
+                        Text(
+                          AppStrings.loginTitle.tr(),
+                          style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                             color: AppColors.logifyDark,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 8),
+
+                        // ── Subtitle ──
+                        Text(
+                          AppStrings.loginSubtitle.tr(),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.logifyGrey,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 40),
 
                         // ── Email ──
                         AuthEmailField(controller: _emailController),
@@ -113,74 +125,88 @@ class _LoginPageState extends State<LoginPage> {
                           label: AppStrings.password.tr(),
                           onFieldSubmitted: (val) => _onSubmit(cubit),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
 
                         // ── Remember Me & Forgot ──
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Checkbox(
-                              value: _rememberMe,
-                              onChanged: (v) =>
-                                  setState(() => _rememberMe = v!),
-                              activeColor: AppColors.logifyPrimary,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4)),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: _rememberMe,
+                                  onChanged: (v) => setState(() => _rememberMe = v ?? false),
+                                  activeColor: AppColors.logifyPrimary,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4)),
+                                ),
+                                Text(
+                                  AppStrings.rememberMe.tr(),
+                                  style: const TextStyle(fontSize: 14, color: AppColors.logifyDark),
+                                ),
+                              ],
                             ),
-                            const Text('Remember me'),
-                            const Spacer(),
                             TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Forgot Password?',
-                                style:
-                                    TextStyle(color: AppColors.logifyPrimary),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, RoutesName.forgotPassword);
+                                },
+                              child: Text(
+                                AppStrings.forgotPassword.tr(),
+                                style: const TextStyle(
+                                  color: AppColors.logifyPrimary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 32),
 
                         // ── Submit Button ──
                         AuthSubmitButton(
                           isLoading: state is AuthLoading,
                           onPressed: () => _onSubmit(cubit),
-                          text: 'Log In',
+                          text: AppStrings.login.tr(),
                         ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 40),
 
                         // ── Divider ──
-                        const Row(
+                        Row(
                           children: [
-                            Expanded(child: Divider()),
+                            const Expanded(
+                                child: Divider(color: AppColors.logifyLightGrey, thickness: 1)),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
-                                'Or continue with',
-                                style: TextStyle(color: AppColors.logifyGrey),
+                                AppStrings.orContinueWith.tr(),
+                                style: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
                               ),
                             ),
-                            Expanded(child: Divider()),
+                            const Expanded(
+                                child: Divider(color: AppColors.logifyLightGrey, thickness: 1)),
                           ],
                         ),
                         const SizedBox(height: 32),
 
                         // ── Social Buttons ──
                         const SocialLoginButtons(),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 40),
 
                         // ── Footer ──
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Don't have an account?"),
+                            Text(
+                              AppStrings.noAccount.tr(),
+                              style: const TextStyle(color: AppColors.logifyDark),
+                            ),
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed(RoutesName.register);
+                                Navigator.of(context).pushNamed(RoutesName.register);
                               },
-                              child: const Text(
-                                'Sign up',
-                                style: TextStyle(
+                              child: Text(
+                                AppStrings.register.tr(),
+                                style: const TextStyle(
                                   color: AppColors.logifyPrimary,
                                   fontWeight: FontWeight.bold,
                                 ),

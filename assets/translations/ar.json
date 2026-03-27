@@ -84,5 +84,17 @@
   "weeklyOverview": "نظرة أسبوعية",
   "retry": "إعادة المحاولة",
   "loadingStats": "جاري تحميل الإحصائيات...",
-  "statsError": "تعذر تحميل الإحصائيات."
+  "statsError": "تعذر تحميل الإحصائيات.",
+  "forgotPassword": "هل نسيت كلمة المرور؟",
+  "rememberMe": "تذكرني",
+  "orContinueWith": "أو المتابعة باستخدام",
+  "registerSubtitle": "قم بإنشاء حساب للبدء",
+  "username": "اسم المستخدم",
+  "forgotPasswordTitle": "نسيت كلمة المرور",
+  "forgotPasswordDesc": "أدخل عنوان بريدك الإلكتروني لإعادة تعيين كلمة المرور.",
+  "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+  "resetPasswordDesc": "الرجاء إدخال كلمة المرور الجديدة أدناه.",
+  "newPassword": "كلمة المرور الجديدة",
+  "passwordMinLength6": "كلمة المرور يجب أن تتكون من 6 أحرف على الأقل",
+  "submitNewPassword": "إرسال كلمة المرور الجديدة"
 }

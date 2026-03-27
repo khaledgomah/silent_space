@@ -84,5 +84,17 @@
   "weeklyOverview": "Weekly Overview",
   "retry": "Retry",
   "loadingStats": "Loading stats...",
-  "statsError": "Could not load stats."
+  "statsError": "Could not load stats.",
+  "forgotPassword": "Forgot Password?",
+  "rememberMe": "Remember me",
+  "orContinueWith": "Or continue with",
+  "registerSubtitle": "Sign up to get started",
+  "username": "Username",
+  "forgotPasswordTitle": "Forgot Password",
+  "forgotPasswordDesc": "Enter your email address to reset your password.",
+  "resetPasswordTitle": "Reset Password",
+  "resetPasswordDesc": "Please enter your new password below.",
+  "newPassword": "New Password",
+  "passwordMinLength6": "Password must be at least 6 characters",
+  "submitNewPassword": "Submit New Password"
 }
