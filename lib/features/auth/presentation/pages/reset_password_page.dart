@@ -61,20 +61,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   children: [
                     Text(
                       AppStrings.resetPasswordTitle.tr(),
-                      style: const TextStyle(
-                        color: AppColors.logifyWhite,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.headlineLarge,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       AppStrings.resetPasswordDesc.tr(),
-                      style: const TextStyle(
-                        color: AppColors.logifyGrey,
-                        fontSize: 15,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 40),

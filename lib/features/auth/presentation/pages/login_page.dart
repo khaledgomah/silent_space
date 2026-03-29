@@ -79,11 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                         // ── Header ──
                         Text(
                           AppStrings.loginTitle.tr(),
-                          style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.logifyWhite,
-                          ),
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         const SizedBox(height: 8),
 
@@ -92,10 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Text(
                               AppStrings.noAccount.tr(),
-                              style: const TextStyle(
-                                color: AppColors.logifyGrey,
-                                fontSize: 14,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             const SizedBox(width: 4),
                             GestureDetector(
@@ -103,11 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .pushNamed(RoutesName.register),
                               child: Text(
                                 AppStrings.register.tr(),
-                                style: const TextStyle(
-                                  color: AppColors.logifyPrimary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),
                           ],
@@ -153,10 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                                 const SizedBox(width: 8),
                                 Text(
                                   AppStrings.rememberMe.tr(),
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.logifyWhite,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             ),
@@ -165,10 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                                   context, RoutesName.forgotPassword),
                               child: Text(
                                 AppStrings.forgotPassword.tr(),
-                                style: const TextStyle(
-                                  color: AppColors.logifyGrey,
-                                  fontSize: 13,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ),
                           ],
@@ -242,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             AppStrings.orContinueWith.tr(),
-            style: const TextStyle(color: AppColors.logifyGrey, fontSize: 13),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         Expanded(

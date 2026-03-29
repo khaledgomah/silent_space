@@ -104,5 +104,6 @@
   "passwordResetLinkSent": "Password reset link sent to your email",
   "passwordResetSuccess": "Password successfully reset",
   "emailAlreadyInUse": "This email is already in use",
-  "weakPassword": "The password provided is too weak"
+  "weakPassword": "The password provided is too weak",
+  "splashSubtitle": "Have a silent space"
 }

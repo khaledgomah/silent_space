@@ -61,20 +61,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   children: [
                     Text(
                       AppStrings.forgotPasswordTitle.tr(),
-                      style: const TextStyle(
-                        color: AppColors.logifyWhite,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.headlineLarge,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       AppStrings.forgotPasswordDesc.tr(),
-                      style: const TextStyle(
-                        color: AppColors.logifyGrey,
-                        fontSize: 15,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 40),

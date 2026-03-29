@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/usecases/usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/is_logged_in_usecase.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/image_manager.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
-import 'package:silent_space/core/utils/text_style_manager.dart';
+import 'package:silent_space/features/splash/presentation/cubit/splash_cubit.dart';
+import 'package:silent_space/features/splash/presentation/cubit/splash_state.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -30,7 +32,6 @@ class _SplashViewState extends State<SplashView>
         Tween<double>(begin: 0.5, end: 1.0).animate(_animationController);
 
     _animationController.forward();
-    _checkAuthAndNavigate();
   }
 
   @override
@@ -39,44 +40,37 @@ class _SplashViewState extends State<SplashView>
     super.dispose();
   }
 
-  Future<void> _checkAuthAndNavigate() async {
-    await Future.delayed(const Duration(seconds: 2));
-    final result = await getIt<IsLoggedInUseCase>()(NoParams());
-    if (!mounted) return;
-
-    result.fold(
-      (failure) {
-        // Log the error or handle it (here we default to login page)
-        Navigator.pushReplacementNamed(context, RoutesName.login);
-      },
-      (isLoggedIn) {
-        if (isLoggedIn) {
-          Navigator.pushReplacementNamed(context, RoutesName.homeView);
-        } else {
-          Navigator.pushReplacementNamed(context, RoutesName.login);
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        child: FadeTransition(
-          opacity: _fadeAnimation,
-          child: ScaleTransition(
-            scale: _scaleAnimation,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(ImageManager.appIcon),
-                const Text(
-                  'Have a silent space',
-                  style: TextStyleManager.headline1,
+    return BlocProvider(
+      create: (context) => getIt<SplashCubit>()..checkAuth(),
+      child: BlocListener<SplashCubit, SplashState>(
+        listener: (context, state) {
+          if (state is Authenticated) {
+            Navigator.pushReplacementNamed(context, RoutesName.homeView);
+          } else if (state is Unauthenticated) {
+            Navigator.pushReplacementNamed(context, RoutesName.login);
+          }
+        },
+        child: Scaffold(
+          body: Container(
+            alignment: Alignment.center,
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: ScaleTransition(
+                scale: _scaleAnimation,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Image(image: AssetImage(ImageManager.appIcon)),
+                    const SizedBox(height: 24),
+                    Text(
+                      AppStrings.splashSubtitle,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ).tr(),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

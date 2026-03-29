@@ -82,11 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         // ── Header ──
                         Text(
                           AppStrings.registerTitle.tr(),
-                          style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.logifyWhite,
-                          ),
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         const SizedBox(height: 8),
 
@@ -95,21 +91,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: [
                             Text(
                               AppStrings.hasAccount.tr(),
-                              style: const TextStyle(
-                                color: AppColors.logifyGrey,
-                                fontSize: 14,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             const SizedBox(width: 4),
                             GestureDetector(
                               onTap: () => Navigator.of(context).pop(),
                               child: Text(
                                 AppStrings.login.tr(),
-                                style: const TextStyle(
-                                  color: AppColors.logifyPrimary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),
                           ],

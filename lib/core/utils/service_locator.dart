@@ -32,6 +32,7 @@ import 'package:silent_space/features/session/presentation/cubit/session_cubit.d
 import '../../features/auth/domain/usecases/verify_reset_token_usecase.dart';
 import '../../features/auth/domain/usecases/is_logged_in_usecase.dart';
 import '../../features/auth/domain/usecases/delete_account_usecase.dart';
+import '../../features/splash/presentation/cubit/splash_cubit.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -166,5 +167,9 @@ Future<void> locatorSetup() async {
       getSessionsByDateRangeUseCase: getIt<GetSessionsByDateRangeUseCase>(),
       saveSessionUseCase: getIt<SaveSessionUseCase>(),
     ),
+  );
+
+  getIt.registerFactory<SplashCubit>(
+    () => SplashCubit(getIt<IsLoggedInUseCase>()),
   );
 }

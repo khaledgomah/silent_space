@@ -110,4 +110,5 @@ class AppStrings {
   static const String passwordResetSuccess = 'passwordResetSuccess';
   static const String emailAlreadyInUse = 'emailAlreadyInUse';
   static const String weakPassword = 'weakPassword';
+  static const String splashSubtitle = 'splashSubtitle';
 }

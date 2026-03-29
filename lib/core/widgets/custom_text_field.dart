@@ -34,11 +34,7 @@ class CustomUnderlineTextField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: AppColors.logifyWhite,
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-          ),
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: 8),
         TextFormField(
@@ -47,7 +43,7 @@ class CustomUnderlineTextField extends StatelessWidget {
           keyboardType: keyboardType,
           textInputAction: textInputAction,
           onFieldSubmitted: onFieldSubmitted,
-          style: const TextStyle(color: AppColors.logifyWhite, fontSize: 15),
+          style: Theme.of(context).textTheme.bodyLarge,
           cursorColor: AppColors.logifyPrimary,
           decoration: InputDecoration(
             hintText: hintText,

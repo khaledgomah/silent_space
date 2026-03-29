@@ -27,9 +27,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: const StadiumBorder(),
           elevation: 0,
         ),
       ),
@@ -72,6 +70,43 @@ class AppTheme {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
+      textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        headlineMedium: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w500,
+          color: Colors.black87,
+        ),
+        headlineSmall: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        titleSmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: AppColors.logifyPrimary,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.normal,
+          color: Colors.black87,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Colors.black54,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.normal,
+          color: Colors.black54,
+        ),
+      ),
     );
   }
 
@@ -98,9 +133,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.logifyPrimary,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
+          shape: const StadiumBorder(),
           elevation: 0,
           minimumSize: const Size(double.infinity, 52),
           textStyle: const TextStyle(
@@ -144,6 +177,43 @@ class AppTheme {
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: AppColors.logifyWhite,
+        ),
+        headlineMedium: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w500,
+          color: AppColors.logifyWhite,
+        ),
+        headlineSmall: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: AppColors.logifyWhite,
+        ),
+        titleSmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: AppColors.logifyPrimary,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.normal,
+          color: AppColors.logifyWhite,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: AppColors.logifyGrey,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.normal,
+          color: AppColors.logifyGrey,
         ),
       ),
     );
