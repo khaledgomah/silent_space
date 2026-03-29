@@ -8,6 +8,7 @@ import 'package:silent_space/features/auth/data/implements/auth_repository_impl.
 import 'package:silent_space/features/auth/data/models/user_model.dart';
 import 'package:silent_space/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:silent_space/features/auth/data/sources/auth_remote_data_source.dart';
+import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
 
 class MockAuthRemoteDataSource extends Mock implements AuthRemoteDataSource {}
 
@@ -15,20 +16,25 @@ class MockAuthLocalDataSource extends Mock implements AuthLocalDataSource {}
 
 class MockNetworkInfo extends Mock implements NetworkInfo {}
 
+class MockSessionRepository extends Mock implements SessionRepository {}
+
 void main() {
   late AuthRepositoryImpl repository;
   late MockAuthRemoteDataSource mockRemoteDataSource;
   late MockAuthLocalDataSource mockLocalDataSource;
   late MockNetworkInfo mockNetworkInfo;
+  late MockSessionRepository mockSessionRepository;
 
   setUp(() {
     mockRemoteDataSource = MockAuthRemoteDataSource();
     mockLocalDataSource = MockAuthLocalDataSource();
     mockNetworkInfo = MockNetworkInfo();
+    mockSessionRepository = MockSessionRepository();
     repository = AuthRepositoryImpl(
       remoteDataSource: mockRemoteDataSource,
       localDataSource: mockLocalDataSource,
       networkInfo: mockNetworkInfo,
+      sessionRepository: mockSessionRepository,
     );
   });
 

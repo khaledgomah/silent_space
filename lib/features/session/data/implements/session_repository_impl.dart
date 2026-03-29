@@ -52,4 +52,14 @@ class SessionRepositoryImpl implements SessionRepository {
       return Left(ServerFailure(message: 'Unexpected error: $e'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> clearSessions() async {
+    try {
+      await localDataSource.clearSessions();
+      return const Right(null);
+    } catch (e) {
+      return Left(CacheFailure(message: 'Failed to clear local sessions: $e'));
+    }
+  }
 }

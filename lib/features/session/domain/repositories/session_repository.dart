@@ -10,4 +10,5 @@ abstract class SessionRepository {
     DateTime start,
     DateTime end,
   );
+  Future<Either<Failure, void>> clearSessions();
 }

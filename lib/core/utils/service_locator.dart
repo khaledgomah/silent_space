@@ -28,11 +28,13 @@ import 'package:silent_space/features/session/domain/repositories/session_reposi
 import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
-
-import '../../features/auth/domain/usecases/verify_reset_token_usecase.dart';
-import '../../features/auth/domain/usecases/is_logged_in_usecase.dart';
-import '../../features/auth/domain/usecases/delete_account_usecase.dart';
-import '../../features/splash/presentation/cubit/splash_cubit.dart';
+import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/is_logged_in_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/delete_account_usecase.dart';
+import 'package:silent_space/features/splash/presentation/cubit/splash_cubit.dart';
+import 'package:silent_space/core/cubits/language_cubit/language_cubit.dart';
+import 'package:silent_space/core/theme/theme_cubit.dart';
+import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -58,7 +60,8 @@ Future<void> locatorSetup() async {
 
   // ── Auth Feature ──
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(
+      () => FirebaseFirestore.instance);
 
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(
@@ -75,6 +78,7 @@ Future<void> locatorSetup() async {
       remoteDataSource: getIt<AuthRemoteDataSource>(),
       localDataSource: getIt<AuthLocalDataSource>(),
       networkInfo: getIt<NetworkInfo>(),
+      sessionRepository: getIt<SessionRepository>(),
     ),
   );
 
@@ -145,7 +149,12 @@ Future<void> locatorSetup() async {
     () => GetSessionsByDateRangeUseCase(getIt<SessionRepository>()),
   );
 
-  getIt.registerFactory<AuthCubit>(
+  // ── Global Cubits (Singletons) ──
+  getIt.registerLazySingleton<LanguageCubit>(() => LanguageCubit());
+  getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
+  getIt.registerLazySingleton<TimerCubit>(() => TimerCubit());
+
+  getIt.registerLazySingleton<AuthCubit>(
     () => AuthCubit(
       signInUseCase: getIt<SignInUseCase>(),
       signUpUseCase: getIt<SignUpUseCase>(),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // ── Brand Colors ──
+  // ── Legacy Brand Colors (Consider Deprecating) ──
   static const Color primaryLight = Color(0xFF5C6BC0);
   static const Color primaryDark = Color(0xFF9FA8DA);
   static const Color seedColor = Color(0xFF5C6BC0);

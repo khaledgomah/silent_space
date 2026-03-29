@@ -45,9 +45,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserModel> signInAnonymously() async {
     try {
       final userCredential = await firebaseAuth.signInAnonymously();
+      final token = await userCredential.user!.getIdToken();
       return UserModel.fromFirebaseUser(
         uid: userCredential.user!.uid,
         email: userCredential.user!.email,
+        token: token,
       );
     } on FirebaseAuthException catch (e) {
       throw ServerException(
@@ -70,9 +72,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email: email,
         password: password,
       );
+      final token = await userCredential.user!.getIdToken();
       return UserModel.fromFirebaseUser(
         uid: userCredential.user!.uid,
         email: userCredential.user!.email,
+        token: token,
       );
     } on FirebaseAuthException catch (e) {
       throw ServerException(
@@ -95,9 +99,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email: email,
         password: password,
       );
+      final token = await userCredential.user!.getIdToken();
       return UserModel.fromFirebaseUser(
         uid: userCredential.user!.uid,
         email: userCredential.user!.email,
+        token: token,
       );
     } on FirebaseAuthException catch (e) {
       throw ServerException(
@@ -116,14 +122,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
-      final credential = EmailAuthProvider.credential(email: email, password: password);
-      final userCredential = await firebaseAuth.currentUser?.linkWithCredential(credential);
+      final credential =
+          EmailAuthProvider.credential(email: email, password: password);
+      final userCredential =
+          await firebaseAuth.currentUser?.linkWithCredential(credential);
       if (userCredential == null) {
         throw const ServerException(message: 'No anonymous user to link');
       }
+      final token = await userCredential.user!.getIdToken();
       return UserModel.fromFirebaseUser(
         uid: userCredential.user!.uid,
         email: userCredential.user!.email,
+        token: token,
       );
     } on FirebaseAuthException catch (e) {
       throw ServerException(
@@ -158,7 +168,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<bool> isLoggedIn() async {
-    return firebaseAuth.currentUser != null;
+    final user = firebaseAuth.currentUser;
+    if (user != null) {
+      try {
+        // Force refresh the token to ensure the session is still valid
+        final token = await user.getIdToken(true);
+        return token != null;
+      } catch (e) {
+        // If token refresh fails, the session is likely invalid
+        return false;
+      }
+    }
+    return false;
   }
 
   @override

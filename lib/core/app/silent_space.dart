@@ -19,29 +19,26 @@ class SilentSpace extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => LanguageCubit()),
-        BlocProvider(create: (_) => ThemeCubit()),
-        BlocProvider(create: (_) => TimerCubit()),
+        BlocProvider(create: (_) => getIt<LanguageCubit>()),
+        BlocProvider(create: (_) => getIt<ThemeCubit>()),
+        BlocProvider(create: (_) => getIt<TimerCubit>()),
         BlocProvider(create: (_) => getIt<AuthCubit>()),
         BlocProvider(create: (_) => getIt<SessionCubit>()),
       ],
-      child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context, langState) {
-          return BlocBuilder<ThemeCubit, ThemeState>(
-            builder: (context, themeState) {
-              return MaterialApp(
-                locale: context.locale,
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                debugShowCheckedModeBanner: false,
-                navigatorKey: navigatorKey,
-                initialRoute: RoutesName.splash,
-                onGenerateRoute: onGenerateRoute,
-                theme: AppTheme.lightTheme,
-                darkTheme: AppTheme.darkTheme,
-                themeMode: themeState.isDark ? ThemeMode.dark : ThemeMode.light,
-              );
-            },
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        buildWhen: (previous, current) => previous.isDark != current.isDark,
+        builder: (context, themeState) {
+          return MaterialApp(
+            locale: context.locale,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            debugShowCheckedModeBanner: false,
+            navigatorKey: navigatorKey,
+            initialRoute: RoutesName.splash,
+            onGenerateRoute: onGenerateRoute,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeState.isDark ? ThemeMode.dark : ThemeMode.light,
           );
         },
       ),

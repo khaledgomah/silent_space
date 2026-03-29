@@ -7,16 +7,19 @@ import 'package:silent_space/features/auth/data/sources/auth_remote_data_source.
 import 'package:silent_space/features/auth/domain/entities/forgot_password_entity.dart';
 import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
+import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   final AuthLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
+  final SessionRepository sessionRepository;
 
   const AuthRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
+    required this.sessionRepository,
   });
 
   @override
@@ -122,6 +125,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await remoteDataSource.signOut();
       await localDataSource.clearToken();
+      await sessionRepository.clearSessions();
       return const Right(null);
     } on ServerException catch (e) {
       return Left(AuthFailure(
@@ -137,6 +141,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await remoteDataSource.deleteAccount();
       await localDataSource.clearToken();
+      await sessionRepository.clearSessions();
       return const Right(null);
     } on ServerException catch (e) {
       return Left(AuthFailure(
@@ -150,6 +155,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, bool>> isLoggedIn() async {
     try {
+      // Priority 1: Check local token cache
+      final hasLocalToken = await localDataSource.hasToken();
+      if (hasLocalToken) return const Right(true);
+
+      // Priority 2: Check remote Firebase state if online
       final result = await remoteDataSource.isLoggedIn();
       return Right(result);
     } on ServerException catch (e) {
@@ -179,8 +189,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, ForgotPasswordEntity>> verifyResetToken(
-      String token) async {
+  Future<Either<Failure, ForgotPasswordEntity>> verifyResetToken(String token) async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure());
     }
@@ -197,8 +206,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> resetPassword(
-      String token, String newPassword) async {
+  Future<Either<Failure, void>> resetPassword(String token, String newPassword) async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure());
     }

@@ -8,19 +8,22 @@ import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_us
 import 'package:silent_space/features/auth/presentation/cubit/forgot_password_state.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
-  final RequestPasswordResetUseCase requestPasswordResetUseCase;
-  final VerifyResetTokenUseCase verifyResetTokenUseCase;
-  final ResetPasswordUseCase resetPasswordUseCase;
+  final RequestPasswordResetUseCase _requestPasswordResetUseCase;
+  final VerifyResetTokenUseCase _verifyResetTokenUseCase;
+  final ResetPasswordUseCase _resetPasswordUseCase;
 
   ForgotPasswordCubit({
-    required this.requestPasswordResetUseCase,
-    required this.verifyResetTokenUseCase,
-    required this.resetPasswordUseCase,
-  }) : super(ForgotPasswordInitial());
+    required RequestPasswordResetUseCase requestPasswordResetUseCase,
+    required VerifyResetTokenUseCase verifyResetTokenUseCase,
+    required ResetPasswordUseCase resetPasswordUseCase,
+  })  : _requestPasswordResetUseCase = requestPasswordResetUseCase,
+        _verifyResetTokenUseCase = verifyResetTokenUseCase,
+        _resetPasswordUseCase = resetPasswordUseCase,
+        super(ForgotPasswordInitial());
 
   Future<void> requestPasswordReset(String email) async {
     emit(ForgotPasswordLoading());
-    final result = await requestPasswordResetUseCase(email);
+    final result = await _requestPasswordResetUseCase(email);
     result.fold(
       (failure) => emit(ForgotPasswordFailure(error: FailureMapper.map(failure))),
       (_) => emit(ForgotPasswordRequestSuccess(
@@ -30,7 +33,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   Future<void> verifyResetToken(String token) async {
     emit(ForgotPasswordLoading());
-    final result = await verifyResetTokenUseCase(token);
+    final result = await _verifyResetTokenUseCase(token);
     result.fold(
       (failure) => emit(ForgotPasswordFailure(error: FailureMapper.map(failure))),
       (entity) => emit(ForgotPasswordVerifySuccess(entity: entity)),
@@ -39,7 +42,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   Future<void> resetPassword(String token, String newPassword) async {
     emit(ForgotPasswordLoading());
-    final result = await resetPasswordUseCase(
+    final result = await _resetPasswordUseCase(
         ResetPasswordParams(token: token, newPassword: newPassword));
     result.fold(
       (failure) => emit(ForgotPasswordFailure(error: FailureMapper.map(failure))),

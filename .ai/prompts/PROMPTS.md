@@ -487,6 +487,36 @@ Suggest improvements to make this prompt more "powerful" and effective for the A
 
 ---
 
+### 16. Update Project Documentation (README)
+
+**Prompt:**
+
+```
+Use the /architecture-audit-documentation skill to update README.md:
+
+1. Analyze current project state (Features, Tech Stack, Architecture).
+2. Synchronize README.md with actual implementation:
+   - Ensure Tech Stack reflects current libraries (Firebase, Bloc, Hive, etc.).
+   - Update Architecture diagram if layers or patterns changed.
+3. Update/Add the "💎 Architectural Excellence & Refactoring" section:
+   - Document recent audit scores and core security/performance fixes.
+   - Highlight strict layer enforcement and DI singleton patterns.
+4. Ensure all screenshots and setup steps are valid.
+
+Maintain a professional, premium "Senior Architect" tone.
+```
+
+**Example:**
+
+```
+Use the /architecture-audit-documentation skill to update README.md after the Auth feature refactor:
+1. Update Tech Stack to prioritize Firebase Auth over Dio.
+2. Add a point in "Architectural Excellence" about atomic session wiping on logout.
+3. Ensure the Architecture section highlights that Domain has zero dependencies.
+```
+
+---
+
 ## Meta-Review: Prompt Design Guidelines
 
 1. **State the Skill Clearly**: Use `/skill-name` notation.
@@ -512,6 +542,7 @@ Suggest improvements to make this prompt more "powerful" and effective for the A
 /debugging-architecture
 /ui-audit
 /performance-opt
+/architecture-audit-documentation
 ```
 
 ## Tips for Better Results
@@ -539,6 +570,7 @@ Suggest improvements to make this prompt more "powerful" and effective for the A
 | Hardcoded strings           | "Add Localization"                  |
 | "Type not found" errors     | "Dependency Injection Setup"        |
 | Complex flows               | "Multi-Cubit Coordination"          |
+| Outdated README/Docs        | "Update Project Documentation"      |
 
 ---
 
