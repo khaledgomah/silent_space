@@ -26,7 +26,10 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     try {
       final user = await remoteDataSource.signInAnonymously();
-      return Right(user);
+      if (user.token != null) {
+        await localDataSource.cacheToken(user.token!);
+      }
+      return Right(user.toEntity());
     } on ServerException catch (e) {
       return Left(AuthFailure(
         message: e.message,
@@ -49,7 +52,10 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
       );
-      return Right(user);
+      if (user.token != null) {
+        await localDataSource.cacheToken(user.token!);
+      }
+      return Right(user.toEntity());
     } on ServerException catch (e) {
       return Left(AuthFailure(
         message: e.message,
@@ -72,7 +78,10 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
       );
-      return Right(user);
+      if (user.token != null) {
+        await localDataSource.cacheToken(user.token!);
+      }
+      return Right(user.toEntity());
     } on ServerException catch (e) {
       return Left(AuthFailure(
         message: e.message,
@@ -95,7 +104,10 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
       );
-      return Right(user);
+      if (user.token != null) {
+        await localDataSource.cacheToken(user.token!);
+      }
+      return Right(user.toEntity());
     } on ServerException catch (e) {
       return Left(AuthFailure(
         message: e.message,
@@ -121,8 +133,32 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<bool> isLoggedIn() async {
-    return await remoteDataSource.isLoggedIn();
+  Future<Either<Failure, void>> deleteAccount() async {
+    try {
+      await remoteDataSource.deleteAccount();
+      await localDataSource.clearToken();
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> isLoggedIn() async {
+    try {
+      final result = await remoteDataSource.isLoggedIn();
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
+    }
   }
 
   @override
@@ -134,7 +170,11 @@ class AuthRepositoryImpl implements AuthRepository {
       await remoteDataSource.requestPasswordReset(email);
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 
@@ -146,9 +186,13 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     try {
       final model = await remoteDataSource.verifyResetToken(token);
-      return Right(model);
+      return Right(model.toEntity());
     } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 
@@ -162,7 +206,11 @@ class AuthRepositoryImpl implements AuthRepository {
       await remoteDataSource.resetPassword(token, newPassword);
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
     }
   }
 }

@@ -1,11 +1,15 @@
 import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 
-/// Data model extending [UserEntity] with JSON serialization.
-class UserModel extends UserEntity {
+/// Data model for authentication — contains JSON serialization.
+class UserModel {
+  final String? id;
+  final String email;
+  final String? token;
+
   const UserModel({
-    super.id,
-    required super.email,
-    super.token,
+    this.id,
+    required this.email,
+    this.token,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +37,14 @@ class UserModel extends UserEntity {
     return UserModel(
       id: uid,
       email: email ?? '',
+      token: token,
+    );
+  }
+
+  UserEntity toEntity() {
+    return UserEntity(
+      id: id,
+      email: email,
       token: token,
     );
   }

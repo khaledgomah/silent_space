@@ -73,20 +73,22 @@ void main() {
       );
     });
 
-    test('should return UserEntity when remote call is successful', () async {
+    test('should return UserEntity and cache token when remote call is successful', () async {
       // arrange
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(() => mockRemoteDataSource.signInWithEmailAndPassword(
             email: tEmail,
             password: tPassword,
           )).thenAnswer((_) async => tUserModel);
+      when(() => mockLocalDataSource.cacheToken(any())).thenAnswer((_) async {});
 
       // act
       final result =
           await repository.signInWithEmailAndPassword(email: tEmail, password: tPassword);
 
       // assert
-      expect(result, const Right(tUserModel));
+      expect(result, Right(tUserModel.toEntity()));
+      verify(() => mockLocalDataSource.cacheToken(tUserModel.token!)).called(1);
     });
 
     test('should return AuthFailure when remote call throws ServerException', () async {
@@ -144,7 +146,7 @@ void main() {
   });
 
   group('isLoggedIn', () {
-    test('should return true when token exists', () async {
+    test('should return Right(true) when token exists', () async {
       // arrange
       when(() => mockRemoteDataSource.isLoggedIn()).thenAnswer((_) async => true);
 
@@ -152,10 +154,10 @@ void main() {
       final result = await repository.isLoggedIn();
 
       // assert
-      expect(result, true);
+      expect(result, const Right(true));
     });
 
-    test('should return false when no token', () async {
+    test('should return Right(false) when no token', () async {
       // arrange
       when(() => mockRemoteDataSource.isLoggedIn()).thenAnswer((_) async => false);
 
@@ -163,7 +165,35 @@ void main() {
       final result = await repository.isLoggedIn();
 
       // assert
-      expect(result, false);
+      expect(result, const Right(false));
+    });
+  });
+
+  group('deleteAccount', () {
+    test('should call remote deleteAccount and clear local token', () async {
+      // arrange
+      when(() => mockRemoteDataSource.deleteAccount()).thenAnswer((_) async {});
+      when(() => mockLocalDataSource.clearToken()).thenAnswer((_) async {});
+
+      // act
+      final result = await repository.deleteAccount();
+
+      // assert
+      expect(result, const Right(null));
+      verify(() => mockRemoteDataSource.deleteAccount()).called(1);
+      verify(() => mockLocalDataSource.clearToken()).called(1);
+    });
+
+    test('should return AuthFailure when remote deleteAccount fails', () async {
+      // arrange
+      when(() => mockRemoteDataSource.deleteAccount())
+          .thenThrow(const ServerException(message: 'Delete failed'));
+
+      // act
+      final result = await repository.deleteAccount();
+
+      // assert
+      expect(result, isA<Left>());
     });
   });
 }

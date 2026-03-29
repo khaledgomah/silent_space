@@ -18,7 +18,6 @@ import 'package:silent_space/features/auth/domain/usecases/sign_in_anonymously_u
 import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
-import 'package:silent_space/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:silent_space/features/session/data/implements/session_repository_impl.dart';
@@ -31,6 +30,8 @@ import 'package:silent_space/features/session/domain/usecases/save_session_useca
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 
 import '../../features/auth/domain/usecases/verify_reset_token_usecase.dart';
+import '../../features/auth/domain/usecases/is_logged_in_usecase.dart';
+import '../../features/auth/domain/usecases/delete_account_usecase.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -107,6 +108,12 @@ Future<void> locatorSetup() async {
   getIt.registerLazySingleton<ResetPasswordUseCase>(
     () => ResetPasswordUseCase(getIt<AuthRepository>()),
   );
+  getIt.registerLazySingleton<IsLoggedInUseCase>(
+    () => IsLoggedInUseCase(getIt<AuthRepository>()),
+  );
+  getIt.registerLazySingleton<DeleteAccountUseCase>(
+    () => DeleteAccountUseCase(getIt<AuthRepository>()),
+  );
 
   // ── Session Feature ──
   // Register Hive adapter
@@ -137,22 +144,12 @@ Future<void> locatorSetup() async {
     () => GetSessionsByDateRangeUseCase(getIt<SessionRepository>()),
   );
 
-  // ── Presentation BLoC/Cubit ──
-  getIt.registerFactory<AuthBloc>(
-    () => AuthBloc(
-      signInAnonymouslyUseCase: getIt<SignInAnonymouslyUseCase>(),
-      signInUseCase: getIt<SignInUseCase>(),
-      signUpUseCase: getIt<SignUpUseCase>(),
-      linkAccountUseCase: getIt<LinkAccountUseCase>(),
-      signOutUseCase: getIt<SignOutUseCase>(),
-    ),
-  );
-
   getIt.registerFactory<AuthCubit>(
     () => AuthCubit(
       signInUseCase: getIt<SignInUseCase>(),
       signUpUseCase: getIt<SignUpUseCase>(),
       signOutUseCase: getIt<SignOutUseCase>(),
+      deleteAccountUseCase: getIt<DeleteAccountUseCase>(),
     ),
   );
 

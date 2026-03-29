@@ -25,7 +25,9 @@ abstract class AuthRepository {
 
   Future<Either<Failure, void>> signOut();
 
-  Future<bool> isLoggedIn();
+  Future<Either<Failure, void>> deleteAccount();
+
+  Future<Either<Failure, bool>> isLoggedIn();
 
   // Forgot Password
   Future<Either<Failure, void>> requestPasswordReset(String email);

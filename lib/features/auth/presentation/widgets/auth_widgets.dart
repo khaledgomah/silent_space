@@ -154,7 +154,16 @@ class AuthSubmitButton extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class SocialLoginButtons extends StatelessWidget {
-  const SocialLoginButtons({super.key});
+  final VoidCallback? onGooglePressed;
+  final VoidCallback? onApplePressed;
+  final VoidCallback? onFacebookPressed;
+
+  const SocialLoginButtons({
+    super.key,
+    this.onGooglePressed,
+    this.onApplePressed,
+    this.onFacebookPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -164,19 +173,19 @@ class SocialLoginButtons extends StatelessWidget {
         _buildCircle(
           icon: FontAwesomeIcons.facebookF,
           color: AppColors.logifyFacebookBlue,
-          onPressed: () {},
+          onPressed: onFacebookPressed ?? () {},
         ),
         const SizedBox(width: 20),
         _buildCircle(
           icon: FontAwesomeIcons.apple,
           color: AppColors.logifyWhite,
-          onPressed: () {},
+          onPressed: onApplePressed ?? () {},
         ),
         const SizedBox(width: 20),
         _buildCircle(
           icon: FontAwesomeIcons.google,
           color: AppColors.logifyGoogleRed,
-          onPressed: () {},
+          onPressed: onGooglePressed ?? () {},
         ),
       ],
     );

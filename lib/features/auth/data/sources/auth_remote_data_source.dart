@@ -24,6 +24,8 @@ abstract class AuthRemoteDataSource {
 
   Future<void> signOut();
 
+  Future<void> deleteAccount();
+
   Future<bool> isLoggedIn();
 
   // Forgot Password methods
@@ -137,6 +139,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> signOut() async {
     await firebaseAuth.signOut();
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    try {
+      await firebaseAuth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error',
+        statusCode: 0,
+        errorCode: e.code,
+      );
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
   }
 
   @override

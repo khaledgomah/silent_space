@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/security/secure_storage_service.dart';
+import 'package:silent_space/core/usecases/usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/is_logged_in_usecase.dart';
 import 'package:silent_space/core/utils/image_manager.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
@@ -40,13 +41,22 @@ class _SplashViewState extends State<SplashView>
 
   Future<void> _checkAuthAndNavigate() async {
     await Future.delayed(const Duration(seconds: 2));
-    final token = await getIt<SecureStorageService>().readToken();
+    final result = await getIt<IsLoggedInUseCase>()(NoParams());
     if (!mounted) return;
-    if (token != null) {
-      Navigator.pushReplacementNamed(context, RoutesName.homeView);
-    } else {
-      Navigator.pushReplacementNamed(context, RoutesName.login);
-    }
+
+    result.fold(
+      (failure) {
+        // Log the error or handle it (here we default to login page)
+        Navigator.pushReplacementNamed(context, RoutesName.login);
+      },
+      (isLoggedIn) {
+        if (isLoggedIn) {
+          Navigator.pushReplacementNamed(context, RoutesName.homeView);
+        } else {
+          Navigator.pushReplacementNamed(context, RoutesName.login);
+        }
+      },
+    );
   }
 
   @override

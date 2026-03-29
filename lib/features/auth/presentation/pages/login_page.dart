@@ -188,7 +188,11 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: 28),
 
                         // ── Social Buttons ──
-                        const SocialLoginButtons(),
+                        SocialLoginButtons(
+                          onGooglePressed: () {},
+                          onApplePressed: () {},
+                          onFacebookPressed: () {},
+                        ),
                         const SizedBox(height: 32),
                       ],
                     ),
