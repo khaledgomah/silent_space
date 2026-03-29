@@ -9,6 +9,7 @@ Copy the prompt text and paste into Copilot Chat (`Ctrl+Shift+I` in VS Code):
 ### 1. Create a Complete Feature
 
 **Prompt:**
+
 ```
 Use the /create-feature skill to implement a {FEATURE_NAME} feature with:
 - Domain: {ENTITY} entity with {FIELDS}
@@ -22,6 +23,7 @@ Follow Clean Architecture strictly. No shortcuts.
 ```
 
 **Example:**
+
 ```
 Use the /create-feature skill to implement a Feedback feature with:
 - Domain: Feedback entity with id, rating (1-5), comment, createdAt, userId
@@ -36,36 +38,28 @@ Follow Clean Architecture strictly. No shortcuts.
 
 ---
 
-### 2. Code Review — Architecture
+### 2. Code Review — Architecture & Logic
 
 **Prompt:**
+
 ```
 Use the /architecture-review skill to validate {FILE_OR_FEATURE}:
 
-Check:
-- [ ] Domain layer has zero external dependencies
-- [ ] No presentation layer imports from data layer
-- [ ] All repositories implement domain contracts
-- [ ] Dependency injection is correct in service_locator.dart
-- [ ] State management uses immutable Equatable classes
-- [ ] Error handling uses Either<Failure, T> pattern
+Core Checks:
+- [ ] Domain layer has ZERO external dependencies (no flutter, no data layer).
+- [ ] No presentation layer imports from data layer (use repositories/usecases).
+- [ ] All repositories implement domain contracts (interfaces).
+- [ ] Dependency injection is correctly registered in service_locator.dart.
+- [ ] State management uses immutable Equatable classes and specific states.
+- [ ] Error handling follows Either<Failure, T> pattern.
+- [ ] Business logic should NOT be in Widgets or UI files.
 
-Report violations and show fixes.
-```
+Deep Checks:
+- [ ] Complexity: Are functions and classes following Single Responsibility Principle?
+- [ ] Duplication: Is there any logic that can be moved to core/utils or core/widgets?
+- [ ] Naming: Does the code follow standard Flutter/Dart naming conventions (camelCase, PascalCase)?
 
-**Example:**
-```
-Use the /architecture-review skill to validate lib/features/auth/:
-
-Check:
-- [ ] Domain layer has zero external dependencies
-- [ ] No presentation layer imports from data layer
-- [ ] All repositories implement domain contracts
-- [ ] Dependency injection is correct in service_locator.dart
-- [ ] State management uses immutable Equatable classes
-- [ ] Error handling uses Either<Failure, T> pattern
-
-Report violations and show fixes.
+Report violations concisely with suggested fixes.
 ```
 
 ---
@@ -73,6 +67,7 @@ Report violations and show fixes.
 ### 3. Debug Architecture Violation
 
 **Prompt:**
+
 ```
 Use the /debugging-architecture skill:
 
@@ -86,6 +81,7 @@ Context: {BRIEF_DESCRIPTION}
 ```
 
 **Example:**
+
 ```
 Use the /debugging-architecture skill:
 
@@ -103,6 +99,7 @@ Context: Getting "Type not found" when trying to use remoteDataSource
 ### 4. Implement Error Handling
 
 **Prompt:**
+
 ```
 Use the /error-handling skill:
 
@@ -118,6 +115,7 @@ Expected Failures: {FAILURE_TYPES}
 ```
 
 **Example:**
+
 ```
 Use the /error-handling skill:
 
@@ -137,6 +135,7 @@ Expected Failures: PaymentFailure (insufficient funds, network error, server err
 ### 5. Refactor Large Widget
 
 **Prompt:**
+
 ```
 Use the /widget-refactoring skill:
 
@@ -153,6 +152,7 @@ Issues: {PROBLEMS}
 ```
 
 **Example:**
+
 ```
 Use the /widget-refactoring skill:
 
@@ -173,6 +173,7 @@ Issues: 250 lines, 5 levels of nesting, hardcoded strings, full rebuild on any s
 ### 6. Write Tests
 
 **Prompt:**
+
 ```
 Use the /testing-flutter skill:
 
@@ -189,6 +190,7 @@ Use Arrange-Act-Assert structure
 ```
 
 **Example:**
+
 ```
 Use the /testing-flutter skill:
 
@@ -209,6 +211,7 @@ Use Arrange-Act-Assert structure
 ### 7. Setup Caching Strategy
 
 **Prompt:**
+
 ```
 Use the /caching-persistence skill:
 
@@ -226,6 +229,7 @@ Offline Support: {YES/NO}
 ```
 
 **Example:**
+
 ```
 Use the /caching-persistence skill:
 
@@ -247,6 +251,7 @@ Offline Support: Yes, show cached sessions when offline
 ### 8. Setup Networking
 
 **Prompt:**
+
 ```
 Use the /networking-api skill:
 
@@ -264,6 +269,7 @@ Special: {RETRIES/HEADERS/INTERCEPTORS}
 ```
 
 **Example:**
+
 ```
 Use the /networking-api skill:
 
@@ -285,6 +291,7 @@ Special: Refresh token when 401, retry timeouts up to 3x
 ### 9. Add Localization
 
 **Prompt:**
+
 ```
 Use the /localization-i18n skill:
 
@@ -301,6 +308,7 @@ Notes: {SPECIAL_FORMATTING}
 ```
 
 **Example:**
+
 ```
 Use the /localization-i18n skill:
 
@@ -327,6 +335,7 @@ Notes: Arabic should support RTL properly, ratings should be 5→1 in RTL
 ### 10. Dependency Injection Setup
 
 **Prompt:**
+
 ```
 Use the /dependency-injection skill:
 
@@ -344,6 +353,7 @@ New dependencies to register:
 ```
 
 **Example:**
+
 ```
 Use the /dependency-injection skill:
 
@@ -365,6 +375,7 @@ New dependencies to register:
 ### 11. Multi-Cubit Coordination
 
 **Prompt:**
+
 ```
 Use the /state-management-advanced skill:
 
@@ -380,6 +391,7 @@ Side effects: {NAVIGATION/DIALOGS/TOASTS}
 ```
 
 **Example:**
+
 ```
 Use the /state-management-advanced skill:
 
@@ -396,6 +408,92 @@ Side effects: Show validation errors, Show success toast, Navigate to HomePage
 
 ---
 
+### 12. Theme & Design System Review
+
+**Prompt:**
+
+```
+Use the /theme-review skill to audit {FILE_OR_PATH}:
+
+Check for Compliance:
+- [ ] Colors: No hardcoded Hex/RGB colors. Use AppColors.xxx or Theme.of(context).
+- [ ] Backgrounds: Scaffolds should use standard theme background color.
+- [ ] Typography: Use Theme.of(context).textTheme for all text styles.
+- [ ] Constants: Use standard spacing constants (Constants.xxx or SizedBox padding).
+- [ ] Theme Symmetry: Does the widget support both Light and Dark mode?
+
+Identify all hardcoded visual values and show how to replace them with theme tokens.
+```
+
+---
+
+### 13. UI/UX Excellence ("Logify" Standards)
+
+**Prompt:**
+
+```
+Evaluate {FILE_OR_PATH} against the "Logify" Design Standards:
+
+Standards Checklist:
+- [ ] Backgrounds: Dark Navy (AppColors.logifyBackground) for dark mode.
+- [ ] Accents: Magenta (AppColors.logifyPrimary) for primary actions/links.
+- [ ] Buttons: Pill-shaped (StadiumBorder) with 0 elevation for primary actions.
+- [ ] Fields: Underline-style inputs with consistent hint/label colors.
+- [ ] Spacing: Large comfortable paddings (16px/24px/32px).
+- [ ] Icons: Consistent icon weights and sizes (Icons.xxx_outlined preferred).
+
+Report any inconsistencies with the premium Logify design language.
+```
+
+---
+
+### 14. Performance & Widget Optimization
+
+**Prompt:**
+
+```
+Analyze {FILE_OR_PATH} for Flutter performance issues:
+
+Optimization Checklist:
+- [ ] Const: Ensure ALL static widgets use 'const' constructors.
+- [ ] Nesting: Nesting depth should not exceed 5 levels (extract if deeper).
+- [ ] Rebuilds: Wrap dynamic parts in BlocBuilder/BlocSelector instead of full rebuilds.
+- [ ] Images: Check for large assets or missing placeholders.
+- [ ] Lambdas: Avoid complex logic inside build methods (move to methods or cubit).
+
+Provide a refactored version of the widget with performance improvements.
+```
+
+---
+
+### 15. Prompt Engineering & Meta-Review
+
+**Prompt:**
+
+```
+Analyze the following prompt for effectiveness and compliance with our project standards:
+
+Prompt to Review: "{PROMPT_TEXT}"
+
+Evaluation Criteria:
+- [ ] Context: Does it provide enough background (files, features, architecture)?
+- [ ] Specificity: Is the goal clear and unambiguous?
+- [ ] Constraints: Does it enforce Clean Architecture and Logify Design?
+- [ ] Output Format: Is the desired response format specified (code, report, tests)?
+- [ ] Skill Usage: Does it correctly invoke the appropriate /skill?
+
+Suggest improvements to make this prompt more "powerful" and effective for the AI agent.
+```
+
+---
+
+## Meta-Review: Prompt Design Guidelines
+
+1. **State the Skill Clearly**: Use `/skill-name` notation.
+2. **Provide a Specific Checklist**: Use `[ ]` for scannable requirements.
+3. **Include Examples**: Show exactly what a "good" call looks like.
+4. **Enforce Standards**: Explicitly mention Clean Architecture and Logify Design.
+
 ## Quick Command Reference
 
 ```bash
@@ -404,6 +502,7 @@ Side effects: Show validation errors, Show success toast, Navigate to HomePage
 /architecture-review
 /testing-flutter
 /error-handling
+/theme-review
 /caching-persistence
 /networking-api
 /dependency-injection
@@ -411,6 +510,8 @@ Side effects: Show validation errors, Show success toast, Navigate to HomePage
 /localization-i18n
 /widget-refactoring
 /debugging-architecture
+/ui-audit
+/performance-opt
 ```
 
 ## Tips for Better Results
@@ -423,19 +524,21 @@ Side effects: Show validation errors, Show success toast, Navigate to HomePage
 
 ## When to Ask Different Prompts
 
-| Situation | Prompt |
-|-----------|--------|
-| Building new feature | "Create a Complete Feature" |
-| Code smells | "Code Review — Architecture" |
-| Runtime errors | "Debug Architecture Violation" |
-| Missing error handling | "Implement Error Handling" |
-| Slow/complex widgets | "Refactor Large Widget" |
-| No test coverage | "Write Tests" |
-| Data not persisting | "Setup Caching Strategy" |
-| API errors | "Setup Networking" |
-| Hardcoded strings | "Add Localization" |
-| "Type not found" errors | "Dependency Injection Setup" |
-| Complex flows | "Multi-Cubit Coordination" |
+| Situation                   | Prompt                              |
+| --------------------------- | ----------------------------------- |
+| Building new feature        | "Create a Complete Feature"         |
+| Code smells / Arch check    | "Code Review — Architecture"        |
+| Color / Style inconsistency | "Theme & Design System Review"      |
+| UI doesn't look premium     | "UI/UX Excellence (Logify)"         |
+| Slow/laggy scrolling/UI     | "Performance & Widget Optimization" |
+| Runtime errors              | "Debug Architecture Violation"      |
+| Missing error handling      | "Implement Error Handling"          |
+| No test coverage            | "Write Tests"                       |
+| Data not persisting         | "Setup Caching Strategy"            |
+| API errors                  | "Setup Networking"                  |
+| Hardcoded strings           | "Add Localization"                  |
+| "Type not found" errors     | "Dependency Injection Setup"        |
+| Complex flows               | "Multi-Cubit Coordination"          |
 
 ---
 
