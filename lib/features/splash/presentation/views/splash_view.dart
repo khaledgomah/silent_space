@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:silent_space/core/utils/app_strings.dart';
-import 'package:silent_space/core/utils/image_manager.dart';
-import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
+import 'package:silent_space/core/utils/service_locator.dart';
+import 'package:silent_space/core/widgets/custom_snack_bar.dart';
 import 'package:silent_space/features/splash/presentation/cubit/splash_cubit.dart';
 import 'package:silent_space/features/splash/presentation/cubit/splash_state.dart';
+import 'package:silent_space/features/splash/presentation/widgets/splash_content.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -50,27 +49,17 @@ class _SplashViewState extends State<SplashView>
             Navigator.pushReplacementNamed(context, RoutesName.homeView);
           } else if (state is Unauthenticated) {
             Navigator.pushReplacementNamed(context, RoutesName.login);
+          } else if (state is SplashError) {
+            CustomSnackBar.showError(context, state.message);
+            Navigator.pushReplacementNamed(context, RoutesName.login);
           }
         },
         child: Scaffold(
           body: Container(
             alignment: Alignment.center,
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: ScaleTransition(
-                scale: _scaleAnimation,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Image(image: AssetImage(ImageManager.appIcon)),
-                    const SizedBox(height: 24),
-                    Text(
-                      AppStrings.splashSubtitle,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ).tr(),
-                  ],
-                ),
-              ),
+            child: SplashContent(
+              fadeAnimation: _fadeAnimation,
+              scaleAnimation: _scaleAnimation,
             ),
           ),
         ),

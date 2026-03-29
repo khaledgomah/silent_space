@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/core/theme/app_colors.dart';
+import 'package:silent_space/core/theme/app_spacing.dart';
 
 class CustomUnderlineTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -36,7 +36,7 @@ class CustomUnderlineTextField extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.titleSmall,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.s8),
         TextFormField(
           controller: controller,
           obscureText: obscureText,
@@ -44,7 +44,7 @@ class CustomUnderlineTextField extends StatelessWidget {
           textInputAction: textInputAction,
           onFieldSubmitted: onFieldSubmitted,
           style: Theme.of(context).textTheme.bodyLarge,
-          cursorColor: AppColors.logifyPrimary,
+          cursorColor: Theme.of(context).colorScheme.primary,
           decoration: InputDecoration(
             hintText: hintText,
             prefixIcon: Icon(prefixIcon, size: 20),

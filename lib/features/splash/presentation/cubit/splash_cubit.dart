@@ -15,7 +15,7 @@ class SplashCubit extends Cubit<SplashState> {
     final result = await _isLoggedInUseCase(NoParams());
 
     result.fold(
-      (failure) => emit(Unauthenticated()),
+      (failure) => emit(SplashError(failure.message)),
       (isLoggedIn) {
         if (isLoggedIn) {
           emit(Authenticated());
