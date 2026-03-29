@@ -5,16 +5,11 @@ import 'package:silent_space/core/theme/app_colors.dart';
 class AppTheme {
   AppTheme._();
 
-  // ── Brand Colors ──
-  static const Color _primaryLight = AppColors.primaryLight;
-  static const Color _primaryDark = AppColors.primaryDark;
-  static const Color _seedColor = AppColors.seedColor;
-
   static ThemeData get lightTheme {
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: _seedColor,
+      seedColor: AppColors.logifyPrimary,
       brightness: Brightness.light,
-      primary: _primaryLight,
+      primary: AppColors.logifyPrimary,
     );
 
     return ThemeData(
@@ -82,16 +77,17 @@ class AppTheme {
 
   static ThemeData get darkTheme {
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: _seedColor,
+      seedColor: AppColors.logifyPrimary,
       brightness: Brightness.dark,
-      primary: _primaryDark,
+      primary: AppColors.logifyPrimary,
+      surface: AppColors.logifyBackground,
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: colorScheme.surface,
+      scaffoldBackgroundColor: AppColors.logifyBackground,
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
@@ -100,32 +96,35 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.primary,
-          foregroundColor: colorScheme.onPrimary,
+          backgroundColor: AppColors.logifyPrimary,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(28),
           ),
           elevation: 0,
+          minimumSize: const Size(double.infinity, 52),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.5,
+          ),
         ),
       ),
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+      inputDecorationTheme: const InputDecorationTheme(
+        filled: false,
+        hintStyle: TextStyle(color: AppColors.logifyGrey, fontSize: 14),
+        contentPadding: EdgeInsets.symmetric(vertical: 14),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.logifyLightGrey, width: 1),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.logifyPrimary, width: 2),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: colorScheme.error),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.redAccent, width: 1.5),
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 14,
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.redAccent, width: 2),
         ),
       ),
       cardTheme: CardThemeData(
@@ -133,7 +132,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        color: colorScheme.surfaceContainer,
+        color: AppColors.logifyNavy,
       ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: colorScheme.primaryContainer,

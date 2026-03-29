@@ -26,11 +26,12 @@ class AppColors {
   static const Color transparent = Colors.transparent;
   static const Color red = Colors.red;
   static const Color blue = Colors.blue;
-  // ── Logify Design Colors (Node 24-173) ──
-  static const Color logifyPrimary = Color(0xFF0027BD); // Royal Blue
+  // ── Logify Design Colors (Figma Node 25-348) ──
+  static const Color logifyBackground = Color(0xFF0B0B1E); // Dark navy bg
+  static const Color logifyPrimary = Color(0xFFBF007E); // Magenta / Pink accent
   static const Color logifyNavy = Color(0xFF030C43); // Deep Navy for side panel
-  static const Color logifyGrey = Color(0xFF757575); // Secondary text grey
-  static const Color logifyLightGrey = Color(0xFFD1D1D1); // Underline color
+  static const Color logifyGrey = Color(0xFF8E8E8E); // Placeholder text grey
+  static const Color logifyLightGrey = Color(0xFF3A3A5C); // Underline on dark bg
   static const Color logifyWhite = Color(0xFFFFFFFF);
   static const Color logifyDark = Color(0xFF000000);
   static const Color logifyGoogleRed = Color(0xFFDB4437);

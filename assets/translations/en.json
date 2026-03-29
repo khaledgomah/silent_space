@@ -96,5 +96,13 @@
   "resetPasswordDesc": "Please enter your new password below.",
   "newPassword": "New Password",
   "passwordMinLength6": "Password must be at least 6 characters",
-  "submitNewPassword": "Submit New Password"
+  "submitNewPassword": "Submit New Password",
+  "emailHint": "Enter your email address",
+  "usernameHint": "Enter your username",
+  "passwordHint": "Enter your password",
+  "confirmPasswordHint": "Confirm your password",
+  "passwordResetLinkSent": "Password reset link sent to your email",
+  "passwordResetSuccess": "Password successfully reset",
+  "emailAlreadyInUse": "This email is already in use",
+  "weakPassword": "The password provided is too weak"
 }

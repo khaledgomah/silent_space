@@ -40,18 +40,11 @@ class CustomTextFormField extends StatelessWidget {
       onSaved: onSaved,
       style: const TextStyle(color: AppColors.white),
       decoration: InputDecoration(
-          hintText: hintText,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(borderRadius ?? 4),
-            borderSide: const BorderSide(color: AppColors.white),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(borderRadius ?? 4),
-            borderSide: const BorderSide(color: AppColors.textFormBorder),
-          ),
-          border: const OutlineInputBorder(),
-          labelText: labelText,
-          labelStyle: const TextStyle(color: AppColors.white)),
+        hintText: hintText,
+        labelText: labelText,
+        labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+        // Removed hardcoded borders to allow theme-based styling (UnderlineInputBorder for dark mode)
+      ),
     );
   }
 }

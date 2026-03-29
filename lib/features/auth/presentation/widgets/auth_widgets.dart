@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
+import 'package:silent_space/core/widgets/custom_button.dart';
+import 'package:silent_space/core/widgets/custom_text_field.dart';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Underline-style Email Field (LOGIFY Figma – Node 25-348)
+// ─────────────────────────────────────────────────────────────────────────────
 
 class AuthEmailField extends StatelessWidget {
   final TextEditingController controller;
@@ -11,33 +17,12 @@ class AuthEmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return CustomUnderlineTextField(
       controller: controller,
+      label: AppStrings.email.tr(),
+      hintText: AppStrings.emailHint.tr(),
+      prefixIcon: Icons.email_outlined,
       keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        hintText: AppStrings.email.tr(),
-        hintStyle: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
-        prefixIcon: const Icon(Icons.email_outlined,
-            size: 20, color: AppColors.logifyPrimary),
-        filled: true,
-        fillColor: AppColors.logifyLightGrey,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide:
-              const BorderSide(color: AppColors.logifyPrimary, width: 1.5),
-        ),
-      ),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return AppStrings.fieldRequired.tr();
@@ -51,6 +36,37 @@ class AuthEmailField extends StatelessWidget {
     );
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Underline-style Username Field
+// ─────────────────────────────────────────────────────────────────────────────
+
+class AuthUsernameField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const AuthUsernameField({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomUnderlineTextField(
+      controller: controller,
+      label: AppStrings.username.tr(),
+      hintText: AppStrings.usernameHint.tr(),
+      prefixIcon: Icons.person_outline,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return AppStrings.fieldRequired.tr();
+        }
+        return null;
+      },
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Underline-style Password Field with visibility toggle
+// ─────────────────────────────────────────────────────────────────────────────
 
 class AuthPasswordField extends StatefulWidget {
   final TextEditingController controller;
@@ -73,47 +89,25 @@ class AuthPasswordField extends StatefulWidget {
 }
 
 class _AuthPasswordFieldState extends State<AuthPasswordField> {
-  bool _obscurePassword = true;
+  bool _obscure = true;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return CustomUnderlineTextField(
       controller: widget.controller,
-      obscureText: _obscurePassword,
+      label: widget.label,
+      hintText: AppStrings.passwordHint.tr(),
+      prefixIcon: Icons.lock_outline,
+      obscureText: _obscure,
       textInputAction: widget.textInputAction,
-      onFieldSubmitted: widget.onFieldSubmitted == null
-          ? null
-          : (_) => widget.onFieldSubmitted!(widget.controller.text),
-      decoration: InputDecoration(
-        hintText: widget.label,
-        hintStyle: const TextStyle(color: AppColors.logifyGrey, fontSize: 14),
-        prefixIcon: const Icon(Icons.lock_outline,
-            size: 20, color: AppColors.logifyPrimary),
-        filled: true,
-        fillColor: AppColors.logifyLightGrey,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      suffixIcon: IconButton(
+        icon: Icon(
+          _obscure ? Icons.visibility_off : Icons.visibility,
+          size: 20,
+          color: AppColors.logifyGrey,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide:
-              const BorderSide(color: AppColors.logifyPrimary, width: 1.5),
-        ),
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscurePassword ? Icons.visibility_off : Icons.visibility,
-            size: 20,
-            color: AppColors.logifyGrey,
-          ),
-          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
-        ),
+        onPressed: () => setState(() => _obscure = !_obscure),
       ),
       validator: widget.validator ??
           (value) {
@@ -129,6 +123,10 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Magenta Pill Submit Button
+// ─────────────────────────────────────────────────────────────────────────────
+
 class AuthSubmitButton extends StatelessWidget {
   final bool isLoading;
   final VoidCallback? onPressed;
@@ -143,39 +141,17 @@ class AuthSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 56,
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.logifyPrimary,
-          foregroundColor: Colors.white,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: isLoading
-            ? const SizedBox(
-                height: 24,
-                width: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: Colors.white,
-                ),
-              )
-            : Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-      ),
+    return CustomButton(
+      isLoading: isLoading,
+      onPressed: onPressed,
+      text: text,
     );
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Circular Social Login Buttons (Facebook · Apple · Google)
+// ─────────────────────────────────────────────────────────────────────────────
 
 class SocialLoginButtons extends StatelessWidget {
   const SocialLoginButtons({super.key});
@@ -183,42 +159,47 @@ class SocialLoginButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildSocialBtn(
-          icon: FontAwesomeIcons.google,
-          color: AppColors.logifyGoogleRed,
-          onPressed: () {},
-        ),
-        _buildSocialBtn(
+        _buildCircle(
           icon: FontAwesomeIcons.facebookF,
           color: AppColors.logifyFacebookBlue,
           onPressed: () {},
         ),
-        _buildSocialBtn(
+        const SizedBox(width: 20),
+        _buildCircle(
           icon: FontAwesomeIcons.apple,
-          color: Colors.black,
+          color: AppColors.logifyWhite,
+          onPressed: () {},
+        ),
+        const SizedBox(width: 20),
+        _buildCircle(
+          icon: FontAwesomeIcons.google,
+          color: AppColors.logifyGoogleRed,
           onPressed: () {},
         ),
       ],
     );
   }
 
-  Widget _buildSocialBtn({
+  Widget _buildCircle({
     required IconData icon,
     required Color color,
     required VoidCallback onPressed,
   }) {
     return InkWell(
       onTap: onPressed,
-      borderRadius: BorderRadius.circular(16),
+      customBorder: const CircleBorder(),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        width: 48,
+        height: 48,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.logifyLightGrey, width: 2),
-          borderRadius: BorderRadius.circular(16),
+          shape: BoxShape.circle,
+          border: Border.all(color: AppColors.logifyLightGrey, width: 1.5),
         ),
-        child: FaIcon(icon, color: color, size: 24),
+        child: Center(
+          child: FaIcon(icon, color: color, size: 20),
+        ),
       ),
     );
   }

@@ -45,11 +45,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocProvider(
       create: (_) => getIt<AuthCubit>(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.logifyBackground,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 28),
               child: BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
                   if (state is AuthSuccess) {
@@ -71,29 +71,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     key: _formKey,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 48),
+
                         // ── Logo ──
-                        Container(
-                          height: 80,
-                          width: 80,
-                          decoration: const BoxDecoration(
-                            color: AppColors.logifyPrimary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'S',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
+                        _buildLogo(),
+                        const SizedBox(height: 32),
 
                         // ── Header ──
                         Text(
@@ -101,58 +85,44 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.logifyDark,
+                            color: AppColors.logifyWhite,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 8),
 
-                        // ── Subtitle ──
-                        Text(
-                          AppStrings.registerSubtitle.tr(),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.logifyGrey,
-                          ),
-                          textAlign: TextAlign.center,
+                        // ── Login link ──
+                        Row(
+                          children: [
+                            Text(
+                              AppStrings.hasAccount.tr(),
+                              style: const TextStyle(
+                                color: AppColors.logifyGrey,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () => Navigator.of(context).pop(),
+                              child: Text(
+                                AppStrings.login.tr(),
+                                style: const TextStyle(
+                                  color: AppColors.logifyPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 40),
 
-                        // ── Username / Name ──
-                        TextFormField(
-                          controller: _nameController,
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: AppStrings.username.tr(),
-                            hintStyle: const TextStyle(
-                                color: AppColors.logifyGrey, fontSize: 14),
-                            prefixIcon: const Icon(Icons.person_outline,
-                                size: 20, color: AppColors.logifyPrimary),
-                            filled: true,
-                            fillColor: AppColors.logifyLightGrey,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 20),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: const BorderSide(
-                                  color: AppColors.logifyPrimary, width: 1.5),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
                         // ── Email ──
                         AuthEmailField(controller: _emailController),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 24),
+
+                        // ── Username ──
+                        AuthUsernameField(controller: _nameController),
+                        const SizedBox(height: 24),
 
                         // ── Password ──
                         AuthPasswordField(
@@ -160,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           label: AppStrings.password.tr(),
                           textInputAction: TextInputAction.next,
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 24),
 
                         // ── Confirm Password ──
                         AuthPasswordField(
@@ -177,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 36),
 
                         // ── Submit Button ──
                         AuthSubmitButton(
@@ -185,36 +155,34 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: () => _onSubmit(cubit),
                           text: AppStrings.register.tr(),
                         ),
-                        const SizedBox(height: 40),
-
-                        // ── Footer ──
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              AppStrings.hasAccount.tr(),
-                              style:
-                                  const TextStyle(color: AppColors.logifyDark),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: Text(
-                                AppStrings.login.tr(),
-                                style: const TextStyle(
-                                  color: AppColors.logifyPrimary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 32),
                       ],
                     ),
                   );
                 },
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return Container(
+      height: 48,
+      width: 48,
+      decoration: const BoxDecoration(
+        color: AppColors.logifyPrimary,
+        shape: BoxShape.circle,
+      ),
+      child: const Center(
+        child: Text(
+          'S',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

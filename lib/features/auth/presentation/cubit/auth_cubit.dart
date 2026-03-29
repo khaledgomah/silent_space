@@ -43,6 +43,14 @@ class AuthCubit extends Cubit<AuthState> {
         return AppStrings.invalidEmail.tr();
       }
 
+      if (code == 'email-already-in-use') {
+        return AppStrings.emailAlreadyInUse.tr();
+      }
+
+      if (code == 'weak-password') {
+        return AppStrings.weakPassword.tr();
+      }
+
       if (failure.statusCode == 400 &&
           (failure.message.isEmpty || failure.message == 'null')) {
         return AppStrings.invalidCredentials.tr();

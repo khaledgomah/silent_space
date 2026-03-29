@@ -102,4 +102,12 @@ class AppStrings {
   static const String newPassword = 'newPassword';
   static const String passwordMinLength6 = 'passwordMinLength6';
   static const String submitNewPassword = 'submitNewPassword';
+  static const String emailHint = 'emailHint';
+  static const String usernameHint = 'usernameHint';
+  static const String passwordHint = 'passwordHint';
+  static const String confirmPasswordHint = 'confirmPasswordHint';
+  static const String passwordResetLinkSent = 'passwordResetLinkSent';
+  static const String passwordResetSuccess = 'passwordResetSuccess';
+  static const String emailAlreadyInUse = 'emailAlreadyInUse';
+  static const String weakPassword = 'weakPassword';
 }

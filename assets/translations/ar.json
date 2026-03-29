@@ -96,5 +96,13 @@
   "resetPasswordDesc": "الرجاء إدخال كلمة المرور الجديدة أدناه.",
   "newPassword": "كلمة المرور الجديدة",
   "passwordMinLength6": "كلمة المرور يجب أن تتكون من 6 أحرف على الأقل",
-  "submitNewPassword": "إرسال كلمة المرور الجديدة"
+  "submitNewPassword": "إرسال كلمة المرور الجديدة",
+  "emailHint": "أدخل عنوان بريدك الإلكتروني",
+  "usernameHint": "أدخل اسم المستخدم",
+  "passwordHint": "أدخل كلمة المرور",
+  "confirmPasswordHint": "تأكيد كلمة المرور",
+  "passwordResetLinkSent": "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني",
+  "passwordResetSuccess": "تم إعادة تعيين كلمة المرور بنجاح",
+  "emailAlreadyInUse": "هذا البريد الإلكتروني مستخدم بالفعل",
+  "weakPassword": "كلمة المرور المقدمة ضعيفة للغاية"
 }
