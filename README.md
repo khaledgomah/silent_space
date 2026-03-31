@@ -43,6 +43,29 @@ This project follows a "Defensive Engineering" philosophy implemented during a m
 | **Error Handling** | `dartz` (Functional programming) |
 | **Localization** | `easy_localization` (English + Arabic) |
 
+## 🤖 AI Prompt Workflow
+
+Reusable prompt templates are available in `.ai/` for architecture-safe development:
+
+- `create-feature.md`
+- `architecture-review.md`
+- `debugging.md`
+- `testing.md`
+- `networking.md` (Firebase-first)
+- `caching.md`
+- `localization.md`
+- `performance.md`
+
+Use these prompts with Copilot Chat to generate features, audits, tests, and refactors that respect Clean Architecture.
+
+## 🧱 Core Infrastructure
+
+- Dependency injection: `lib/core/utils/service_locator.dart`
+- Error system: `lib/core/errors/`
+- Use case base: `lib/core/usecases/usecase.dart`
+- Constants: `lib/core/constants/`
+- Remote backend: Firebase Auth + Cloud Firestore (no Dio dependency)
+
 ## 🚀 Setup
 
 ```bash
