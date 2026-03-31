@@ -4,16 +4,15 @@ import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/core/theme/app_spacing.dart';
 
 class SocialLoginButtons extends StatelessWidget {
-  final VoidCallback? onGooglePressed;
-  final VoidCallback? onApplePressed;
-  final VoidCallback? onFacebookPressed;
-
   const SocialLoginButtons({
     super.key,
     this.onGooglePressed,
     this.onApplePressed,
     this.onFacebookPressed,
   });
+  final VoidCallback? onGooglePressed;
+  final VoidCallback? onApplePressed;
+  final VoidCallback? onFacebookPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +42,14 @@ class SocialLoginButtons extends StatelessWidget {
 }
 
 class _SocialButton extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-  final VoidCallback onPressed;
-
   const _SocialButton({
     required this.icon,
     required this.color,
     required this.onPressed,
   });
+  final IconData icon;
+  final Color color;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {

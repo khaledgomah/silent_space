@@ -5,9 +5,8 @@ import 'package:silent_space/features/auth/domain/entities/forgot_password_entit
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
 
 class VerifyResetTokenUseCase implements UseCase<ForgotPasswordEntity, String> {
-  final AuthRepository repository;
-
   VerifyResetTokenUseCase(this.repository);
+  final AuthRepository repository;
 
   @override
   Future<Either<Failure, ForgotPasswordEntity>> call(String token) {

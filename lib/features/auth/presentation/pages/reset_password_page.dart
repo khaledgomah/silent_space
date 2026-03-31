@@ -6,9 +6,8 @@ import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cu
 import 'package:silent_space/features/auth/presentation/widgets/auth_widgets.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  final String token;
-
   const ResetPasswordPage({super.key, required this.token});
+  final String token;
 
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();

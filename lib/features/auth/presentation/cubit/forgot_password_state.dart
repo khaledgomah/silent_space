@@ -13,36 +13,32 @@ class ForgotPasswordInitial extends ForgotPasswordState {}
 class ForgotPasswordLoading extends ForgotPasswordState {}
 
 class ForgotPasswordRequestSuccess extends ForgotPasswordState {
-  final String message;
-
   const ForgotPasswordRequestSuccess({required this.message});
+  final String message;
 
   @override
   List<Object?> get props => [message];
 }
 
 class ForgotPasswordVerifySuccess extends ForgotPasswordState {
-  final ForgotPasswordEntity entity;
-
   const ForgotPasswordVerifySuccess({required this.entity});
+  final ForgotPasswordEntity entity;
 
   @override
   List<Object?> get props => [entity];
 }
 
 class ForgotPasswordResetSuccess extends ForgotPasswordState {
-  final String message;
-
   const ForgotPasswordResetSuccess({required this.message});
+  final String message;
 
   @override
   List<Object?> get props => [message];
 }
 
 class ForgotPasswordFailure extends ForgotPasswordState {
-  final String error;
-
   const ForgotPasswordFailure({required this.error});
+  final String error;
 
   @override
   List<Object?> get props => [error];

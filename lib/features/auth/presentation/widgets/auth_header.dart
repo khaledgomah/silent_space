@@ -3,11 +3,6 @@ import 'package:silent_space/core/theme/app_spacing.dart';
 import 'package:silent_space/features/auth/presentation/widgets/auth_logo.dart';
 
 class AuthHeader extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String linkText;
-  final VoidCallback onLinkTap;
-
   const AuthHeader({
     super.key,
     required this.title,
@@ -15,6 +10,10 @@ class AuthHeader extends StatelessWidget {
     required this.linkText,
     required this.onLinkTap,
   });
+  final String title;
+  final String subtitle;
+  final String linkText;
+  final VoidCallback onLinkTap;
 
   @override
   Widget build(BuildContext context) {

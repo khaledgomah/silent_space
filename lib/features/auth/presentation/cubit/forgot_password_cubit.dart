@@ -8,10 +8,6 @@ import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_us
 import 'package:silent_space/features/auth/presentation/cubit/forgot_password_state.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
-  final RequestPasswordResetUseCase _requestPasswordResetUseCase;
-  final VerifyResetTokenUseCase _verifyResetTokenUseCase;
-  final ResetPasswordUseCase _resetPasswordUseCase;
-
   ForgotPasswordCubit({
     required RequestPasswordResetUseCase requestPasswordResetUseCase,
     required VerifyResetTokenUseCase verifyResetTokenUseCase,
@@ -20,14 +16,16 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         _verifyResetTokenUseCase = verifyResetTokenUseCase,
         _resetPasswordUseCase = resetPasswordUseCase,
         super(ForgotPasswordInitial());
+  final RequestPasswordResetUseCase _requestPasswordResetUseCase;
+  final VerifyResetTokenUseCase _verifyResetTokenUseCase;
+  final ResetPasswordUseCase _resetPasswordUseCase;
 
   Future<void> requestPasswordReset(String email) async {
     emit(ForgotPasswordLoading());
     final result = await _requestPasswordResetUseCase(email);
     result.fold(
       (failure) => emit(ForgotPasswordFailure(error: FailureMapper.map(failure))),
-      (_) => emit(ForgotPasswordRequestSuccess(
-          message: AppStrings.passwordResetLinkSent.tr())),
+      (_) => emit(ForgotPasswordRequestSuccess(message: AppStrings.passwordResetLinkSent.tr())),
     );
   }
 
@@ -42,12 +40,11 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   Future<void> resetPassword(String token, String newPassword) async {
     emit(ForgotPasswordLoading());
-    final result = await _resetPasswordUseCase(
-        ResetPasswordParams(token: token, newPassword: newPassword));
+    final result =
+        await _resetPasswordUseCase(ResetPasswordParams(token: token, newPassword: newPassword));
     result.fold(
       (failure) => emit(ForgotPasswordFailure(error: FailureMapper.map(failure))),
-      (_) => emit(ForgotPasswordResetSuccess(
-          message: AppStrings.passwordResetSuccess.tr())),
+      (_) => emit(ForgotPasswordResetSuccess(message: AppStrings.passwordResetSuccess.tr())),
     );
   }
 }

@@ -12,11 +12,6 @@ import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart'
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final SignInUseCase _signInUseCase;
-  final SignUpUseCase _signUpUseCase;
-  final SignOutUseCase _signOutUseCase;
-  final DeleteAccountUseCase _deleteAccountUseCase;
-
   AuthCubit({
     required SignInUseCase signInUseCase,
     required SignUpUseCase signUpUseCase,
@@ -27,6 +22,10 @@ class AuthCubit extends Cubit<AuthState> {
         _signOutUseCase = signOutUseCase,
         _deleteAccountUseCase = deleteAccountUseCase,
         super(AuthInitial());
+  final SignInUseCase _signInUseCase;
+  final SignUpUseCase _signUpUseCase;
+  final SignOutUseCase _signOutUseCase;
+  final DeleteAccountUseCase _deleteAccountUseCase;
 
   Future<void> signIn({
     required String email,

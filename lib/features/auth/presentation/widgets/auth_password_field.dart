@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:silent_space/core/widgets/custom_text_field.dart';
 
 class AuthPasswordField extends StatefulWidget {
-  final TextEditingController controller;
-  final String label;
-  final FormFieldValidator<String>? validator;
-  final ValueChanged<String>? onFieldSubmitted;
-  final TextInputAction? textInputAction;
-
   const AuthPasswordField({
     super.key,
     required this.controller,
@@ -16,6 +10,11 @@ class AuthPasswordField extends StatefulWidget {
     this.onFieldSubmitted,
     this.textInputAction,
   });
+  final TextEditingController controller;
+  final String label;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onFieldSubmitted;
+  final TextInputAction? textInputAction;
 
   @override
   State<AuthPasswordField> createState() => _AuthPasswordFieldState();

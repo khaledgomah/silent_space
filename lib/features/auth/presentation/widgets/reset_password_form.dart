@@ -9,8 +9,8 @@ import 'package:silent_space/features/auth/presentation/cubit/forgot_password_st
 import 'package:silent_space/features/auth/presentation/widgets/auth_widgets.dart';
 
 class ResetPasswordForm extends StatefulWidget {
-  final String token;
   const ResetPasswordForm({super.key, required this.token});
+  final String token;
 
   @override
   State<ResetPasswordForm> createState() => _ResetPasswordFormState();

@@ -5,9 +5,8 @@ import 'package:silent_space/core/theme/app_spacing.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 
 class RememberMeCheckbox extends StatefulWidget {
-  final ValueChanged<bool> onChanged;
-
   const RememberMeCheckbox({super.key, required this.onChanged});
+  final ValueChanged<bool> onChanged;
 
   @override
   State<RememberMeCheckbox> createState() => _RememberMeCheckboxState();
