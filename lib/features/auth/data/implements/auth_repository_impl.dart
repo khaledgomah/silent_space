@@ -10,17 +10,16 @@ import 'package:silent_space/features/auth/domain/repositories/auth_repository.d
 import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource remoteDataSource;
-  final AuthLocalDataSource localDataSource;
-  final NetworkInfo networkInfo;
-  final SessionRepository sessionRepository;
-
   const AuthRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
     required this.sessionRepository,
   });
+  final AuthRemoteDataSource remoteDataSource;
+  final AuthLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
+  final SessionRepository sessionRepository;
 
   @override
   Future<Either<Failure, UserEntity>> signInAnonymously() async {

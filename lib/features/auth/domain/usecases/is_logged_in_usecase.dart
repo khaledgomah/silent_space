@@ -4,9 +4,8 @@ import 'package:silent_space/core/usecases/usecase.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
 
 class IsLoggedInUseCase extends UseCase<bool, NoParams> {
-  final AuthRepository repository;
-
   IsLoggedInUseCase(this.repository);
+  final AuthRepository repository;
 
   @override
   Future<Either<Failure, bool>> call(NoParams params) async {

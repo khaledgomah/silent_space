@@ -10,9 +10,8 @@ abstract class AuthLocalDataSource {
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
-  final SecureStorageService secureStorage;
-
   const AuthLocalDataSourceImpl({required this.secureStorage});
+  final SecureStorageService secureStorage;
 
   @override
   Future<void> cacheToken(String token) async {

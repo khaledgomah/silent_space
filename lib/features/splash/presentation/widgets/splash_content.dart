@@ -5,14 +5,13 @@ import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/image_manager.dart';
 
 class SplashContent extends StatelessWidget {
-  final Animation<double> fadeAnimation;
-  final Animation<double> scaleAnimation;
-
   const SplashContent({
     super.key,
     required this.fadeAnimation,
     required this.scaleAnimation,
   });
+  final Animation<double> fadeAnimation;
+  final Animation<double> scaleAnimation;
 
   @override
   Widget build(BuildContext context) {

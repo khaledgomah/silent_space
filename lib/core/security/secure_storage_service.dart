@@ -3,11 +3,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// Wrapper around [FlutterSecureStorage] for token management.
 /// Uses hardware-backed keystore on Android / Keychain on iOS.
 class SecureStorageService {
-  static const _tokenKey = 'auth_token';
-  final FlutterSecureStorage _storage;
-
   const SecureStorageService({FlutterSecureStorage? storage})
       : _storage = storage ?? const FlutterSecureStorage();
+  static const _tokenKey = 'auth_token';
+  final FlutterSecureStorage _storage;
 
   Future<void> saveToken(String token) async {
     await _storage.write(key: _tokenKey, value: token);

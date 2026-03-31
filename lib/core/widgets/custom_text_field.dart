@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:silent_space/core/theme/app_spacing.dart';
 
 class CustomUnderlineTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String label;
-  final String hintText;
-  final IconData prefixIcon;
-  final Widget? suffixIcon;
-  final bool obscureText;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
-  final String? Function(String?)? validator;
-  final void Function(String)? onFieldSubmitted;
-
   const CustomUnderlineTextField({
     super.key,
     required this.controller,
@@ -26,6 +15,16 @@ class CustomUnderlineTextField extends StatelessWidget {
     this.validator,
     this.onFieldSubmitted,
   });
+  final TextEditingController controller;
+  final String label;
+  final String hintText;
+  final IconData prefixIcon;
+  final Widget? suffixIcon;
+  final bool obscureText;
+  final TextInputType keyboardType;
+  final TextInputAction textInputAction;
+  final String? Function(String?)? validator;
+  final void Function(String)? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {

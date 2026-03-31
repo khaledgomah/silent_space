@@ -8,6 +8,9 @@
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
 analyzer:
+  exclude:
+    - build/**
+    - "**/*.g.dart"
   errors:
     depend_on_referenced_packages: ignore
 include: package:flutter_lints/flutter.yaml
@@ -25,9 +28,15 @@ linter:
   # producing the lint.
   rules:
     prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
     prefer_final_locals: true
+    prefer_final_fields: true
     avoid_print: true
     always_declare_return_types: true
+    use_super_parameters: true
+    sort_constructors_first: true
+    directives_ordering: true
+    avoid_unnecessary_containers: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

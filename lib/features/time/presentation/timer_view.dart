@@ -1,11 +1,11 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/features/time/presentation/widgets/custom_count_down_timer.dart';
 import 'package:silent_space/features/time/presentation/widgets/restart_icon_button.dart';
 import 'package:silent_space/features/time/presentation/widgets/select_music_modal_sheet.dart';
 import 'package:silent_space/features/time/presentation/widgets/start_and_pause_widget.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silent_space/features/time/presentation/widgets/timer_setting_modal_sheet.dart';
 
 class TimerView extends StatelessWidget {

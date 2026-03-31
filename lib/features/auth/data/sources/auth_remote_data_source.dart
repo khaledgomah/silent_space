@@ -35,11 +35,10 @@ abstract class AuthRemoteDataSource {
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final FirebaseAuth firebaseAuth;
-
   const AuthRemoteDataSourceImpl({
     required this.firebaseAuth,
   });
+  final FirebaseAuth firebaseAuth;
 
   @override
   Future<UserModel> signInAnonymously() async {
@@ -122,10 +121,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
-      final credential =
-          EmailAuthProvider.credential(email: email, password: password);
-      final userCredential =
-          await firebaseAuth.currentUser?.linkWithCredential(credential);
+      final credential = EmailAuthProvider.credential(email: email, password: password);
+      final userCredential = await firebaseAuth.currentUser?.linkWithCredential(credential);
       if (userCredential == null) {
         throw const ServerException(message: 'No anonymous user to link');
       }

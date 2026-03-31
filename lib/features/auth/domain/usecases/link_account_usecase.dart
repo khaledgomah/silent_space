@@ -6,9 +6,8 @@ import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
 
 class LinkAccountUseCase extends UseCase<UserEntity, LinkAccountParams> {
-  final AuthRepository repository;
-
   LinkAccountUseCase(this.repository);
+  final AuthRepository repository;
 
   @override
   Future<Either<Failure, UserEntity>> call(LinkAccountParams params) async {
@@ -20,10 +19,9 @@ class LinkAccountUseCase extends UseCase<UserEntity, LinkAccountParams> {
 }
 
 class LinkAccountParams extends Equatable {
+  const LinkAccountParams({required this.email, required this.password});
   final String email;
   final String password;
-
-  const LinkAccountParams({required this.email, required this.password});
 
   @override
   List<Object?> get props => [email, password];

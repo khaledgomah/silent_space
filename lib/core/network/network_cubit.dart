@@ -5,9 +5,6 @@ import 'package:silent_space/core/network/network_info.dart';
 import 'package:silent_space/core/network/network_state.dart';
 
 class NetworkCubit extends Cubit<NetworkState> {
-  final NetworkInfo networkInfo;
-  late StreamSubscription<List<ConnectivityResult>> _subscription;
-
   NetworkCubit({required this.networkInfo}) : super(NetworkInitial()) {
     _subscription = networkInfo.onConnectivityChanged.listen((results) {
       if (results.contains(ConnectivityResult.none)) {
@@ -17,6 +14,8 @@ class NetworkCubit extends Cubit<NetworkState> {
       }
     });
   }
+  final NetworkInfo networkInfo;
+  late StreamSubscription<List<ConnectivityResult>> _subscription;
 
   @override
   Future<void> close() {

@@ -1,31 +1,29 @@
+import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/utils/sounds_manager.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 import 'package:uuid/uuid.dart';
-import 'package:equatable/equatable.dart';
 
 part 'timer_state.dart';
 
 class TimerCubit extends Cubit<TimerState> {
-  late final AudioPlayer player;
-  final SharedPreferences _prefs;
-
   TimerCubit()
       : _prefs = getIt<SharedPreferences>(),
         super(TimerState(
           durationTime: getIt<SharedPreferences>().getInt('focusTime') ?? 25,
           breakTime: getIt<SharedPreferences>().getInt('breakTime') ?? 5,
           voiceLevel: getIt<SharedPreferences>().getInt('voiceLevel') ?? 50,
-          path: getIt<SharedPreferences>().getString('soundPath') ??
-              SoundsManager.none,
+          path: getIt<SharedPreferences>().getString('soundPath') ?? SoundsManager.none,
         )) {
     player = AudioPlayer();
   }
+  late final AudioPlayer player;
+  final SharedPreferences _prefs;
 
   @override
   Future<void> close() {

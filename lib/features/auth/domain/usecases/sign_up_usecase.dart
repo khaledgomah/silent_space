@@ -6,9 +6,8 @@ import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
 
 class SignUpUseCase extends UseCase<UserEntity, SignUpParams> {
-  final AuthRepository repository;
-
   SignUpUseCase(this.repository);
+  final AuthRepository repository;
 
   @override
   Future<Either<Failure, UserEntity>> call(SignUpParams params) async {
@@ -20,10 +19,9 @@ class SignUpUseCase extends UseCase<UserEntity, SignUpParams> {
 }
 
 class SignUpParams extends Equatable {
+  const SignUpParams({required this.email, required this.password});
   final String email;
   final String password;
-
-  const SignUpParams({required this.email, required this.password});
 
   @override
   List<Object?> get props => [email, password];

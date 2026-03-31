@@ -7,8 +7,8 @@
 // See test/features/ for focused unit tests on use cases and repositories.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
+import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 
 void main() {
   group('Entity equality', () {

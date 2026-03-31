@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:silent_space/features/time/data/models/sound.dart';
 
 class SoundTile extends StatelessWidget {
+  const SoundTile(
+      {super.key, required this.sound, required this.onPressed, required this.isSelected});
   final Sound sound;
   final Function() onPressed;
   final bool isSelected;
-  const SoundTile(
-      {super.key,
-      required this.sound,
-      required this.onPressed,
-      required this.isSelected});
 
   @override
   Widget build(BuildContext context) {

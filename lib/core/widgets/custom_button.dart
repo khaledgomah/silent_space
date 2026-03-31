@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final bool isLoading;
-  final VoidCallback? onPressed;
-  final String? text;
-  final Widget? child;
-
   const CustomButton({
     super.key,
     this.isLoading = false,
@@ -13,6 +8,10 @@ class CustomButton extends StatelessWidget {
     this.text,
     this.child,
   }) : assert(text != null || child != null, 'Either text or child must be provided');
+  final bool isLoading;
+  final VoidCallback? onPressed;
+  final String? text;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

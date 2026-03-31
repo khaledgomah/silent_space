@@ -5,12 +5,16 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silent_space/core/cache/hive_service.dart';
+import 'package:silent_space/core/cubits/language_cubit/language_cubit.dart';
 import 'package:silent_space/core/network/network_info.dart';
 import 'package:silent_space/core/security/secure_storage_service.dart';
+import 'package:silent_space/core/theme/theme_cubit.dart';
 import 'package:silent_space/features/auth/data/implements/auth_repository_impl.dart';
 import 'package:silent_space/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:silent_space/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
+import 'package:silent_space/features/auth/domain/usecases/delete_account_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/is_logged_in_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/link_account_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/request_password_reset_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/reset_password_usecase.dart';
@@ -18,6 +22,7 @@ import 'package:silent_space/features/auth/domain/usecases/sign_in_anonymously_u
 import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_usecase.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:silent_space/features/session/data/implements/session_repository_impl.dart';
@@ -28,12 +33,7 @@ import 'package:silent_space/features/session/domain/repositories/session_reposi
 import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
-import 'package:silent_space/features/auth/domain/usecases/verify_reset_token_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/is_logged_in_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/delete_account_usecase.dart';
 import 'package:silent_space/features/splash/presentation/cubit/splash_cubit.dart';
-import 'package:silent_space/core/cubits/language_cubit/language_cubit.dart';
-import 'package:silent_space/core/theme/theme_cubit.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 
 GetIt getIt = GetIt.instance;
@@ -60,8 +60,7 @@ Future<void> locatorSetup() async {
 
   // ── Auth Feature ──
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton<FirebaseFirestore>(
-      () => FirebaseFirestore.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
 
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(

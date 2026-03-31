@@ -14,8 +14,8 @@ class Authenticated extends SplashState {}
 class Unauthenticated extends SplashState {}
 
 class SplashError extends SplashState {
-  final String message;
   const SplashError(this.message);
+  final String message;
 
   @override
   List<Object> get props => [message];
