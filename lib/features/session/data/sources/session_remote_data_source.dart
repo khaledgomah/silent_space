@@ -14,9 +14,8 @@ abstract class SessionRemoteDataSource {
 }
 
 class SessionRemoteDataSourceImpl implements SessionRemoteDataSource {
-  final FirebaseFirestore firestore;
-
   SessionRemoteDataSourceImpl({required this.firestore});
+  final FirebaseFirestore firestore;
 
   CollectionReference<Map<String, dynamic>> get _sessionsCollection =>
       firestore.collection('sessions');
@@ -46,9 +45,7 @@ class SessionRemoteDataSourceImpl implements SessionRemoteDataSource {
           .where('startTime', isLessThanOrEqualTo: Timestamp.fromDate(end))
           .get();
 
-      final sessions = snapshot.docs
-          .map((doc) => SessionModel.fromJson(doc.data()))
-          .toList();
+      final sessions = snapshot.docs.map((doc) => SessionModel.fromJson(doc.data())).toList();
 
       // Sort in code to avoid requiring a composite index in Firestore
       sessions.sort((a, b) => b.startTime.compareTo(a.startTime));
@@ -57,8 +54,7 @@ class SessionRemoteDataSourceImpl implements SessionRemoteDataSource {
     } catch (e, stack) {
       debugPrint('Firestore Load Error: $e');
       debugPrint('Stack Trace: $stack');
-      throw ServerException(
-          message: 'Failed to load sessions from Firestore: $e');
+      throw ServerException(message: 'Failed to load sessions from Firestore: $e');
     }
   }
 }

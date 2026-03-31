@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mrx_charts/mrx_charts.dart';
-import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/core/helper/helper_functions.dart';
+import 'package:silent_space/core/theme/app_colors.dart';
 
 class FocusChart extends StatelessWidget {
-  final List<int> weeklyMinutes;
-
   const FocusChart({super.key, required this.weeklyMinutes});
+  final List<int> weeklyMinutes;
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +16,16 @@ class FocusChart extends StatelessWidget {
       fontSize: 10.0,
     );
 
-    final maxValue = weeklyMinutes.isEmpty
-        ? 0
-        : weeklyMinutes.reduce((a, b) => a > b ? a : b);
-    final yMax =
-        maxValue <= 0 ? 30.0 : ((maxValue / 30).ceil() * 30).toDouble();
+    final maxValue = weeklyMinutes.isEmpty ? 0 : weeklyMinutes.reduce((a, b) => a > b ? a : b);
+    final yMax = maxValue <= 0 ? 30.0 : ((maxValue / 30).ceil() * 30).toDouble();
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        color: isDark
-            ? theme.colorScheme.surfaceContainerHighest.withAlpha(50)
-            : Colors.white,
+        color: isDark ? theme.colorScheme.surfaceContainerHighest.withAlpha(50) : Colors.white,
         border: Border.all(
-          color:
-              AppColors.navBarIndicator.withValues(alpha: isDark ? 0.1 : 0.05),
+          color: AppColors.navBarIndicator.withValues(alpha: isDark ? 0.1 : 0.05),
           width: 1,
         ),
       ),

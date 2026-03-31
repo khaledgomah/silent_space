@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:silent_space/core/theme/app_colors.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
-  final ValueChanged<int> onDestinationSelected;
-
   const CustomBottomNavigationBar({
     super.key,
     required this.currentIndex,
     required this.onDestinationSelected,
   });
+  final int currentIndex;
+  final ValueChanged<int> onDestinationSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +53,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
 }
 
 class _NavBarItem extends StatelessWidget {
-  final int index;
-  final int currentIndex;
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
   const _NavBarItem({
     required this.index,
     required this.currentIndex,
@@ -67,6 +60,11 @@ class _NavBarItem extends StatelessWidget {
     required this.label,
     required this.onTap,
   });
+  final int index;
+  final int currentIndex;
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +77,7 @@ class _NavBarItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color:
-                    isActive ? AppColors.navBarIndicator : Colors.transparent,
+                color: isActive ? AppColors.navBarIndicator : Colors.transparent,
                 width: 2,
               ),
             ),
@@ -90,18 +87,14 @@ class _NavBarItem extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isActive
-                    ? AppColors.navBarActive
-                    : AppColors.navBarInactiveLabel,
+                color: isActive ? AppColors.navBarActive : AppColors.navBarInactiveLabel,
                 size: 24,
               ),
               const SizedBox(height: 4),
               Text(
                 label,
                 style: TextStyle(
-                  color: isActive
-                      ? AppColors.navBarActive
-                      : AppColors.navBarInactiveLabel,
+                  color: isActive ? AppColors.navBarActive : AppColors.navBarInactiveLabel,
                   fontSize: 12,
                   fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
                 ),

@@ -7,13 +7,11 @@ import 'package:silent_space/features/session/domain/repositories/session_reposi
 
 class GetSessionsByDateRangeUseCase
     extends UseCase<List<FocusSession>, GetSessionsByDateRangeParams> {
+  GetSessionsByDateRangeUseCase(this.repository);
   final SessionRepository repository;
 
-  GetSessionsByDateRangeUseCase(this.repository);
-
   @override
-  Future<Either<Failure, List<FocusSession>>> call(
-      GetSessionsByDateRangeParams params) {
+  Future<Either<Failure, List<FocusSession>>> call(GetSessionsByDateRangeParams params) {
     return repository.getSessionsByDateRange(
       params.userId,
       params.startTime,
@@ -23,15 +21,14 @@ class GetSessionsByDateRangeUseCase
 }
 
 class GetSessionsByDateRangeParams extends Equatable {
-  final String userId;
-  final DateTime startTime;
-  final DateTime endTime;
-
   const GetSessionsByDateRangeParams({
     required this.userId,
     required this.startTime,
     required this.endTime,
   });
+  final String userId;
+  final DateTime startTime;
+  final DateTime endTime;
 
   @override
   List<Object?> get props => [userId, startTime, endTime];

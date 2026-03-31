@@ -5,13 +5,12 @@ import 'package:silent_space/features/session/domain/usecases/save_session_useca
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
 class SessionCubit extends Cubit<SessionState> {
-  final SaveSessionUseCase saveSessionUseCase;
-  final GetSessionsByDateRangeUseCase getSessionsByDateRangeUseCase;
-
   SessionCubit({
     required this.saveSessionUseCase,
     required this.getSessionsByDateRangeUseCase,
   }) : super(const SessionInitial());
+  final SaveSessionUseCase saveSessionUseCase;
+  final GetSessionsByDateRangeUseCase getSessionsByDateRangeUseCase;
 
   Future<void> saveSession(FocusSession session) async {
     final result = await saveSessionUseCase(session);

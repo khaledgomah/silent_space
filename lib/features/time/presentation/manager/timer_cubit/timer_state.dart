@@ -3,12 +3,6 @@ part of 'timer_cubit.dart';
 enum TimerStatus { initial, inProgress, stopped }
 
 class TimerState extends Equatable {
-  final TimerStatus status;
-  final int durationTime;
-  final int breakTime;
-  final int voiceLevel;
-  final String path;
-
   const TimerState({
     this.status = TimerStatus.initial,
     this.durationTime = 25,
@@ -16,6 +10,11 @@ class TimerState extends Equatable {
     this.voiceLevel = 50,
     this.path = '',
   });
+  final TimerStatus status;
+  final int durationTime;
+  final int breakTime;
+  final int voiceLevel;
+  final String path;
 
   TimerState copyWith({
     TimerStatus? status,

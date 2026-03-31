@@ -6,24 +6,6 @@ part 'session_model.g.dart';
 
 @HiveType(typeId: 0)
 class SessionModel extends HiveObject {
-  @HiveField(0)
-  final String id;
-
-  @HiveField(1)
-  final String userId;
-
-  @HiveField(2)
-  final DateTime startTime;
-
-  @HiveField(3)
-  final DateTime endTime;
-
-  @HiveField(4)
-  final int durationInSeconds;
-
-  @HiveField(5)
-  final String category;
-
   SessionModel({
     required this.id,
     required this.userId,
@@ -44,6 +26,35 @@ class SessionModel extends HiveObject {
       category: entity.category,
     );
   }
+
+  /// Converts from JSON for Firestore handling both Timestamps and ISO Strings.
+  factory SessionModel.fromJson(Map<String, dynamic> json) {
+    return SessionModel(
+      id: json['id'] as String,
+      userId: json['userId'] as String,
+      startTime: _parseDateTime(json['startTime']),
+      endTime: _parseDateTime(json['endTime']),
+      durationInSeconds: json['durationInSeconds'] as int,
+      category: json['category'] as String,
+    );
+  }
+  @HiveField(0)
+  final String id;
+
+  @HiveField(1)
+  final String userId;
+
+  @HiveField(2)
+  final DateTime startTime;
+
+  @HiveField(3)
+  final DateTime endTime;
+
+  @HiveField(4)
+  final int durationInSeconds;
+
+  @HiveField(5)
+  final String category;
 
   /// Converts from model to domain entity.
   FocusSession toEntity() {
@@ -67,18 +78,6 @@ class SessionModel extends HiveObject {
       'durationInSeconds': durationInSeconds,
       'category': category,
     };
-  }
-
-  /// Converts from JSON for Firestore handling both Timestamps and ISO Strings.
-  factory SessionModel.fromJson(Map<String, dynamic> json) {
-    return SessionModel(
-      id: json['id'] as String,
-      userId: json['userId'] as String,
-      startTime: _parseDateTime(json['startTime']),
-      endTime: _parseDateTime(json['endTime']),
-      durationInSeconds: json['durationInSeconds'] as int,
-      category: json['category'] as String,
-    );
   }
 
   static DateTime _parseDateTime(dynamic value) {

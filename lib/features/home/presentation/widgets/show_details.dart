@@ -4,14 +4,13 @@ import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/features/home/presentation/widgets/show_data_container.dart';
 
 class ShowDetails extends StatelessWidget {
-  final int focusMinutes;
-  final int sessionCount;
-
   const ShowDetails({
     super.key,
     required this.focusMinutes,
     required this.sessionCount,
   });
+  final int focusMinutes;
+  final int sessionCount;
 
   @override
   Widget build(BuildContext context) {

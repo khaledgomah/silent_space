@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:silent_space/core/theme/app_colors.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
+import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/home/presentation/widgets/focus_chart.dart';
 import 'package:silent_space/features/home/presentation/widgets/show_details.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:silent_space/core/theme/app_colors.dart';
-import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
+import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
 class StatesScreen extends StatefulWidget {
   const StatesScreen({super.key});
@@ -75,11 +75,9 @@ class _StatesScreenState extends State<StatesScreen> {
                       Icon(Icons.error_outline,
                           size: 80, color: Theme.of(context).colorScheme.error),
                       const SizedBox(height: 16),
-                      Text(AppStrings.statsError.tr(),
-                          style: TextStyleManager.headline2),
+                      Text(AppStrings.statsError.tr(), style: TextStyleManager.headline2),
                       const SizedBox(height: 8),
-                      Text(state.message,
-                          style: Theme.of(context).textTheme.bodyMedium),
+                      Text(state.message, style: Theme.of(context).textTheme.bodyMedium),
                       const SizedBox(height: 24),
                       FilledButton.icon(
                         onPressed: _loadSessions,
@@ -106,8 +104,7 @@ class _StatesScreenState extends State<StatesScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.query_stats,
-                          size: 100, color: Theme.of(context).disabledColor),
+                      Icon(Icons.query_stats, size: 100, color: Theme.of(context).disabledColor),
                       const SizedBox(height: 24),
                       Text(
                         AppStrings.noSessionsTitle.tr(),
@@ -117,9 +114,7 @@ class _StatesScreenState extends State<StatesScreen> {
                       Text(
                         AppStrings.noSessionsSubtitle.tr(),
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                       ),
                     ],

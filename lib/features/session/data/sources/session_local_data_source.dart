@@ -11,9 +11,8 @@ abstract class SessionLocalDataSource {
 }
 
 class SessionLocalDataSourceImpl implements SessionLocalDataSource {
-  final HiveService hiveService;
-
   SessionLocalDataSourceImpl({required this.hiveService});
+  final HiveService hiveService;
 
   Future<Box<SessionModel>> get _box =>
       hiveService.openBox<SessionModel>(HiveService.sessionBoxName);
@@ -32,8 +31,7 @@ class SessionLocalDataSourceImpl implements SessionLocalDataSource {
   Future<List<SessionModel>> getSessions() async {
     try {
       final box = await _box;
-      return box.values.toList()
-        ..sort((a, b) => b.startTime.compareTo(a.startTime));
+      return box.values.toList()..sort((a, b) => b.startTime.compareTo(a.startTime));
     } catch (e) {
       throw CacheException(message: 'Failed to load local sessions: $e');
     }

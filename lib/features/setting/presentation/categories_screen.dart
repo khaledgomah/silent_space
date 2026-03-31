@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/features/setting/helper/category_functions.dart';
 import 'package:silent_space/features/setting/presentation/widgets/category_item.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:silent_space/core/utils/app_strings.dart';
 
 bool isCategoriesEmpty = false;
 
@@ -24,16 +24,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Future<void> _loadCategories() async {
     categories = await getCategeories();
     if (categories.isEmpty && isCategoriesEmpty == false) {
-      categories = [
-        'Focus',
-        'Relax',
-        'Sleep',
-        'Meditation',
-        'Study',
-        'Workout',
-        'Yoga',
-        'Kids'
-      ];
+      categories = ['Focus', 'Relax', 'Sleep', 'Meditation', 'Study', 'Workout', 'Yoga', 'Kids'];
       saveCategories(categories);
     }
     setState(() {});

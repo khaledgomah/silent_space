@@ -8,13 +8,12 @@ import 'package:silent_space/features/session/domain/entities/focus_session.dart
 import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
 
 class SessionRepositoryImpl implements SessionRepository {
-  final SessionLocalDataSource localDataSource;
-  final SessionRemoteDataSource remoteDataSource;
-
   const SessionRepositoryImpl({
     required this.localDataSource,
     required this.remoteDataSource,
   });
+  final SessionLocalDataSource localDataSource;
+  final SessionRemoteDataSource remoteDataSource;
 
   @override
   Future<Either<Failure, void>> saveSession(FocusSession session) async {
@@ -42,8 +41,7 @@ class SessionRepositoryImpl implements SessionRepository {
   ) async {
     try {
       // Fetch from remote for accurate range filtering
-      final models =
-          await remoteDataSource.getSessionsByDateRange(userId, start, end);
+      final models = await remoteDataSource.getSessionsByDateRange(userId, start, end);
       final entities = models.map((m) => m.toEntity()).toList();
       return Right(entities);
     } on ServerException catch (e) {

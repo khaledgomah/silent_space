@@ -17,12 +17,10 @@ class SessionLoading extends SessionState {
 }
 
 class SessionLoaded extends SessionState {
+  const SessionLoaded(this.sessions);
   final List<FocusSession> sessions;
 
-  const SessionLoaded(this.sessions);
-
-  int get totalMinutes =>
-      sessions.fold(0, (sum, s) => sum + (s.durationInSeconds ~/ 60));
+  int get totalMinutes => sessions.fold(0, (sum, s) => sum + (s.durationInSeconds ~/ 60));
   int get totalCount => sessions.length;
 
   int get todayMinutes {
@@ -65,9 +63,8 @@ class SessionLoaded extends SessionState {
 }
 
 class SessionError extends SessionState {
-  final String message;
-
   const SessionError({required this.message});
+  final String message;
 
   @override
   List<Object?> get props => [message];

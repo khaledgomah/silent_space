@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:silent_space/features/setting/presentation/setting_screen.dart';
 import 'package:silent_space/features/home/presentation/widgets/custom_bottom_navigation_bar.dart';
 import 'package:silent_space/features/home/presentation/widgets/states_screen.dart';
+import 'package:silent_space/features/setting/presentation/setting_screen.dart';
 import 'package:silent_space/features/time/presentation/timer_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -33,8 +33,7 @@ class _HomeViewState extends State<HomeView> {
       extendBody: true,
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
-        transitionBuilder: (child, animation) =>
-            FadeTransition(opacity: animation, child: child),
+        transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
         child: _buildScreen(_currentIndex),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(

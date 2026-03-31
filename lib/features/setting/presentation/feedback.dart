@@ -8,10 +8,9 @@ import 'package:silent_space/core/widgets/custom_button.dart';
 import 'package:silent_space/core/widgets/custom_text_form_field.dart';
 
 class FeedbackScreen extends StatelessWidget {
+  FeedbackScreen({super.key});
   final TextEditingController _feedbackController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-
-  FeedbackScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +37,7 @@ class FeedbackScreen extends StatelessWidget {
             CustomButton(
               child: Text(AppStrings.send.tr()),
               onPressed: () async {
-                if (_feedbackController.text.isEmpty ||
-                    _emailController.text.isEmpty) {
+                if (_feedbackController.text.isEmpty || _emailController.text.isEmpty) {
                   showSnackBar(
                       context,
                       _feedbackController.text.isEmpty
