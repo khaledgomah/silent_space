@@ -171,6 +171,46 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, UserEntity>> signInWithGoogle() async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure());
+    }
+    try {
+      final user = await remoteDataSource.signInWithGoogle();
+      if (user.token != null) {
+        await localDataSource.cacheToken(user.token!);
+      }
+      return Right(user.toEntity());
+    } on ServerException catch (e) {
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> signInWithFacebook() async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure());
+    }
+    try {
+      final user = await remoteDataSource.signInWithFacebook();
+      if (user.token != null) {
+        await localDataSource.cacheToken(user.token!);
+      }
+      return Right(user.toEntity());
+    } on ServerException catch (e) {
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> requestPasswordReset(String email) async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure());
