@@ -5,13 +5,6 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
-        <!-- Facebook SDK credentials -->
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-        <meta-data
-            android:name="com.facebook.sdk.ClientToken"
-            android:value="@string/facebook_client_token"/>
 
         <activity
             android:name=".MainActivity"
@@ -37,13 +30,10 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-
-    <!-- Required for Facebook Login on Android 11+ (API 30+) -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
-        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
     </queries>
 </manifest>

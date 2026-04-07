@@ -6,7 +6,6 @@ import 'package:silent_space/core/usecases/usecase.dart';
 import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 import 'package:silent_space/features/auth/domain/usecases/delete_account_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/sign_in_with_facebook_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
@@ -20,13 +19,11 @@ class AuthCubit extends Cubit<AuthState> {
     required SignOutUseCase signOutUseCase,
     required DeleteAccountUseCase deleteAccountUseCase,
     required SignInWithGoogleUseCase signInWithGoogleUseCase,
-    required SignInWithFacebookUseCase signInWithFacebookUseCase,
   })  : _signInUseCase = signInUseCase,
         _signUpUseCase = signUpUseCase,
         _signOutUseCase = signOutUseCase,
         _deleteAccountUseCase = deleteAccountUseCase,
         _signInWithGoogleUseCase = signInWithGoogleUseCase,
-        _signInWithFacebookUseCase = signInWithFacebookUseCase,
         super(AuthInitial());
 
   final SignInUseCase _signInUseCase;
@@ -34,7 +31,6 @@ class AuthCubit extends Cubit<AuthState> {
   final SignOutUseCase _signOutUseCase;
   final DeleteAccountUseCase _deleteAccountUseCase;
   final SignInWithGoogleUseCase _signInWithGoogleUseCase;
-  final SignInWithFacebookUseCase _signInWithFacebookUseCase;
 
   Future<void> signIn({
     required String email,
@@ -94,17 +90,6 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
 
     final result = await _signInWithGoogleUseCase(NoParams());
-
-    result.fold(
-      (failure) => emit(AuthError(message: FailureMapper.map(failure))),
-      (user) => emit(AuthSuccess(user: user)),
-    );
-  }
-
-  Future<void> signInWithFacebook() async {
-    emit(AuthLoading());
-
-    final result = await _signInWithFacebookUseCase(NoParams());
 
     result.fold(
       (failure) => emit(AuthError(message: FailureMapper.map(failure))),

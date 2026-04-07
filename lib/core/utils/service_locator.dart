@@ -21,7 +21,6 @@ import 'package:silent_space/features/auth/domain/usecases/request_password_rese
 import 'package:silent_space/features/auth/domain/usecases/reset_password_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_anonymously_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
-import 'package:silent_space/features/auth/domain/usecases/sign_in_with_facebook_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_up_usecase.dart';
@@ -126,9 +125,6 @@ Future<void> locatorSetup() async {
   getIt.registerLazySingleton<SignInWithGoogleUseCase>(
     () => SignInWithGoogleUseCase(getIt<AuthRepository>()),
   );
-  getIt.registerLazySingleton<SignInWithFacebookUseCase>(
-    () => SignInWithFacebookUseCase(getIt<AuthRepository>()),
-  );
 
   // ── Session Feature ──
   // Register Hive adapter
@@ -171,7 +167,6 @@ Future<void> locatorSetup() async {
       signOutUseCase: getIt<SignOutUseCase>(),
       deleteAccountUseCase: getIt<DeleteAccountUseCase>(),
       signInWithGoogleUseCase: getIt<SignInWithGoogleUseCase>(),
-      signInWithFacebookUseCase: getIt<SignInWithFacebookUseCase>(),
     ),
   );
 

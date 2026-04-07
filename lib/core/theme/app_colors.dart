@@ -35,7 +35,6 @@ class AppColors {
   static const Color logifyWhite = Color(0xFFFFFFFF);
   static const Color logifyDark = Color(0xFF000000);
   static const Color logifyGoogleRed = Color(0xFFDB4437);
-  static const Color logifyFacebookBlue = Color(0xFF4267B2);
 
   static final Color grey800 = Colors.grey.shade800;
   static final Color greyWithAlpha20 = Colors.grey.withValues(alpha: 0.2);

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:silent_space/core/errors/exceptions.dart';
 import 'package:silent_space/features/auth/data/models/forgot_password_model.dart';
@@ -35,9 +34,7 @@ abstract class AuthRemoteDataSource {
   Future<ForgotPasswordModel> verifyResetToken(String token);
   Future<void> resetPassword(String token, String newPassword);
 
-  // Social Sign-In
   Future<UserModel> signInWithGoogle();
-  Future<UserModel> signInWithFacebook();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -272,48 +269,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } on FirebaseAuthException catch (e) {
       throw ServerException(
         message: e.message ?? 'Google sign-in failed.',
-        statusCode: 0,
-        errorCode: e.code,
-      );
-    } on ServerException {
-      rethrow;
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
-  }
-
-  @override
-  Future<UserModel> signInWithFacebook() async {
-    try {
-      final loginResult = await FacebookAuth.instance.login();
-
-      if (loginResult.status == LoginStatus.cancelled) {
-        throw const ServerException(
-          message: 'Facebook sign-in was cancelled.',
-          errorCode: 'sign-in-cancelled',
-        );
-      }
-
-      if (loginResult.status == LoginStatus.failed) {
-        throw ServerException(
-          message: loginResult.message ?? 'Facebook sign-in failed.',
-          errorCode: 'facebook-sign-in-failed',
-        );
-      }
-
-      final accessToken = loginResult.accessToken!.tokenString;
-      final credential = FacebookAuthProvider.credential(accessToken);
-      final userCredential = await firebaseAuth.signInWithCredential(credential);
-      final token = await userCredential.user!.getIdToken();
-
-      return UserModel.fromFirebaseUser(
-        uid: userCredential.user!.uid,
-        email: userCredential.user!.email,
-        token: token,
-      );
-    } on FirebaseAuthException catch (e) {
-      throw ServerException(
-        message: e.message ?? 'Facebook sign-in failed.',
         statusCode: 0,
         errorCode: e.code,
       );

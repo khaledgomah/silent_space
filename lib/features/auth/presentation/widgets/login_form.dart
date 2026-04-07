@@ -99,7 +99,6 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(height: AppSpacing.s28),
             SocialLoginButtons(
               onGooglePressed: () => context.read<AuthCubit>().signInWithGoogle(),
-              onFacebookPressed: () => context.read<AuthCubit>().signInWithFacebook(),
             ),
             const SizedBox(height: AppSpacing.s32),
           ],
