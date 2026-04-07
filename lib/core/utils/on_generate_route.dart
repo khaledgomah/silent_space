@@ -5,7 +5,7 @@ import 'package:silent_space/core/utils/page_transitions.dart';
 import 'package:silent_space/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:silent_space/features/auth/presentation/pages/login_page.dart';
 import 'package:silent_space/features/auth/presentation/pages/register_page.dart';
-import 'package:silent_space/features/auth/presentation/pages/reset_password_page.dart';
+
 import 'package:silent_space/features/home/presentation/views/home_view.dart';
 import 'package:silent_space/features/setting/presentation/about_app_screen.dart';
 import 'package:silent_space/features/setting/presentation/categories_screen.dart';
@@ -23,9 +23,6 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return FadePageRoute(page: const RegisterPage());
     case RoutesName.forgotPassword:
       return FadePageRoute(page: const ForgotPasswordPage());
-    case RoutesName.resetPassword:
-      final token = settings.arguments as String? ?? '';
-      return FadePageRoute(page: ResetPasswordPage(token: token));
     case RoutesName.homeView:
       return FadePageRoute(page: const HomeView());
     case RoutesName.howToUse:

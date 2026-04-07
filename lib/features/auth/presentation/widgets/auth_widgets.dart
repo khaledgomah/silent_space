@@ -9,5 +9,4 @@ export 'login_form.dart';
 export 'or_divider.dart';
 export 'register_form.dart';
 export 'remember_me_checkbox.dart';
-export 'reset_password_form.dart';
 export 'social_login_buttons.dart';

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/theme/app_spacing.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
-import 'package:silent_space/core/utils/on_generate_route.dart';
 import 'package:silent_space/core/widgets/custom_snack_bar.dart';
 import 'package:silent_space/features/auth/presentation/cubit/forgot_password_cubit.dart';
 import 'package:silent_space/features/auth/presentation/cubit/forgot_password_state.dart';
@@ -34,7 +33,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           CustomSnackBar.showError(context, state.error);
         } else if (state is ForgotPasswordRequestSuccess) {
           CustomSnackBar.showSuccess(context, state.message);
-          Navigator.pushReplacementNamed(context, RoutesName.resetPassword);
         }
       },
       child: Form(
@@ -72,6 +70,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                 );
               },
             ),
+            const SizedBox(height: AppSpacing.s16),
           ],
         ),
       ),
