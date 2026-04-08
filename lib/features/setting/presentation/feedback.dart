@@ -42,7 +42,7 @@ class FeedbackScreen extends StatelessWidget {
                       context,
                       _feedbackController.text.isEmpty
                           ? AppStrings.noFeedbackError.tr()
-                          : AppStrings.noMailErro.tr());
+                          : AppStrings.noMailError.tr());
                 } else {
                   final Email email = Email(
                     body: _feedbackController.text,

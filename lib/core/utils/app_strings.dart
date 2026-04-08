@@ -14,21 +14,20 @@ class AppStrings {
   static const String focusTime = 'focusTime';
   static const String today = 'today';
   static const String summary = 'summary';
-  static const String focusTimeMin =
-      'focasTime(min)'; // Keep original key for now to avoid breaking translations
+  static const String focusTimeMin = 'focusTimeMin';
   static const String focusCount = 'focusCount';
   static const String arabic = 'arabic';
   static const String english = 'english';
   static const String selectLanguage = 'selectLanguage';
-  static const String configurwNotificationQuestion =
-      'configurwNotificationQuestion';
-  static const String configurwNotificationAnswer =
-      'configurwNotificationAnswer';
+  static const String configureNotificationQuestion =
+      'configureNotificationQuestion';
+  static const String configureNotificationAnswer =
+      'configureNotificationAnswer';
   static const String enterYourMail = 'enterYourMail';
   static const String enterYourFeedback = 'enterYourFeedback';
   static const String send = 'send';
   static const String noFeedbackError = 'noFeedbackError';
-  static const String noMailErro = 'noMailErro';
+  static const String noMailError = 'noMailError';
   static const String feedbackSent = 'feedbackSent';
   static const String feedbackNotSent = 'feedbackNotSent';
   static const String ambientSound = 'ambientSound';
@@ -95,6 +94,7 @@ class AppStrings {
   static const String orContinueWith = 'orContinueWith';
   static const String registerSubtitle = 'registerSubtitle';
   static const String username = 'username';
+  static const String fullName = 'fullName';
   static const String forgotPasswordTitle = 'forgotPasswordTitle';
   static const String forgotPasswordDesc = 'forgotPasswordDesc';
   static const String resetPasswordTitle = 'resetPasswordTitle';
@@ -104,6 +104,7 @@ class AppStrings {
   static const String submitNewPassword = 'submitNewPassword';
   static const String emailHint = 'emailHint';
   static const String usernameHint = 'usernameHint';
+  static const String fullNameHint = 'fullNameHint';
   static const String passwordHint = 'passwordHint';
   static const String confirmPasswordHint = 'confirmPasswordHint';
   static const String passwordResetLinkSent = 'passwordResetLinkSent';

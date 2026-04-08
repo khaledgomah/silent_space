@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/widgets/custom_text_field.dart';
 
 class AuthUsernameField extends StatelessWidget {
@@ -9,8 +11,8 @@ class AuthUsernameField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomUnderlineTextField(
       controller: controller,
-      label: 'Full Name',
-      hintText: 'Enter your full name',
+      label: AppStrings.fullName.tr(),
+      hintText: AppStrings.fullNameHint.tr(),
       prefixIcon: Icons.person_outline,
     );
   }

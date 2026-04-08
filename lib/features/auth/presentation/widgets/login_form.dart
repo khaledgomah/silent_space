@@ -66,6 +66,7 @@ class _LoginFormState extends State<LoginForm> {
             AuthPasswordField(
               controller: _passwordController,
               label: AppStrings.password.tr(),
+              hintText: AppStrings.passwordHint.tr(),
               onFieldSubmitted: (val) => _onSubmit(context),
             ),
             const SizedBox(height: AppSpacing.s16),

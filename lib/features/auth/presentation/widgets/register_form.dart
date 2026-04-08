@@ -71,12 +71,14 @@ class _RegisterFormState extends State<RegisterForm> {
             AuthPasswordField(
               controller: _passwordController,
               label: AppStrings.password.tr(),
+              hintText: AppStrings.passwordHint.tr(),
               textInputAction: TextInputAction.next,
             ),
             const SizedBox(height: AppSpacing.s24),
             AuthPasswordField(
               controller: _confirmPasswordController,
               label: AppStrings.confirmPassword.tr(),
+              hintText: AppStrings.confirmPasswordHint.tr(),
               onFieldSubmitted: (val) => _onSubmit(context),
               validator: (value) {
                 if (value == null || value.isEmpty) {

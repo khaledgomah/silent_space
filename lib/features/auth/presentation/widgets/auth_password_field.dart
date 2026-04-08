@@ -6,12 +6,14 @@ class AuthPasswordField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.label,
+    required this.hintText,
     this.validator,
     this.onFieldSubmitted,
     this.textInputAction,
   });
   final TextEditingController controller;
   final String label;
+  final String hintText;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onFieldSubmitted;
   final TextInputAction? textInputAction;
@@ -28,7 +30,7 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
     return CustomUnderlineTextField(
       controller: widget.controller,
       label: widget.label,
-      hintText: 'Enter your ${widget.label}',
+      hintText: widget.hintText,
       obscureText: _obscure,
       prefixIcon: Icons.lock_outline,
       suffixIcon: IconButton(

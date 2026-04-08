@@ -11,8 +11,8 @@ class HowToUseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<QuestionModel> questions = <QuestionModel>[
       QuestionModel(
-        question: AppStrings.configurwNotificationQuestion.tr(),
-        answer: AppStrings.configurwNotificationAnswer.tr(),
+        question: AppStrings.configureNotificationQuestion.tr(),
+        answer: AppStrings.configureNotificationAnswer.tr(),
       ),
     ];
     return Scaffold(
