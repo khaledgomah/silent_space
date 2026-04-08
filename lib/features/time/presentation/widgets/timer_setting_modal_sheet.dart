@@ -7,140 +7,94 @@ import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/text_style_manager.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 
-class TimerSettingModalSheet extends StatefulWidget {
+class TimerSettingModalSheet extends StatelessWidget {
   const TimerSettingModalSheet({super.key});
 
   @override
-  State<TimerSettingModalSheet> createState() => _TimerSettingModalSheetState();
-}
-
-class _TimerSettingModalSheetState extends State<TimerSettingModalSheet> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: context.height() * 0.4,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocBuilder<TimerCubit, TimerState>(
+      builder: (context, state) {
+        return Container(
+          constraints: BoxConstraints(
+            minHeight: context.height() * 0.4,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  enableFeedback: false,
-                  onPressed: () {},
-                  icon: const Text(''),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(width: 48),
+                    Text(
+                      AppStrings.timerSettings.tr(),
+                      style: TextStyleManager.bodyText1,
+                    ),
+                    IconButton(
+                      onPressed: () => context.pop(),
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
                 ),
-                Text(
-                  AppStrings.timerSettings.tr(),
-                  style: TextStyleManager.bodyText1,
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppStrings.focusDuration.tr(),
+                        style: TextStyleManager.bodyText1,
+                      ),
+                      Text(
+                        '${state.durationTime} min',
+                        style: TextStyleManager.bodyText1,
+                      ),
+                    ],
+                  ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    context.pop();
+                Slider(
+                  value: state.durationTime.toDouble(),
+                  min: 10,
+                  max: 180,
+                  divisions: 34,
+                  onChanged: (value) {
+                    context.read<TimerCubit>().setDurationTime(value.round());
                   },
-                  icon: const Icon(Icons.close),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppStrings.soundLevel.tr(),
+                        style: TextStyleManager.bodyText1,
+                      ),
+                      Text(
+                        '${state.voiceLevel}%',
+                        style: TextStyleManager.bodyText1,
+                      ),
+                    ],
+                  ),
+                ),
+                Slider(
+                  value: state.voiceLevel.toDouble(),
+                  min: 0,
+                  max: 100,
+                  divisions: 100,
+                  onChanged: (value) {
+                    context.read<TimerCubit>().setVoiceLevel(value.round());
+                  },
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppStrings.focusDuration.tr(),
-                    style: TextStyleManager.bodyText1,
-                  ),
-                  Text(
-                    BlocProvider.of<TimerCubit>(context)
-                        .durationTime
-                        .toString(),
-                    style: TextStyleManager.bodyText1,
-                  ),
-                ],
-              ),
-            ),
-            Slider(
-              //Working Slider
-              value:
-                  BlocProvider.of<TimerCubit>(context).durationTime.toDouble(),
-              min: 10,
-              max: 180,
-              divisions: 90,
-              onChanged: (value) {
-                setState(() {
-                  BlocProvider.of<TimerCubit>(context)
-                      .setDurationTime(value.round());
-                });
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppStrings.breakDuration.tr(),
-                    style: TextStyleManager.bodyText1,
-                  ),
-                  Text(
-                    BlocProvider.of<TimerCubit>(context).breakTime.toString(),
-                    style: TextStyleManager.bodyText1,
-                  ),
-                ],
-              ),
-            ),
-            Slider(
-              //Break Slider
-              value: BlocProvider.of<TimerCubit>(context).breakTime.toDouble(),
-              min: 2,
-              max: 30,
-              divisions: 100,
-              onChanged: (value) {
-                setState(() {
-                  BlocProvider.of<TimerCubit>(context)
-                      .setBreakTime(value.round());
-                });
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppStrings.soundLevel.tr(),
-                    style: TextStyleManager.bodyText1,
-                  ),
-                  Text(
-                    BlocProvider.of<TimerCubit>(context).voiceLevel.toString(),
-                    style: TextStyleManager.bodyText1,
-                  ),
-                ],
-              ),
-            ),
-            Slider(
-              //Break Slider
-              value: BlocProvider.of<TimerCubit>(context).voiceLevel.toDouble(),
-              min: 0,
-              max: 100,
-              divisions: 100,
-
-              onChanged: (value) {
-                setState(() {
-                  BlocProvider.of<TimerCubit>(context)
-                      .setVoiceLevel(value.round());
-                });
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -29,11 +29,7 @@ class SelectMusicSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  enableFeedback: false,
-                  onPressed: () {},
-                  icon: const Text(''),
-                ),
+                const SizedBox(width: 48),
                 Text(
                   AppStrings.ambientSound.tr(),
                   style: TextStyleManager.bodyText1,

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,14 +15,19 @@ part 'timer_state.dart';
 class TimerCubit extends Cubit<TimerState> {
   TimerCubit()
       : _prefs = getIt<SharedPreferences>(),
-        super(TimerState(
-          durationTime: getIt<SharedPreferences>().getInt('focusTime') ?? 25,
-          breakTime: getIt<SharedPreferences>().getInt('breakTime') ?? 5,
-          voiceLevel: getIt<SharedPreferences>().getInt('voiceLevel') ?? 50,
-          path: getIt<SharedPreferences>().getString('soundPath') ?? SoundsManager.none,
-        )) {
+        super(
+          TimerState(
+            durationTime: getIt<SharedPreferences>().getInt('focusTime') ?? 25,
+            breakTime: getIt<SharedPreferences>().getInt('breakTime') ?? 5,
+            voiceLevel: getIt<SharedPreferences>().getInt('voiceLevel') ?? 50,
+            path:
+                getIt<SharedPreferences>().getString('soundPath') ??
+                SoundsManager.none,
+          ),
+        ) {
     player = AudioPlayer();
   }
+
   late final AudioPlayer player;
   final SharedPreferences _prefs;
 
@@ -31,17 +37,9 @@ class TimerCubit extends Cubit<TimerState> {
     return super.close();
   }
 
-  // ── Getters ──
-  int get breakTime => state.breakTime;
   int get durationTime => state.durationTime;
   int get voiceLevel => state.voiceLevel;
   String get path => state.path;
-
-  // ── Setters ──
-  void setBreakTime(int value) {
-    _prefs.setInt('breakTime', value);
-    emit(state.copyWith(breakTime: value));
-  }
 
   void setVoiceLevel(int value) {
     player.setVolume(value / 100);
@@ -61,10 +59,14 @@ class TimerCubit extends Cubit<TimerState> {
 
   Future<void> _playSound() async {
     if (state.path != SoundsManager.none && state.path.isNotEmpty) {
-      await player.setAsset(state.path);
-      await player.setLoopMode(LoopMode.all);
-      await player.play();
-      player.setVolume(state.voiceLevel / 100);
+      try {
+        await player.setAsset(state.path);
+        await player.setLoopMode(LoopMode.all);
+        await player.setVolume(state.voiceLevel / 100);
+        await player.play();
+      } catch (e) {
+        debugPrint('Audio playback error: $e');
+      }
     }
   }
 
@@ -82,13 +84,12 @@ class TimerCubit extends Cubit<TimerState> {
     }
   }
 
-  /// Called when the timer naturally finishes
   void completeSession(SessionCubit sessionCubit) {
     emit(state.copyWith(status: TimerStatus.stopped));
     _pauseSound();
 
     final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return; // Should ideally be logged in
+    if (user == null) return;
 
     final session = FocusSession(
       id: const Uuid().v4(),
@@ -96,7 +97,7 @@ class TimerCubit extends Cubit<TimerState> {
       startTime: DateTime.now().subtract(Duration(minutes: state.durationTime)),
       endTime: DateTime.now(),
       durationInSeconds: state.durationTime * 60,
-      category: 'Focus', // Default category
+      category: 'Focus',
     );
 
     sessionCubit.saveSession(session);

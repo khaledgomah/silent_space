@@ -14,27 +14,30 @@ class StartAndPauseWidget extends StatelessWidget {
       builder: (context, state) {
         if (state.status == TimerStatus.initial) {
           return CustomIconButton(
+            tooltip: 'Start',
             onPressed: () async {
               countDownController.start();
 
               if (!context.mounted) return;
-              BlocProvider.of<TimerCubit>(context).triggerTimer();
+              context.read<TimerCubit>().triggerTimer();
             },
             icon: const Icon(Icons.play_arrow),
           );
         }
         if (state.status == TimerStatus.inProgress) {
           return CustomIconButton(
+            tooltip: 'Pause',
             icon: const Icon(Icons.pause),
             onPressed: () async {
-              BlocProvider.of<TimerCubit>(context).triggerTimer();
+              context.read<TimerCubit>().triggerTimer();
               countDownController.pause();
             },
           );
         } else {
           return CustomIconButton(
+            tooltip: 'Resume',
             onPressed: () async {
-              BlocProvider.of<TimerCubit>(context).triggerTimer();
+              context.read<TimerCubit>().triggerTimer();
               countDownController.resume();
             },
             icon: const Icon(Icons.play_arrow),

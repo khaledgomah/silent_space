@@ -12,6 +12,7 @@ class TimerState extends Equatable {
   });
   final TimerStatus status;
   final int durationTime;
+  /// TODO: Implement Pomodoro break cycle - currently stored but unused
   final int breakTime;
   final int voiceLevel;
   final String path;

@@ -21,30 +21,35 @@ class CustomCountDownTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, state) {
-        final int maxTime =
-            BlocProvider.of<TimerCubit>(context).durationTime * 60;
+        final maxTime = state.durationTime * 60;
+        final theme = Theme.of(context);
+
         return CircularCountDownTimer(
-          strokeWidth: Constants.circleThikness,
+          strokeWidth: Constants.circleThickness,
           controller: _countDownController,
           autoStart: false,
           isReverse: true,
           duration: maxTime,
           width: context.width() * 0.8,
           height: context.height() * 0.5,
-          fillColor: Colors.grey.shade300,
-          ringColor: Colors.grey.shade800,
+          fillColor: theme.colorScheme.primary,
+          ringColor: theme.colorScheme.surfaceContainerHighest,
           textFormat: maxTime >= 3600 ? 'hh:mm:ss' : 'mm:ss',
-          textStyle: const TextStyle(fontSize: 48, color: Colors.white),
+          textStyle: TextStyle(
+            fontSize: 48,
+            color: theme.colorScheme.onSurface,
+          ),
           onComplete: () {
-            NotificationService().showNotification(
-              id: 0,
-              title: AppStrings.timesUp.tr(),
-              body: AppStrings.focusSessionComplete.tr(),
-            );
-            // Save the session data
-            context
-                .read<TimerCubit>()
-                .completeSession(context.read<SessionCubit>());
+            try {
+              NotificationService().showNotification(
+                id: 0,
+                title: AppStrings.timesUp.tr(),
+                body: AppStrings.focusSessionComplete.tr(),
+              );
+            } catch (_) {
+              // Silently handle notification failure
+            }
+            context.read<TimerCubit>().completeSession(context.read<SessionCubit>());
           },
         );
       },

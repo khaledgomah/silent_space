@@ -15,11 +15,12 @@ class RestartTimerIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomIconButton(
+      tooltip: 'Restart',
       onPressed: () {
         countDownController.restart(
-            duration: BlocProvider.of<TimerCubit>(context).durationTime * 60);
-        if (BlocProvider.of<TimerCubit>(context).state.status !=
-            TimerStatus.inProgress) {
+          duration: context.read<TimerCubit>().durationTime * 60,
+        );
+        if (context.read<TimerCubit>().state.status != TimerStatus.inProgress) {
           countDownController.pause();
         }
       },

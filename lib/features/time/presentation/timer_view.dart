@@ -8,9 +8,16 @@ import 'package:silent_space/features/time/presentation/widgets/select_music_mod
 import 'package:silent_space/features/time/presentation/widgets/start_and_pause_widget.dart';
 import 'package:silent_space/features/time/presentation/widgets/timer_setting_modal_sheet.dart';
 
-class TimerView extends StatelessWidget {
-  TimerView({super.key});
+class TimerView extends StatefulWidget {
+  const TimerView({super.key});
+
+  @override
+  State<TimerView> createState() => _TimerViewState();
+}
+
+class _TimerViewState extends State<TimerView> {
   final CountDownController _countDownController = CountDownController();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -31,41 +38,35 @@ class TimerView extends StatelessWidget {
         children: [
           const Spacer(),
           Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: context.width() * 0.05),
               IconButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => const SelectMusicSheet(),
-                    );
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.music,
-                    color: iconColor,
-                  )),
+                tooltip: 'Ambient Sound',
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SelectMusicSheet(),
+                  );
+                },
+                icon: Icon(
+                  FontAwesomeIcons.music,
+                  color: iconColor,
+                ),
+              ),
+              const SizedBox(width: 24),
               IconButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return const TimerSettingModalSheet();
-                      },
-                    );
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.sliders,
-                    color: iconColor,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.music_note,
-                    color: iconColor,
-                  )),
-              SizedBox(width: context.width() * 0.05),
+                tooltip: 'Timer Settings',
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const TimerSettingModalSheet(),
+                  );
+                },
+                icon: Icon(
+                  FontAwesomeIcons.sliders,
+                  color: iconColor,
+                ),
+              ),
             ],
           ),
           const Spacer(),

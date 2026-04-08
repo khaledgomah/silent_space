@@ -17,13 +17,13 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildScreen(int index) {
     switch (index) {
       case 0:
-        return TimerView(key: const ValueKey('timer'));
+        return const TimerView(key: ValueKey('timer'));
       case 1:
         return const StatesScreen(key: ValueKey('stats'));
       case 2:
         return const SettingScreen(key: ValueKey('settings'));
       default:
-        return TimerView(key: const ValueKey('timer'));
+        return const TimerView(key: ValueKey('timer'));
     }
   }
 
