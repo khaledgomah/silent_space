@@ -124,10 +124,12 @@ void main() {
   });
 
   group('signOut', () {
-    test('should clear token and return Right(null)', () async {
+    test('should clear token, sessions and return Right(null)', () async {
       // arrange
       when(() => mockRemoteDataSource.signOut()).thenAnswer((_) async {});
       when(() => mockLocalDataSource.clearToken()).thenAnswer((_) async {});
+      when(() => mockSessionRepository.clearSessions())
+          .thenAnswer((_) async => const Right(null));
 
       // act
       final result = await repository.signOut();
@@ -136,6 +138,7 @@ void main() {
       expect(result, const Right(null));
       verify(() => mockRemoteDataSource.signOut()).called(1);
       verify(() => mockLocalDataSource.clearToken()).called(1);
+      verify(() => mockSessionRepository.clearSessions()).called(1);
     });
 
     test('should return AuthFailure when remote call throws ServerException', () async {
@@ -152,8 +155,22 @@ void main() {
   });
 
   group('isLoggedIn', () {
-    test('should return Right(true) when token exists', () async {
+    test('should return Right(true) when local token exists', () async {
       // arrange
+      when(() => mockLocalDataSource.hasToken()).thenAnswer((_) async => true);
+
+      // act
+      final result = await repository.isLoggedIn();
+
+      // assert
+      expect(result, const Right(true));
+      verify(() => mockLocalDataSource.hasToken()).called(1);
+      verifyZeroInteractions(mockRemoteDataSource);
+    });
+
+    test('should check remote isLoggedIn when no local token exists and return true if logged in', () async {
+      // arrange
+      when(() => mockLocalDataSource.hasToken()).thenAnswer((_) async => false);
       when(() => mockRemoteDataSource.isLoggedIn()).thenAnswer((_) async => true);
 
       // act
@@ -161,10 +178,13 @@ void main() {
 
       // assert
       expect(result, const Right(true));
+      verify(() => mockLocalDataSource.hasToken()).called(1);
+      verify(() => mockRemoteDataSource.isLoggedIn()).called(1);
     });
 
-    test('should return Right(false) when no token', () async {
+    test('should return Right(false) when no local token and remote isLoggedIn is false', () async {
       // arrange
+      when(() => mockLocalDataSource.hasToken()).thenAnswer((_) async => false);
       when(() => mockRemoteDataSource.isLoggedIn()).thenAnswer((_) async => false);
 
       // act
@@ -172,14 +192,18 @@ void main() {
 
       // assert
       expect(result, const Right(false));
+      verify(() => mockLocalDataSource.hasToken()).called(1);
+      verify(() => mockRemoteDataSource.isLoggedIn()).called(1);
     });
   });
 
   group('deleteAccount', () {
-    test('should call remote deleteAccount and clear local token', () async {
+    test('should call remote deleteAccount and clear local token and sessions', () async {
       // arrange
       when(() => mockRemoteDataSource.deleteAccount()).thenAnswer((_) async {});
       when(() => mockLocalDataSource.clearToken()).thenAnswer((_) async {});
+      when(() => mockSessionRepository.clearSessions())
+          .thenAnswer((_) async => const Right(null));
 
       // act
       final result = await repository.deleteAccount();
@@ -188,6 +212,7 @@ void main() {
       expect(result, const Right(null));
       verify(() => mockRemoteDataSource.deleteAccount()).called(1);
       verify(() => mockLocalDataSource.clearToken()).called(1);
+      verify(() => mockSessionRepository.clearSessions()).called(1);
     });
 
     test('should return AuthFailure when remote deleteAccount fails', () async {
