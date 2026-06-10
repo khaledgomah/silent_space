@@ -15,6 +15,7 @@ import 'package:silent_space/features/auth/data/sources/auth_local_data_source.d
 import 'package:silent_space/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:silent_space/features/auth/domain/repositories/auth_repository.dart';
 import 'package:silent_space/features/auth/domain/usecases/delete_account_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/is_logged_in_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/link_account_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/request_password_reset_usecase.dart';
@@ -35,6 +36,11 @@ import 'package:silent_space/features/session/domain/repositories/session_reposi
 import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
+import 'package:silent_space/features/setting/data/repositories/settings_repository_impl.dart';
+import 'package:silent_space/features/setting/domain/repositories/settings_repository.dart';
+import 'package:silent_space/features/setting/domain/usecases/get_categories_usecase.dart';
+import 'package:silent_space/features/setting/domain/usecases/save_categories_usecase.dart';
+import 'package:silent_space/features/setting/presentation/manager/settings_cubit/settings_cubit.dart';
 import 'package:silent_space/features/splash/presentation/cubit/splash_cubit.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 
@@ -125,6 +131,9 @@ Future<void> locatorSetup() async {
   getIt.registerLazySingleton<SignInWithGoogleUseCase>(
     () => SignInWithGoogleUseCase(getIt<AuthRepository>()),
   );
+  getIt.registerLazySingleton<GetCurrentUserUseCase>(
+    () => GetCurrentUserUseCase(getIt<AuthRepository>()),
+  );
 
   // ── Session Feature ──
   // Register Hive adapter
@@ -155,6 +164,17 @@ Future<void> locatorSetup() async {
     () => GetSessionsByDateRangeUseCase(getIt<SessionRepository>()),
   );
 
+  // ── Settings Feature ──
+  getIt.registerLazySingleton<SettingsRepository>(
+    () => SettingsRepositoryImpl(getIt<SharedPreferences>()),
+  );
+  getIt.registerLazySingleton<GetCategoriesUseCase>(
+    () => GetCategoriesUseCase(getIt<SettingsRepository>()),
+  );
+  getIt.registerLazySingleton<SaveCategoriesUseCase>(
+    () => SaveCategoriesUseCase(getIt<SettingsRepository>()),
+  );
+
   // ── Global Cubits (Singletons) ──
   getIt.registerLazySingleton<LanguageCubit>(() => LanguageCubit());
   getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
@@ -167,6 +187,7 @@ Future<void> locatorSetup() async {
       signOutUseCase: getIt<SignOutUseCase>(),
       deleteAccountUseCase: getIt<DeleteAccountUseCase>(),
       signInWithGoogleUseCase: getIt<SignInWithGoogleUseCase>(),
+      getCurrentUserUseCase: getIt<GetCurrentUserUseCase>(),
     ),
   );
 
@@ -186,6 +207,16 @@ Future<void> locatorSetup() async {
   );
 
   getIt.registerFactory<SplashCubit>(
-    () => SplashCubit(getIt<IsLoggedInUseCase>()),
+    () => SplashCubit(
+      getIt<IsLoggedInUseCase>(),
+      getIt<AuthCubit>(),
+    ),
+  );
+
+  getIt.registerFactory<SettingsCubit>(
+    () => SettingsCubit(
+      getCategoriesUseCase: getIt<GetCategoriesUseCase>(),
+      saveCategoriesUseCase: getIt<SaveCategoriesUseCase>(),
+    ),
   );
 }

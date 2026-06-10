@@ -7,11 +7,13 @@ import 'package:silent_space/core/utils/service_locator.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(const ThemeState(isDark: true)) {
+  ThemeCubit({SharedPreferences? prefs})
+      : _prefs = prefs ?? getIt<SharedPreferences>(),
+        super(const ThemeState(isDark: true)) {
     _loadTheme();
   }
 
-  final SharedPreferences _prefs = getIt<SharedPreferences>();
+  final SharedPreferences _prefs;
 
   void _loadTheme() {
     final isDark = _prefs.getBool('isDarkTheme') ?? true;

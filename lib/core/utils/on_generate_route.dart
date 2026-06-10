@@ -1,16 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/page_transitions.dart';
+import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:silent_space/features/auth/presentation/pages/login_page.dart';
 import 'package:silent_space/features/auth/presentation/pages/register_page.dart';
-
 import 'package:silent_space/features/home/presentation/views/home_view.dart';
 import 'package:silent_space/features/setting/presentation/about_app_screen.dart';
 import 'package:silent_space/features/setting/presentation/categories_screen.dart';
 import 'package:silent_space/features/setting/presentation/feedback.dart';
 import 'package:silent_space/features/setting/presentation/how_to_use_screen.dart';
+import 'package:silent_space/features/setting/presentation/manager/settings_cubit/settings_cubit.dart';
 import 'package:silent_space/features/splash/presentation/views/splash_view.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -28,9 +30,14 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case RoutesName.howToUse:
       return SlidePageRoute(page: const HowToUseScreen());
     case RoutesName.categories:
-      return SlidePageRoute(page: const CategoriesScreen());
+      return SlidePageRoute(
+        page: BlocProvider(
+          create: (context) => getIt<SettingsCubit>()..loadCategories(),
+          child: const CategoriesScreen(),
+        ),
+      );
     case RoutesName.feedbackScreen:
-      return SlidePageRoute(page: FeedbackScreen());
+      return SlidePageRoute(page: const FeedbackScreen());
     case RoutesName.aboutApp:
       return SlidePageRoute(page: const AboutAppScreen());
     default:

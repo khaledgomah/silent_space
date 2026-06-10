@@ -6,8 +6,10 @@ import 'package:silent_space/core/utils/service_locator.dart';
 part 'language_state.dart';
 
 class LanguageCubit extends Cubit<LanguageState> {
-  LanguageCubit() : super(LanguageInitial());
-  final SharedPreferences _prefs = getIt<SharedPreferences>();
+  LanguageCubit({SharedPreferences? prefs})
+      : _prefs = prefs ?? getIt<SharedPreferences>(),
+        super(LanguageInitial());
+  final SharedPreferences _prefs;
 
   Future<void> changeLanguage(String languageCode) async {
     await _prefs.setString('language', languageCode);
