@@ -2,15 +2,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
+import 'package:silent_space/features/session/domain/usecases/sync_offline_sessions_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
 class SessionCubit extends Cubit<SessionState> {
   SessionCubit({
     required this.saveSessionUseCase,
     required this.getSessionsByDateRangeUseCase,
+    required this.syncOfflineSessionsUseCase,
   }) : super(const SessionInitial());
   final SaveSessionUseCase saveSessionUseCase;
   final GetSessionsByDateRangeUseCase getSessionsByDateRangeUseCase;
+  final SyncOfflineSessionsUseCase syncOfflineSessionsUseCase;
 
   Future<void> saveSession(FocusSession session) async {
     final result = await saveSessionUseCase(session);
@@ -26,6 +29,9 @@ class SessionCubit extends Cubit<SessionState> {
     required DateTime endTime,
   }) async {
     emit(const SessionLoading());
+
+    // Sync any offline sessions first
+    await syncOfflineSessionsUseCase(userId);
 
     final result = await getSessionsByDateRangeUseCase(
       GetSessionsByDateRangeParams(

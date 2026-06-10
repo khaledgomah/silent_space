@@ -5,6 +5,7 @@ import 'package:silent_space/core/errors/failures.dart';
 import 'package:silent_space/features/session/domain/entities/focus_session.dart';
 import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
+import 'package:silent_space/features/session/domain/usecases/sync_offline_sessions_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_state.dart';
 
@@ -12,6 +13,9 @@ class MockGetSessionsByDateRangeUseCase extends Mock
     implements GetSessionsByDateRangeUseCase {}
 
 class MockSaveSessionUseCase extends Mock implements SaveSessionUseCase {}
+
+class MockSyncOfflineSessionsUseCase extends Mock
+    implements SyncOfflineSessionsUseCase {}
 
 class FakeGetSessionsByDateRangeParams extends Fake
     implements GetSessionsByDateRangeParams {}
@@ -22,6 +26,7 @@ void main() {
   late SessionCubit cubit;
   late MockGetSessionsByDateRangeUseCase mockGetSessionsByDateRangeUseCase;
   late MockSaveSessionUseCase mockSaveSessionUseCase;
+  late MockSyncOfflineSessionsUseCase mockSyncOfflineSessionsUseCase;
 
   setUpAll(() {
     registerFallbackValue(FakeGetSessionsByDateRangeParams());
@@ -31,9 +36,16 @@ void main() {
   setUp(() {
     mockGetSessionsByDateRangeUseCase = MockGetSessionsByDateRangeUseCase();
     mockSaveSessionUseCase = MockSaveSessionUseCase();
+    mockSyncOfflineSessionsUseCase = MockSyncOfflineSessionsUseCase();
+    
+    // Default mock stub for syncOfflineSessionsUseCase
+    when(() => mockSyncOfflineSessionsUseCase(any()))
+        .thenAnswer((_) async => const Right(null));
+
     cubit = SessionCubit(
       getSessionsByDateRangeUseCase: mockGetSessionsByDateRangeUseCase,
       saveSessionUseCase: mockSaveSessionUseCase,
+      syncOfflineSessionsUseCase: mockSyncOfflineSessionsUseCase,
     );
   });
 
@@ -85,6 +97,8 @@ void main() {
         startTime: now,
         endTime: now,
       );
+
+      verify(() => mockSyncOfflineSessionsUseCase('user123')).called(1);
     });
 
     test('should emit SessionLoaded with empty list when no sessions exist',

@@ -35,6 +35,7 @@ import 'package:silent_space/features/session/data/sources/session_remote_data_s
 import 'package:silent_space/features/session/domain/repositories/session_repository.dart';
 import 'package:silent_space/features/session/domain/usecases/get_sessions_by_date_range_usecase.dart';
 import 'package:silent_space/features/session/domain/usecases/save_session_usecase.dart';
+import 'package:silent_space/features/session/domain/usecases/sync_offline_sessions_usecase.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 import 'package:silent_space/features/setting/data/repositories/settings_repository_impl.dart';
 import 'package:silent_space/features/setting/domain/repositories/settings_repository.dart';
@@ -164,6 +165,10 @@ Future<void> locatorSetup() async {
     () => GetSessionsByDateRangeUseCase(getIt<SessionRepository>()),
   );
 
+  getIt.registerLazySingleton<SyncOfflineSessionsUseCase>(
+    () => SyncOfflineSessionsUseCase(getIt<SessionRepository>()),
+  );
+
   // ── Settings Feature ──
   getIt.registerLazySingleton<SettingsRepository>(
     () => SettingsRepositoryImpl(getIt<SharedPreferences>()),
@@ -203,6 +208,7 @@ Future<void> locatorSetup() async {
     () => SessionCubit(
       getSessionsByDateRangeUseCase: getIt<GetSessionsByDateRangeUseCase>(),
       saveSessionUseCase: getIt<SaveSessionUseCase>(),
+      syncOfflineSessionsUseCase: getIt<SyncOfflineSessionsUseCase>(),
     ),
   );
 
