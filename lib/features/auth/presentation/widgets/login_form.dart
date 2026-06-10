@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silent_space/core/theme/app_spacing.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/on_generate_route.dart';
+import 'package:silent_space/core/utils/service_locator.dart';
 import 'package:silent_space/core/widgets/custom_snack_bar.dart';
 import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/auth/presentation/widgets/auth_widgets.dart';
@@ -19,6 +21,17 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final prefs = getIt<SharedPreferences>();
+    _rememberMe = prefs.getBool('remember_me') ?? false;
+    if (_rememberMe) {
+      _emailController.text = prefs.getString('saved_email') ?? '';
+    }
+  }
 
   @override
   void dispose() {
@@ -29,6 +42,15 @@ class _LoginFormState extends State<LoginForm> {
 
   void _onSubmit(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
+      final prefs = getIt<SharedPreferences>();
+      if (_rememberMe) {
+        prefs.setBool('remember_me', true);
+        prefs.setString('saved_email', _emailController.text.trim());
+      } else {
+        prefs.setBool('remember_me', false);
+        prefs.remove('saved_email');
+      }
+
       context.read<AuthCubit>().signIn(
             email: _emailController.text.trim(),
             password: _passwordController.text,
@@ -73,7 +95,12 @@ class _LoginFormState extends State<LoginForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                RememberMeCheckbox(onChanged: (v) {}),
+                RememberMeCheckbox(
+                  initialValue: _rememberMe,
+                  onChanged: (v) {
+                    _rememberMe = v;
+                  },
+                ),
                 GestureDetector(
                   onTap: () =>
                       Navigator.pushNamed(context, RoutesName.forgotPassword),
