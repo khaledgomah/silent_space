@@ -7,10 +7,8 @@ class SocialLoginButtons extends StatelessWidget {
   const SocialLoginButtons({
     super.key,
     this.onGooglePressed,
-    this.onApplePressed,
   });
   final VoidCallback? onGooglePressed;
-  final VoidCallback? onApplePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +19,6 @@ class SocialLoginButtons extends StatelessWidget {
           icon: FontAwesomeIcons.google,
           color: AppColors.logifyPrimary,
           onPressed: onGooglePressed ?? () {},
-        ),
-        const SizedBox(width: AppSpacing.s24),
-        _SocialButton(
-          icon: FontAwesomeIcons.apple,
-          color: Theme.of(context).colorScheme.onSurface,
-          onPressed: onApplePressed ?? () {},
         ),
       ],
     );
