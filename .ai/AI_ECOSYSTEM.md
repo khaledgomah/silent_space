@@ -34,7 +34,7 @@ Comprehensive guide to all AI-assisted development files, tools, and workflows.
 | `.ai/rules.md`   | Strict DO/DON'T rules      | `.github/copilot-instructions.md` |
 | `.ai/context.md` | Project context/tech stack | `.github/copilot-instructions.md` |
 
-### AI Skills Library (11 Total)
+### AI Skills Library (12 Total)
 
 **Core Skills (5):**
 
@@ -56,6 +56,13 @@ Comprehensive guide to all AI-assisted development files, tools, and workflows.
 | debugging-architecture    | `.github/skills/debugging-architecture/SKILL.md`    | Layer violation debugging   | ✅ 450 lines |
 | networking-api            | `.github/skills/networking-api/SKILL.md`            | Dio integration             | ✅ 650 lines |
 | caching-persistence       | `.github/skills/caching-persistence/SKILL.md`       | Hive offline-first patterns | ✅ 700 lines |
+
+**Workflow & Git Skills (1):**
+
+| Skill            | Path                                        | Purpose                     | Status       |
+| ---------------- | ------------------------------------------- | --------------------------- | ------------ |
+| git-commit-split | `.github/skills/git-commit-split/SKILL.md` | Atomic git commits workflow | ✅ 150 lines |
+
 
 ### AI Workflows & Automation
 

@@ -517,6 +517,27 @@ Use the /architecture-audit-documentation skill to update README.md after the Au
 
 ---
 
+### 17. Atomic Git Commits (git-commit-split)
+
+**Prompt:**
+
+```
+Use the /git-commit-split skill to commit my recent changes:
+
+1. Analyze all uncommitted changes (git status & git diff).
+2. Group the changes into logical, atomic commits (e.g., separating domain, data, presentation, configuration, and testing layers).
+3. Generate an Atomic Commit Plan with descriptive conventional commit messages.
+4. Prompt me for confirmation before staging and committing each group.
+```
+
+**Example:**
+
+```
+Use the /git-commit-split skill to split and commit the changes in my working tree, focusing on conventional commit format and keeping each commit completely compilable.
+```
+
+---
+
 ## Meta-Review: Prompt Design Guidelines
 
 1. **State the Skill Clearly**: Use `/skill-name` notation.
@@ -543,7 +564,9 @@ Use the /architecture-audit-documentation skill to update README.md after the Au
 /ui-audit
 /performance-opt
 /architecture-audit-documentation
+/git-commit-split
 ```
+
 
 ## Tips for Better Results
 
@@ -571,6 +594,7 @@ Use the /architecture-audit-documentation skill to update README.md after the Au
 | "Type not found" errors     | "Dependency Injection Setup"        |
 | Complex flows               | "Multi-Cubit Coordination"          |
 | Outdated README/Docs        | "Update Project Documentation"      |
+| Bulk uncommitted changes   | "Atomic Git Commits"                |
 
 ---
 
