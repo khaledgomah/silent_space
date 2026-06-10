@@ -7,10 +7,31 @@ import 'package:silent_space/core/utils/constants.dart';
 import 'package:silent_space/core/widgets/custom_button.dart';
 import 'package:silent_space/core/widgets/custom_text_form_field.dart';
 
-class FeedbackScreen extends StatelessWidget {
-  FeedbackScreen({super.key});
-  final TextEditingController _feedbackController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+class FeedbackScreen extends StatefulWidget {
+  const FeedbackScreen({super.key});
+
+  @override
+  State<FeedbackScreen> createState() => _FeedbackScreenState();
+}
+
+class _FeedbackScreenState extends State<FeedbackScreen> {
+  late final TextEditingController _feedbackController;
+  late final TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _feedbackController = TextEditingController();
+    _emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _feedbackController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +66,10 @@ class FeedbackScreen extends StatelessWidget {
                           : AppStrings.noMailError.tr());
                 } else {
                   final Email email = Email(
-                    body: _feedbackController.text,
+                    body: 'User Email: ${_emailController.text.trim()}\n\nFeedback:\n${_feedbackController.text}',
                     subject: Constants.emailSubject,
                     recipients: [Constants.myMail],
-                    isHTML: false, // النص عادي
+                    isHTML: false,
                   );
                   try {
                     await FlutterEmailSender.send(email);

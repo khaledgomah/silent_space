@@ -1,34 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
-import 'package:silent_space/features/setting/helper/category_functions.dart';
+import 'package:silent_space/features/setting/presentation/manager/settings_cubit/settings_cubit.dart';
 import 'package:silent_space/features/setting/presentation/widgets/category_item.dart';
 
-bool isCategoriesEmpty = false;
-
-class CategoriesScreen extends StatefulWidget {
+class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
-
-  @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
-}
-
-class _CategoriesScreenState extends State<CategoriesScreen> {
-  List<String> categories = [];
-  @override
-  void initState() {
-    super.initState();
-    _loadCategories();
-  }
-
-  Future<void> _loadCategories() async {
-    categories = await getCategeories();
-    if (categories.isEmpty && isCategoriesEmpty == false) {
-      categories = ['Focus', 'Relax', 'Sleep', 'Meditation', 'Study', 'Workout', 'Yoga', 'Kids'];
-      saveCategories(categories);
-    }
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,32 +14,47 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                addCategoryOnPressed(context);
-              }),
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              addCategoryOnPressed(context);
+            },
+          ),
         ],
         centerTitle: true,
         title: Text(AppStrings.categoriesTitle.tr()),
       ),
-      body: ListView.builder(
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          final category = categories[index];
-          return CategoryItem(
-              category: category,
-              onDismissed: (direction) {
-                setState(() {
-                  categories.removeAt(index);
-                  saveCategories(categories);
-                });
-              });
+      body: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          if (state is SettingsLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is SettingsLoaded) {
+            final categories = state.categories;
+            if (categories.isEmpty) {
+              return const Center(child: Text('No categories found'));
+            }
+            return ListView.builder(
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                final category = categories[index];
+                return CategoryItem(
+                  category: category,
+                  onDismissed: (direction) {
+                    context.read<SettingsCubit>().removeCategory(category);
+                  },
+                );
+              },
+            );
+          } else if (state is SettingsError) {
+            return Center(child: Text(state.message));
+          }
+          return const SizedBox.shrink();
         },
       ),
     );
   }
 
   Future<dynamic> addCategoryOnPressed(BuildContext context) {
+    final settingsCubit = context.read<SettingsCubit>();
     return showDialog(
       context: context,
       builder: (context) {
@@ -75,7 +68,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
             textInputAction: TextInputAction.done,
             onSubmitted: (value) {
-              _addCategory(textController);
+              _addCategory(context, settingsCubit, textController);
             },
           ),
           actions: [
@@ -87,7 +80,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
             TextButton(
               onPressed: () {
-                _addCategory(textController);
+                _addCategory(context, settingsCubit, textController);
               },
               child: Text(AppStrings.add.tr()),
             ),
@@ -97,14 +90,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-  void _addCategory(TextEditingController textController) {
-    final category = textController.text;
+  void _addCategory(BuildContext dialogContext, SettingsCubit settingsCubit, TextEditingController textController) {
+    final category = textController.text.trim();
     if (category.isNotEmpty) {
-      isCategoriesEmpty = false;
-      categories.add(category);
-      saveCategories(categories);
-      Navigator.pop(context);
-      setState(() {});
+      settingsCubit.addCategory(category);
+      Navigator.pop(dialogContext);
     }
   }
 }
