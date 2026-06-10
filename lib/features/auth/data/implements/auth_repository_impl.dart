@@ -71,6 +71,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, UserEntity>> registerWithEmailAndPassword({
     required String email,
     required String password,
+    String? displayName,
   }) async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure());
@@ -79,6 +80,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await remoteDataSource.registerWithEmailAndPassword(
         email: email,
         password: password,
+        displayName: displayName,
       );
       if (user.token != null) {
         await localDataSource.cacheToken(user.token!);
@@ -167,6 +169,25 @@ class AuthRepositoryImpl implements AuthRepository {
         statusCode: e.statusCode,
         errorCode: e.errorCode,
       ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity?>> getCurrentUser() async {
+    try {
+      final userModel = await remoteDataSource.getCurrentUser();
+      if (userModel != null) {
+        return Right(userModel.toEntity());
+      }
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(
+        message: e.message,
+        statusCode: e.statusCode,
+        errorCode: e.errorCode,
+      ));
+    } catch (e) {
+      return Left(AuthFailure(message: e.toString()));
     }
   }
 

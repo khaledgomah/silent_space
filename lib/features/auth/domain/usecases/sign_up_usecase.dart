@@ -14,15 +14,21 @@ class SignUpUseCase extends UseCase<UserEntity, SignUpParams> {
     return await repository.registerWithEmailAndPassword(
       email: params.email,
       password: params.password,
+      displayName: params.displayName,
     );
   }
 }
 
 class SignUpParams extends Equatable {
-  const SignUpParams({required this.email, required this.password});
+  const SignUpParams({
+    required this.email,
+    required this.password,
+    this.displayName,
+  });
   final String email;
   final String password;
+  final String? displayName;
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [email, password, displayName];
 }

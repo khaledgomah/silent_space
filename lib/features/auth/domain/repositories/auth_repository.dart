@@ -16,6 +16,7 @@ abstract class AuthRepository {
   Future<Either<Failure, UserEntity>> registerWithEmailAndPassword({
     required String email,
     required String password,
+    String? displayName,
   });
 
   Future<Either<Failure, UserEntity>> linkAccountWithEmailAndPassword({
@@ -30,6 +31,7 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> isLoggedIn();
 
   Future<Either<Failure, UserEntity>> signInWithGoogle();
+  Future<Either<Failure, UserEntity?>> getCurrentUser();
 
 
   // Forgot Password

@@ -16,6 +16,7 @@ abstract class AuthRemoteDataSource {
   Future<UserModel> registerWithEmailAndPassword({
     required String email,
     required String password,
+    String? displayName,
   });
 
   Future<UserModel> linkAccountWithEmailAndPassword({
@@ -35,6 +36,7 @@ abstract class AuthRemoteDataSource {
   Future<void> resetPassword(String token, String newPassword);
 
   Future<UserModel> signInWithGoogle();
+  Future<UserModel?> getCurrentUser();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -98,12 +100,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserModel> registerWithEmailAndPassword({
     required String email,
     required String password,
+    String? displayName,
   }) async {
     try {
       final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      if (displayName != null) {
+        await userCredential.user!.updateDisplayName(displayName);
+      }
       final token = await userCredential.user!.getIdToken();
       return UserModel.fromFirebaseUser(
         uid: userCredential.user!.uid,
@@ -186,6 +192,20 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
     }
     return false;
+  }
+
+  @override
+  Future<UserModel?> getCurrentUser() async {
+    final user = firebaseAuth.currentUser;
+    if (user != null) {
+      final token = await user.getIdToken();
+      return UserModel.fromFirebaseUser(
+        uid: user.uid,
+        email: user.email,
+        token: token,
+      );
+    }
+    return null;
   }
 
   @override
