@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:silent_space/core/errors/exceptions.dart';
 import 'package:silent_space/core/errors/failures.dart';
 import 'package:silent_space/features/session/data/models/session_model.dart';
@@ -19,17 +20,22 @@ class SessionRepositoryImpl implements SessionRepository {
   Future<Either<Failure, void>> saveSession(FocusSession session) async {
     try {
       final model = SessionModel.fromEntity(session);
-      // Save locally for offline access
+      // Save locally first for offline access
       await localDataSource.saveSession(model);
-      // Save remotely to Firestore
-      await remoteDataSource.saveSession(model);
+      
+      try {
+        // Try saving remotely to Firestore
+        await remoteDataSource.saveSession(model);
+      } catch (e) {
+        // Flag local session as needing sync and return success
+        debugPrint('Failed to save to Firestore. Marking as unsynced: $e');
+        await localDataSource.saveSession(model.copyWith(needsSync: true));
+      }
       return const Right(null);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: 'Unexpected error: $e'));
+      return Left(CacheFailure(message: 'Unexpected error: $e'));
     }
   }
 
@@ -40,14 +46,24 @@ class SessionRepositoryImpl implements SessionRepository {
     DateTime end,
   ) async {
     try {
-      // Fetch from remote for accurate range filtering
+      // Try to fetch from remote
       final models = await remoteDataSource.getSessionsByDateRange(userId, start, end);
       final entities = models.map((m) => m.toEntity()).toList();
       return Right(entities);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: 'Unexpected error: $e'));
+      debugPrint('Firestore load failed, falling back to Hive cache: $e');
+      try {
+        final localSessions = await localDataSource.getSessions();
+        final filtered = localSessions
+            .where((s) => s.userId == userId &&
+                s.startTime.millisecondsSinceEpoch >= start.millisecondsSinceEpoch &&
+                s.startTime.millisecondsSinceEpoch <= end.millisecondsSinceEpoch)
+            .map((m) => m.toEntity())
+            .toList();
+        return Right(filtered);
+      } catch (cacheError) {
+        return Left(CacheFailure(message: 'Failed to retrieve local sessions: $cacheError'));
+      }
     }
   }
 
@@ -58,6 +74,26 @@ class SessionRepositoryImpl implements SessionRepository {
       return const Right(null);
     } catch (e) {
       return Left(CacheFailure(message: 'Failed to clear local sessions: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> syncOfflineSessions(String userId) async {
+    try {
+      final localSessions = await localDataSource.getSessions();
+      final unsynced = localSessions.where((s) => s.userId == userId && s.needsSync).toList();
+      
+      for (final model in unsynced) {
+        try {
+          await remoteDataSource.saveSession(model);
+          await localDataSource.saveSession(model.copyWith(needsSync: false));
+        } catch (e) {
+          debugPrint('Sync failed for session ${model.id}: $e');
+        }
+      }
+      return const Right(null);
+    } catch (e) {
+      return Left(CacheFailure(message: 'Failed during offline sync: $e'));
     }
   }
 }

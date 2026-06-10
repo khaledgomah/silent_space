@@ -11,4 +11,5 @@ abstract class SessionRepository {
     DateTime end,
   );
   Future<Either<Failure, void>> clearSessions();
+  Future<Either<Failure, void>> syncOfflineSessions(String userId);
 }

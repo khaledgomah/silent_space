@@ -5,6 +5,7 @@ import 'package:silent_space/core/errors/failure_mapper.dart';
 import 'package:silent_space/core/usecases/usecase.dart';
 import 'package:silent_space/features/auth/domain/entities/user_entity.dart';
 import 'package:silent_space/features/auth/domain/usecases/delete_account_usecase.dart';
+import 'package:silent_space/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/sign_out_usecase.dart';
@@ -19,11 +20,13 @@ class AuthCubit extends Cubit<AuthState> {
     required SignOutUseCase signOutUseCase,
     required DeleteAccountUseCase deleteAccountUseCase,
     required SignInWithGoogleUseCase signInWithGoogleUseCase,
+    required GetCurrentUserUseCase getCurrentUserUseCase,
   })  : _signInUseCase = signInUseCase,
         _signUpUseCase = signUpUseCase,
         _signOutUseCase = signOutUseCase,
         _deleteAccountUseCase = deleteAccountUseCase,
         _signInWithGoogleUseCase = signInWithGoogleUseCase,
+        _getCurrentUserUseCase = getCurrentUserUseCase,
         super(AuthInitial());
 
   final SignInUseCase _signInUseCase;
@@ -31,6 +34,7 @@ class AuthCubit extends Cubit<AuthState> {
   final SignOutUseCase _signOutUseCase;
   final DeleteAccountUseCase _deleteAccountUseCase;
   final SignInWithGoogleUseCase _signInWithGoogleUseCase;
+  final GetCurrentUserUseCase _getCurrentUserUseCase;
 
   Future<void> signIn({
     required String email,
@@ -94,6 +98,23 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(AuthError(message: FailureMapper.map(failure))),
       (user) => emit(AuthSuccess(user: user)),
+    );
+  }
+
+  Future<void> checkAuthStatus() async {
+    emit(AuthLoading());
+
+    final result = await _getCurrentUserUseCase(NoParams());
+
+    result.fold(
+      (failure) => emit(AuthError(message: FailureMapper.map(failure))),
+      (user) {
+        if (user != null) {
+          emit(AuthSuccess(user: user));
+        } else {
+          emit(AuthLoggedOut());
+        }
+      },
     );
   }
 }

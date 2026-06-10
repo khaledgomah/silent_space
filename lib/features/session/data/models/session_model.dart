@@ -13,10 +13,11 @@ class SessionModel extends HiveObject {
     required this.endTime,
     required this.durationInSeconds,
     required this.category,
+    this.needsSync = false,
   });
 
   /// Converts from domain entity to model.
-  factory SessionModel.fromEntity(FocusSession entity) {
+  factory SessionModel.fromEntity(FocusSession entity, {bool needsSync = false}) {
     return SessionModel(
       id: entity.id,
       userId: entity.userId,
@@ -24,6 +25,7 @@ class SessionModel extends HiveObject {
       endTime: entity.endTime,
       durationInSeconds: entity.durationInSeconds,
       category: entity.category,
+      needsSync: needsSync,
     );
   }
 
@@ -36,6 +38,7 @@ class SessionModel extends HiveObject {
       endTime: _parseDateTime(json['endTime']),
       durationInSeconds: json['durationInSeconds'] as int,
       category: json['category'] as String,
+      needsSync: json['needsSync'] as bool? ?? false,
     );
   }
   @HiveField(0)
@@ -56,6 +59,9 @@ class SessionModel extends HiveObject {
   @HiveField(5)
   final String category;
 
+  @HiveField(6)
+  final bool needsSync;
+
   /// Converts from model to domain entity.
   FocusSession toEntity() {
     return FocusSession(
@@ -65,6 +71,26 @@ class SessionModel extends HiveObject {
       endTime: endTime,
       durationInSeconds: durationInSeconds,
       category: category,
+    );
+  }
+
+  SessionModel copyWith({
+    String? id,
+    String? userId,
+    DateTime? startTime,
+    DateTime? endTime,
+    int? durationInSeconds,
+    String? category,
+    bool? needsSync,
+  }) {
+    return SessionModel(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      durationInSeconds: durationInSeconds ?? this.durationInSeconds,
+      category: category ?? this.category,
+      needsSync: needsSync ?? this.needsSync,
     );
   }
 
