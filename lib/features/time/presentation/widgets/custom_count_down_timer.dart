@@ -6,6 +6,7 @@ import 'package:silent_space/core/helper/helper_functions.dart';
 import 'package:silent_space/core/notifications/notification_service.dart';
 import 'package:silent_space/core/utils/app_strings.dart';
 import 'package:silent_space/core/utils/constants.dart';
+import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/session/presentation/cubit/session_cubit.dart';
 import 'package:silent_space/features/time/presentation/manager/timer_cubit/timer_cubit.dart';
 
@@ -49,7 +50,15 @@ class CustomCountDownTimer extends StatelessWidget {
             } catch (_) {
               // Silently handle notification failure
             }
-            context.read<TimerCubit>().completeSession(context.read<SessionCubit>());
+            final authState = context.read<AuthCubit>().state;
+            String userId = '';
+            if (authState is AuthSuccess) {
+              userId = authState.user.id ?? '';
+            }
+            context.read<TimerCubit>().completeSession(
+                  sessionCubit: context.read<SessionCubit>(),
+                  userId: userId,
+                );
           },
         );
       },

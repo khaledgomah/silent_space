@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silent_space/core/errors/failures.dart';
 import 'package:silent_space/core/usecases/usecase.dart';
 import 'package:silent_space/features/auth/domain/usecases/is_logged_in_usecase.dart';
+import 'package:silent_space/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:silent_space/features/splash/presentation/cubit/splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
-  SplashCubit(this._isLoggedInUseCase) : super(SplashInitial());
+  SplashCubit(this._isLoggedInUseCase, this._authCubit) : super(SplashInitial());
   final IsLoggedInUseCase _isLoggedInUseCase;
+  final AuthCubit _authCubit;
 
   Future<void> checkAuth() async {
     final results = await Future.wait([
@@ -19,8 +21,9 @@ class SplashCubit extends Cubit<SplashState> {
 
     result.fold(
       (failure) => emit(SplashError(failure.message)),
-      (isLoggedIn) {
+      (isLoggedIn) async {
         if (isLoggedIn) {
+          await _authCubit.checkAuthStatus();
           emit(Authenticated());
         } else {
           emit(Unauthenticated());

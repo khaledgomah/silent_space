@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
@@ -13,19 +12,21 @@ import 'package:uuid/uuid.dart';
 part 'timer_state.dart';
 
 class TimerCubit extends Cubit<TimerState> {
-  TimerCubit()
-      : _prefs = getIt<SharedPreferences>(),
+  TimerCubit({
+    SharedPreferences? prefs,
+    AudioPlayer? player,
+  })  : _prefs = prefs ?? getIt<SharedPreferences>(),
         super(
           TimerState(
-            durationTime: getIt<SharedPreferences>().getInt('focusTime') ?? 25,
-            breakTime: getIt<SharedPreferences>().getInt('breakTime') ?? 5,
-            voiceLevel: getIt<SharedPreferences>().getInt('voiceLevel') ?? 50,
+            durationTime: (prefs ?? getIt<SharedPreferences>()).getInt('focusTime') ?? 25,
+            breakTime: (prefs ?? getIt<SharedPreferences>()).getInt('breakTime') ?? 5,
+            voiceLevel: (prefs ?? getIt<SharedPreferences>()).getInt('voiceLevel') ?? 50,
             path:
-                getIt<SharedPreferences>().getString('soundPath') ??
+                (prefs ?? getIt<SharedPreferences>()).getString('soundPath') ??
                 SoundsManager.none,
           ),
         ) {
-    player = AudioPlayer();
+    this.player = player ?? AudioPlayer();
   }
 
   late final AudioPlayer player;
@@ -84,16 +85,16 @@ class TimerCubit extends Cubit<TimerState> {
     }
   }
 
-  void completeSession(SessionCubit sessionCubit) {
+  void completeSession({
+    required SessionCubit sessionCubit,
+    required String userId,
+  }) {
     emit(state.copyWith(status: TimerStatus.stopped));
     _pauseSound();
 
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return;
-
     final session = FocusSession(
       id: const Uuid().v4(),
-      userId: user.uid,
+      userId: userId,
       startTime: DateTime.now().subtract(Duration(minutes: state.durationTime)),
       endTime: DateTime.now(),
       durationInSeconds: state.durationTime * 60,
